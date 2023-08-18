@@ -10,3 +10,6 @@
 /obj/Debug/net7.0/TextRPGGame.pdb
 /Item.json
 /bin/Debug/net7.0/Item.json
+/bin/*
+/obj/*
+
