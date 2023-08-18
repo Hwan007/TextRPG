@@ -6,16 +6,12 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        /*
         TextRPG game = new TextRPG();
         game.GameStart();
-        */
-        
-        JsonFileIOStream stream = new JsonFileIOStream();
-        stream.TestSave();
-        stream.TestLoad();
-        
 
+        //JsonFileIOStream stream = new JsonFileIOStream();
+        //stream.TestSave();
+        //stream.TestLoad();
     }
 }
 
@@ -116,6 +112,7 @@ internal class TextRPG
                 var route = sLocate.DisplayEnableRoute();
                 // 입력을 기다린다.
                 var input = Console.ReadLine();
+                // 입력을 받고 위치를 바꾸거나 행동의 취한다.
                 if (input is string)
                 {
                     if (int.TryParse(input, out var id))
@@ -123,15 +120,14 @@ internal class TextRPG
                         if (id < sLocate.Choice)
                         {
                             // 상황에 맞는 동작을 해야 한다.
+                            sLocate.ActByInput(id);
                         }
                         else
                         {
-                            sLocate.ChageLocation(route[id-sLocate.Choice]);
+                            sLocate.ChageLocation(route[id - sLocate.Choice]);
                         }
                     }
                 }
-                // 입력을 받고 위치를 바꾸거나 행동의 취한다.
-
             }
             // 죽으면 while을 빠져나온다.
             // 다시 시작하시겠습니까?를 물어봐서 다시 시작하도록 한다.
@@ -234,7 +230,7 @@ internal class TextRPG
             for (int i = Choice; i < Choice + route.Length; ++i)
             {
                 Console.Write($"[{i}] ");
-                switch (route[i- Choice])
+                switch (route[i - Choice])
                 {
                     case LocationType.Main:
                         Console.Write("마을");
@@ -326,7 +322,42 @@ internal class TextRPG
             Console.WriteLine("Created by Hwan007");
             Console.WriteLine();
         }
+
+        public void ActByInput(int i)
+        {
+            switch (Type)
+            {
+                case LocationType.Main:
+
+                    break;
+                case LocationType.Status:
+
+                    break;
+                case LocationType.Inventory:
+
+                    break;
+                case LocationType.EquipSetting:
+                    // 장비를 착용
+                    //mPlayer.Inven.GetItem(i).ValueRef;
+                    break;
+                case LocationType.StoreBuy:
+                    // 장비를 산다.
+                    break;
+                case LocationType.StoreSell:
+                    // 장비를 판다.
+                    break;
+                case LocationType.Dungeon:
+                    // 던전을 들어간다.
+                    break;
+                case LocationType.Ending:
+
+                    break;
+                default:
+                    break;
+            }
+        }
     }
+
 
     /// <summary>
     /// 화면에 뿌리는 내용만 담당하는 클래스
@@ -342,11 +373,15 @@ internal class TextRPG
         public string Job { get; }
         public int Level { get; }
         public int Atk { get; }
+        private int baseAtk;
         public int Def { get; }
+        private int baseDef;
         public int Hp { get; }
+        private int baseHP;
         public int Gold { get; }
         public Inventory Inven { get; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
+        private Item[] Equipments;
 
         [JsonConstructor]
         public Character(string name, string job, int level, int atk, int def, int hp, int gold)
@@ -354,11 +389,12 @@ internal class TextRPG
             Name = name;
             Job = job;
             Level = level;
-            Atk = atk;
-            Def = def;
-            Hp = hp;
+            baseAtk = Atk = atk;
+            baseDef = Def = def;
+            baseHP = Hp = hp;
             Gold = gold;
             Inven = new Inventory();
+            Equipments = new Item[2];
         }
 
         public int Display()
@@ -378,6 +414,61 @@ internal class TextRPG
         public void TakeDamage()
         {
 
+        }
+
+        public bool EquipItem(Item item)
+        {
+            if (item.Data.type == EquipType.Weapon)
+            {
+                var weapon = item as Weapon;
+                if (weapon != null)
+                {// 장착된 장비가 있는 경우에 벗는다.
+                    if (Equipments[(int)EquipType.Weapon] != null)
+                        Equipments[(int)EquipType.Weapon].IsEquip = false;
+                    // 장비를 장착한다.
+                    Equipments[(int)EquipType.Weapon] = weapon;
+                    weapon.IsEquip = true;
+                    return true;
+                }
+            }
+            else if (item is Armor)
+            {
+                var armor = item as Armor;
+                if (armor != null)
+                {// 장착된 장비가 있는 경우에 벗는다.
+                    if (Equipments[(int)EquipType.Armor] != null)
+                        Equipments[(int)EquipType.Armor].IsEquip = false;
+                    // 장비를 장착한다.
+                    Equipments[(int)EquipType.Armor] = armor;
+                    armor.IsEquip = true;
+                    return true;
+                }
+            }
+            // 허용된 타입이 아니거나, 정상적으로 진행되지 못했다.
+            return false;
+        }
+
+        public void UnEquipItem(Item item)
+        {
+            if (item.Data.type == EquipType.Weapon)
+            {
+                var weapon = item as Weapon;
+                if (weapon != null)
+                {// 장착된 장비가 있는 경우에 벗는다.
+                    if (Equipments[(int)EquipType.Weapon] != null)
+                        Equipments[(int)EquipType.Weapon].IsEquip = false;
+                }
+            }
+            else if (item is Armor)
+            {
+                var armor = item as Armor;
+                if (armor != null)
+                {// 장착된 장비가 있는 경우에 벗는다.
+                    if (Equipments[(int)EquipType.Armor] != null)
+                        Equipments[(int)EquipType.Armor].IsEquip = false;
+                }
+            }
+            // 허용된 타입이 아니거나, 정상적으로 진행되지 못했다.
         }
     }
 
@@ -473,7 +564,7 @@ internal class TextRPG
         public ItemData Data { get { return mData; } }
         public string Name { get => mData.Name; }
         public string Description { get => mData.Description; }
-        public bool IsEquip { get => mData.IsEquip; }
+        public bool IsEquip { get => mData.IsEquip; set => mData.IsEquip = value; }
 
         [JsonConstructor]
         public Item(string name, string description)
