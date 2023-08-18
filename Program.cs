@@ -22,7 +22,6 @@ internal class TextRPG
     {
         GameDataSetting();
         RunGame();
-        //do, while로 다시 시작하시겠습니까?를 물어봐서 다시 시작하도록 한다.
     }
     public void GameDataSetting()
     {
@@ -100,14 +99,34 @@ internal class TextRPG
     {
         if (sPlayer is Character && sLocate is Location)
         {
-            while (sPlayer.IsDead)
+            while (sPlayer.IsDead == false)
             {
                 // 주요 로직으로 while으로 State에 따라서 Display를 한다.
-                sLocate.Display();
 
+                // 화면 표시
+                sLocate.Display();
+                var route = sLocate.DisplayRoute();
+                // 입력을 기다린다.
+                var input = Console.ReadLine();
+                if (input is string)
+                {
+                    if (int.TryParse(input, out var id))
+                    {
+                        if (id < sLocate.Choice)
+                        {
+                            // 상황에 맞는 동작을 해야 한다.
+                        }
+                        else
+                        {
+                            sLocate.ChageLocation(route[id-sLocate.Choice]);
+                        }
+                    }
+                }
+                // 입력을 받고 위치를 바꾸거나 행동의 취한다.
 
             }
             // 죽으면 while을 빠져나온다.
+            // 다시 시작하시겠습니까?를 물어봐서 다시 시작하도록 한다.
         }
     }
 
@@ -130,6 +149,7 @@ internal class TextRPG
         private Character mPlayer;
         private Store mStore;
         private Dungeon mDungeon;
+        public int Choice { get; private set; }
 
         public Location(int[,] map, Character player, Store store, Dungeon dungeon)
         {
@@ -139,8 +159,9 @@ internal class TextRPG
             mStore = store;
             mDungeon = dungeon;
         }
-        public void Display()
+        public int Display()
         {
+            Choice = 0;
             Console.Clear();
             switch (Type)
             {
@@ -171,20 +192,74 @@ internal class TextRPG
                 default:
                     break;
             }
-
+            return 0;
         }
 
         public bool ChageLocation(LocationType type)
         {
             if (mMap[(int)Type, (int)type] == 1)
+            {
+                Type = type;
                 return true;
+            }
             else
                 return false;
         }
 
-        public void DisplayRoute()
+        public LocationType[] GetRoute()
         {
+            List<LocationType> route = new List<LocationType>();
+            for (int i = 0; i <= (int)LocationType.Ending; ++i)
+            {
+                if (mMap[(int)Type, i] == 1)
+                {
+                    route.Add((LocationType)i);
+                }
+            }
+            return route.ToArray();
+        }
 
+        public LocationType[] DisplayRoute()
+        {
+            var route = GetRoute();
+            for (int i = Choice; i < Choice + route.Length; ++i)
+            {
+                Console.Write($"[{i}] ");
+                switch (route[i- Choice])
+                {
+                    case LocationType.Main:
+                        Console.Write("마을");
+                        break;
+                    case LocationType.Status:
+                        Console.Write("상태창");
+                        break;
+                    case LocationType.Inventory:
+                        Console.Write("인벤토리");
+                        break;
+                    case LocationType.EquipSetting:
+                        Console.Write("장비관리");
+                        break;
+                    case LocationType.StoreBuy:
+                        if (Type == LocationType.StoreSell)
+                            Console.Write("구매");
+                        else
+                            Console.Write("상점");
+                        break;
+                    case LocationType.StoreSell:
+                        Console.Write("판매");
+                        break;
+                    case LocationType.Dungeon:
+                        Console.Write("던전");
+                        break;
+                    case LocationType.Ending:
+                        Console.Write("Game Over");
+                        break;
+                    default:
+                        break;
+                }
+                Console.Write("\n");
+            }
+            return route;
         }
 
         public void DisplayMain()
@@ -198,36 +273,43 @@ internal class TextRPG
             Console.WriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
+            Choice = mPlayer.Display();
         }
         public void DisplayInventory()
         {
             Console.WriteLine("인벤토리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
             Console.WriteLine();
+            Choice = mPlayer.Inven.Display();
         }
         public void DisplayEquipSetting()
         {
             Console.WriteLine("인벤토리 - 장착 관리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
             Console.WriteLine();
+            Choice = mPlayer.Inven.Display();
         }
         public void DisplayStoreBuy()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine();
+            Choice = mStore.Inven.Display();
         }
         public void DisplayStoreSell()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine();
+            Choice = mPlayer.Inven.Display();
         }
         public void DisplayDungeon()
         {
             Console.WriteLine("던전");
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
+            // 던전 함수
+            Choice = mDungeon.Display();
         }
         public void DisplayEnding()
         {
@@ -242,7 +324,7 @@ internal class TextRPG
     /// </summary>
     public interface IDisplay
     {
-        public void Display();
+        public int Display();
     }
 
     public class Character : IDisplay
@@ -269,7 +351,7 @@ internal class TextRPG
             Inven = new Inventory();
         }
 
-        public void Display()
+        public int Display()
         {
             // 플래이어 스탯 정보 표시
             Console.WriteLine();
@@ -280,14 +362,7 @@ internal class TextRPG
             Console.WriteLine($"방어력 : {Def}");
             Console.WriteLine($"Gold : {Gold}");
             Console.WriteLine();
-        }
-
-        public void DisplayInven()
-        {
-            // 인벤토리의 아이템을 표시
-            Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
-            Inven.Display();
+            return 0;
         }
 
         public void TakeDamage()
@@ -304,8 +379,9 @@ internal class TextRPG
         {
             mItems = new LinkedList<Item>();
         }
-        public void Display()
+        public int Display()
         {
+            Console.WriteLine("[아이템 목록]");
             // 인벤토리 내용물 표시
             int i = 0;
             foreach (Item item in mItems)
@@ -315,6 +391,7 @@ internal class TextRPG
                 Console.Write("\n");
                 ++i;
             }
+            return i;
         }
         public void AddItem(Item addItem)
         {
@@ -406,13 +483,14 @@ internal class TextRPG
             mData = item.Data;
         }
 
-        public virtual void Display()
+        public virtual int Display()
         {
             // 장착 여부 표시
             if (IsEquip)
                 Console.Write("[E]");
             // 이름을 표시
             Console.Write(Name);
+            return 1;
         }
     }
 
@@ -427,13 +505,14 @@ internal class TextRPG
         public Weapon(ItemData data) : base(data) { }
         public Weapon(Item data) : base(data) { }
 
-        public override void Display()
+        public override int Display()
         {
             base.Display();
             // 공격력 표시
             Console.Write("공격력 +" + ATK);
             // 설명 표시
             Console.Write(Description);
+            return 1;
         }
     }
 
@@ -447,13 +526,14 @@ internal class TextRPG
         }
         public Armor(ItemData data) : base(data) { }
         public Armor(Item data) : base(data) { }
-        public override void Display()
+        public override int Display()
         {
             base.Display();
             // 방어력 표시
             Console.Write("방어력 +" + DEF);
             // 설명 표시
             Console.Write(Description);
+            return 1;
         }
     }
 
@@ -465,17 +545,17 @@ internal class TextRPG
         {
             Inven = new Inventory();
         }
-        public void Display()
+        public int Display()
         {
-
+            return 1;
         }
     }
 
     public class Dungeon : IDisplay
     {
-        public void Display()
+        public int Display()
         {
-
+            return 1;
         }
     }
 }
