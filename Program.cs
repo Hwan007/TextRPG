@@ -10,11 +10,11 @@ internal class Program
         TextRPG game = new TextRPG();
         game.GameStart();
         */
-        /*
+        
         JsonFileIOStream stream = new JsonFileIOStream();
         stream.TestSave();
         stream.TestLoad();
-        */
+        
 
     }
 }
