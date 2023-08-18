@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "qk7PtZ5LaiQwWX5wt7bmbv0sPqfPlXac0duEf630RSZPf/2FA2dyOYUP2lRPdz0vaZf22Wx6yvOBZ+X/z91SSw==",
+  "dgSpecHash": "PaY9jMyLIBdlW27goT96/0HpxaSb7O+c5u9gs3TVm0lWqmyKYzE5FwFIqURmsD+d4pPPTr5kBAgAM/WBCLwfOQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\CHAE\\source\\repos\\TextRPGGame\\TextRPGGame.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\CHAE\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\CHAE\\.nuget\\packages\\system.text.json\\7.0.3\\system.text.json.7.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

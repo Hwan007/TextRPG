@@ -3,7 +3,6 @@ C:\Users\CHAE\source\repos\TextRPGGame\bin\Debug\net7.0\TextRPGGame.deps.json
 C:\Users\CHAE\source\repos\TextRPGGame\bin\Debug\net7.0\TextRPGGame.runtimeconfig.json
 C:\Users\CHAE\source\repos\TextRPGGame\bin\Debug\net7.0\TextRPGGame.dll
 C:\Users\CHAE\source\repos\TextRPGGame\bin\Debug\net7.0\TextRPGGame.pdb
-C:\Users\CHAE\source\repos\TextRPGGame\obj\Debug\net7.0\TextRPGGame.csproj.AssemblyReference.cache
 C:\Users\CHAE\source\repos\TextRPGGame\obj\Debug\net7.0\TextRPGGame.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\CHAE\source\repos\TextRPGGame\obj\Debug\net7.0\TextRPGGame.AssemblyInfoInputs.cache
 C:\Users\CHAE\source\repos\TextRPGGame\obj\Debug\net7.0\TextRPGGame.AssemblyInfo.cs

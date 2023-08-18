@@ -1,13 +1,21 @@
 ﻿using System.Data;
+using System.Text.Json.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using static TextRPG;
 
 internal class Program
 {
     static void Main(string[] args)
     {
+        /*
         TextRPG game = new TextRPG();
         game.GameStart();
+        */
+        /*
+        JsonFileIOStream stream = new JsonFileIOStream();
+        stream.TestSave();
+        stream.TestLoad();
+        */
+
     }
 }
 
@@ -105,7 +113,7 @@ internal class TextRPG
 
                 // 화면 표시
                 sLocate.Display();
-                var route = sLocate.DisplayRoute();
+                var route = sLocate.DisplayEnableRoute();
                 // 입력을 기다린다.
                 var input = Console.ReadLine();
                 if (input is string)
@@ -206,7 +214,7 @@ internal class TextRPG
                 return false;
         }
 
-        public LocationType[] GetRoute()
+        public LocationType[] GetEnableRoute()
         {
             List<LocationType> route = new List<LocationType>();
             for (int i = 0; i <= (int)LocationType.Ending; ++i)
@@ -219,9 +227,10 @@ internal class TextRPG
             return route.ToArray();
         }
 
-        public LocationType[] DisplayRoute()
+        public LocationType[] DisplayEnableRoute()
         {
-            var route = GetRoute();
+            Console.WriteLine();
+            var route = GetEnableRoute();
             for (int i = Choice; i < Choice + route.Length; ++i)
             {
                 Console.Write($"[{i}] ");
@@ -339,6 +348,7 @@ internal class TextRPG
         public Inventory Inven { get; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
 
+        [JsonConstructor]
         public Character(string name, string job, int level, int atk, int def, int hp, int gold)
         {
             Name = name;
@@ -465,6 +475,7 @@ internal class TextRPG
         public string Description { get => mData.Description; }
         public bool IsEquip { get => mData.IsEquip; }
 
+        [JsonConstructor]
         public Item(string name, string description)
         {
             mData = new ItemData()
@@ -497,6 +508,7 @@ internal class TextRPG
     public class Weapon : Item
     {
         public int ATK { get => mData.Point; }
+        [JsonConstructor]
         public Weapon(string name, int atk, string description) : base(name, description)
         {
             mData.type = EquipType.Weapon;
@@ -519,6 +531,7 @@ internal class TextRPG
     public class Armor : Item
     {
         public int DEF { get => mData.Point; }
+        [JsonConstructor]
         public Armor(string name, int def, string description) : base(name, description)
         {
             mData.type = EquipType.Armor;
@@ -559,4 +572,3 @@ internal class TextRPG
         }
     }
 }
-
