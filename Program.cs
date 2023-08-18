@@ -98,14 +98,17 @@ internal class TextRPG
 
     public void RunGame()
     {
-        while (sPlayer.IsDead)
+        if (sPlayer is Character && sLocate is Location)
         {
-            // 주요 로직으로 while으로 State에 따라서 Display를 한다.
-            sLocate.Display();
+            while (sPlayer.IsDead)
+            {
+                // 주요 로직으로 while으로 State에 따라서 Display를 한다.
+                sLocate.Display();
 
+                
+            }
+            // 죽으면 while을 빠져나온다.
         }
-        // 죽으면 while을 빠져나온다.
-
     }
 
     public enum LocationType
