@@ -98,14 +98,16 @@ internal class TextRPG
 
     public void RunGame()
     {
-        while (sPlayer.IsDead)
+        if (sPlayer is Character && sLocate is Location)
         {
-            // 주요 로직으로 while으로 State에 따라서 Display를 한다.
-            sLocate.Display();
+            while (sPlayer.IsDead)
+            {
+                // 주요 로직으로 while으로 State에 따라서 Display를 한다.
+                sLocate.Display();
 
+            }
+            // 죽으면 while을 빠져나온다.
         }
-        // 죽으면 while을 빠져나온다.
-
     }
 
     public enum LocationType
@@ -331,29 +333,34 @@ internal class TextRPG
         public LinkedListNode<Item>? GetItem(int index)
         {
             var item = mItems.First;
-
-            for (int i = 0; i < index; ++i)
+            if (item is LinkedListNode<Item>)
             {
-                if (item.Next != null)
-                    item = item.Next;
-                else
-                    throw new Exception($"Item is null at {i}, but try to Get");
+                for (int i = 0; i < index; ++i)
+                {
+                    if (item.Next != null)
+                        item = item.Next;
+                    else
+                        throw new Exception($"Item is null at {i}, but try to Get");
+                }
+                return item;
             }
-            return item;
+            return null;
         }
 
         public void RemoveItem(int index)
         {
             var item = mItems.First;
-
-            for (int i = 0; i < index; ++i)
+            if (item is LinkedListNode<Item>)
             {
-                if (item.Next != null)
-                    item = item.Next;
-                else
-                    throw new Exception($"Item is null at {i}, but try to Remove");
+                for (int i = 0; i < index; ++i)
+                {
+                    if (item.Next != null)
+                        item = item.Next;
+                    else
+                        throw new Exception($"Item is null at {i}, but try to Remove");
+                }
+                mItems.Remove(item);
             }
-            mItems.Remove(item);
         }
     }
 
@@ -459,7 +466,7 @@ internal class TextRPG
         }
         public void Display()
         {
-            
+
         }
     }
 
@@ -467,7 +474,7 @@ internal class TextRPG
     {
         public void Display()
         {
-            
+
         }
     }
 }
