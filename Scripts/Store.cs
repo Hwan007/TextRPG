@@ -24,7 +24,7 @@
         public dynamic SellToPlayer(int index)
         {
             var item = Inven.GetItem(index);
-            return item;
+            return item.ValueRef;
         }
     }
 }

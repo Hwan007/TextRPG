@@ -53,7 +53,7 @@ internal partial class TextRPG
         {
             foreach (var equipment in EquipItemList)
             {
-                if (item.GetType() == equipment.GetType && item == equipment.ItemRef)
+                if (item.GetType() == equipment.GetType() && item == equipment.ItemRef)
                 {
                     EquipItemList.Remove(equipment);
                     return;
@@ -65,7 +65,7 @@ internal partial class TextRPG
         {
             foreach (var equipment in EquipItemList)
             {
-                if (item.GetType() == equipment.GetType && item == equipment.ItemRef)
+                if (item.GetType() == equipment.GetType() && item == equipment.ItemRef)
                     return true;
             }
             return false;
@@ -74,13 +74,11 @@ internal partial class TextRPG
         public class EquipItemData
         {
             public dynamic ItemRef { get; }
-            public Type GetType { get; }
 
             [JsonConstructor]
             public EquipItemData(dynamic item)
             {
                 ItemRef = item;
-                GetType = item.GetType();
             }
         }
     }

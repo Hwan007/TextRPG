@@ -13,7 +13,7 @@ public class JsonFileIOStream
 
     private string PathFromCurrent()
     {
-        string? currentPath = Environment.ProcessPath.Split("TextRPGGame")[0] + "TextRPGGame\\Data";
+        string? currentPath = Environment.ProcessPath?.Split("TextRPGGame")[0] + "TextRPGGame\\Data";
         return currentPath ?? PathFromDesktop();
     }
 

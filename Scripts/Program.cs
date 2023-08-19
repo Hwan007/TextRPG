@@ -21,7 +21,7 @@ internal partial class TextRPG
     private Location? sLocate;
     private Store? sStore;
     private Dungeon? sDungeon;
-    private JsonFileIOStream sJsonIO;
+    private JsonFileIOStream? sJsonIO;
 
     public void GameStart()
     {
@@ -58,23 +58,22 @@ internal partial class TextRPG
             sPlayer.Inven.AddItem(armors[0]);
             sPlayer.Inven.GetItem(0)?.Value.EquipByCharacter(sPlayer);
             sPlayer.Inven.GetItem(1)?.Value.EquipByCharacter(sPlayer);
-        }
-        // 나머지는 스토어에 넣기
+
+            // 나머지는 스토어에 넣기
 
 
-        // 아이템 리스트를 스토어에 넣어서 스토어가 가지고 있게 하기
-        sStore = new Store();
-        if (weapons != null && armors != null)
-        {
+            // 아이템 리스트를 스토어에 넣어서 스토어가 가지고 있게 하기
+            sStore = new Store();
+
             sStore.AddItems(weapons);
             sStore.AddItems(armors);
-        }
-        sDungeon = new Dungeon();
+            sDungeon = new Dungeon();
 
-        // 맵 연결 정보를 가져오기
-        // map은 LocationType의 최대개수 정사각행렬
-        int[,] map = MapSetting();
-        sLocate = new Location(map, sPlayer, sStore, sDungeon);
+            // 맵 연결 정보를 가져오기
+            // map은 LocationType의 최대개수 정사각행렬
+            int[,] map = MapSetting();
+            sLocate = new Location(map, sPlayer, sStore, sDungeon);
+        }
     }
 
     
