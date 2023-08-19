@@ -1,5 +1,6 @@
 ﻿using static TextRPG;
 using System.Text.Json.Serialization;
+using System.Text;
 
 internal partial class TextRPG
 {
@@ -16,63 +17,85 @@ internal partial class TextRPG
         public string Description;
         public bool IsEquip;
         public int Point;
+        public int Gold;
     }
 
     public class Item : IDisplay
     {
-        protected ItemData mData;
-        public ItemData Data { get { return mData; } }
-        public string Name { get => mData.Name; }
-        public string Description { get => mData.Description; }
-        public bool IsEquip { get => mData.IsEquip; set => mData.IsEquip = value; }
+        public ItemData Data { get; protected set; }
+        public string Name { get => Data.Name; }
+        public string Description { get => Data.Description; }
+        public bool IsEquip
+        {
+            get => Data.IsEquip;
+            private set
+            {
+                var tempData = Data;
+                tempData.IsEquip = value;
+                Data = tempData;
+            }
+        }
+        public int Gold { get => Data.Gold; }
 
         [JsonConstructor]
-        public Item(string name, string description)
+        public Item(string name, string description, int gold)
         {
-            mData = new ItemData()
+            Data = new ItemData()
             {
                 Name = name,
                 IsEquip = false,
-                Description = description
+                Description = description,
+                Gold = gold
             };
         }
         public Item(ItemData data)
         {
-            mData = data;
+            Data = data;
         }
         public Item(Item item)
         {
-            mData = item.Data;
+            Data = item.Data;
         }
 
         public virtual int Display()
         {
             // 장착 여부 표시
             if (IsEquip)
-                Console.Write("[E]");
+                Console.Write("[E] ");
             // 이름을 표시
-            Console.Write(Name);
+            StringBuilder cout = new StringBuilder();
+            cout.Append(Name);
+            while (cout.Length < 14 - Name.Length)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             return 1;
         }
 
         public void EquipByCharacter(Character character)
         {
-            character.Equipments.EquipItem(this);
+            IsEquip = character.Equipments.EquipItem(this);
         }
         public void UnquipByCharacter(Character character)
         {
+            if (IsEquip == false)
+                return;
             character.Equipments.UnequipItem(this);
+            IsEquip = false;
         }
     }
 
     public class Weapon : Item
     {
-        public int ATK { get => mData.Point; }
+        public int ATK { get => Data.Point; }
         [JsonConstructor]
-        public Weapon(string name, int atk, string description) : base(name, description)
+        public Weapon(string name, int atk, string description, int gold) : base(name, description, gold)
         {
-            mData.type = EquipType.Weapon;
-            mData.Point = atk;
+            var tempData = Data;
+            tempData.type = EquipType.Weapon;
+            tempData.Point = atk;
+            Data = tempData;
         }
         public Weapon(ItemData data) : base(data) { }
         public Weapon(Item data) : base(data) { }
@@ -81,21 +104,37 @@ internal partial class TextRPG
         {
             base.Display();
             // 공격력 표시
-            Console.Write("공격력 +" + ATK);
+            StringBuilder cout = new StringBuilder();
+            cout.Append("| 공격력 + ");
+            cout.Append(ATK);
+            while (cout.Length < 11)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             // 설명 표시
-            Console.Write(Description);
+            cout.Clear();
+            cout.Append(" | ");
+            cout.Append(Description);
+            while (cout.Length < 40)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             return 1;
         }
     }
 
     public class Armor : Item
     {
-        public int DEF { get => mData.Point; }
+        public int DEF { get => Data.Point; }
         [JsonConstructor]
-        public Armor(string name, int def, string description) : base(name, description)
+        public Armor(string name, int def, string description, int gold) : base(name, description, gold)
         {
-            mData.type = EquipType.Armor;
-            mData.Point = def;
+            var tempData = Data;
+            tempData.type = EquipType.Armor;
+            tempData.Point = def;
+            Data = tempData;
         }
         public Armor(ItemData data) : base(data) { }
         public Armor(Item data) : base(data) { }
@@ -103,9 +142,23 @@ internal partial class TextRPG
         {
             base.Display();
             // 방어력 표시
-            Console.Write("방어력 +" + DEF);
+            StringBuilder cout = new StringBuilder();
+            cout.Append("| 방어력 + ");
+            cout.Append(DEF);
+            while (cout.Length < 11)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             // 설명 표시
-            Console.Write(Description);
+            cout.Clear();
+            cout.Append(" | ");
+            cout.Append(Description);
+            while (cout.Length < 40)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             return 1;
         }
     }

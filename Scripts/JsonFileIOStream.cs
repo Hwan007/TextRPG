@@ -5,21 +5,21 @@ public class JsonFileIOStream
 {
     JsonSerializerOptions jsonOptions = new JsonSerializerOptions { WriteIndented = true };
 
-    private string PathFromDesktop(string fileName)
+    private string PathFromDesktop()
     {
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        return Path.Combine(desktopPath, fileName);
+        return desktopPath;
     }
 
-    private string PathFromCurrent(string fileName)
+    private string PathFromCurrent()
     {
-        string? currentPath = Environment.ProcessPath;
-        return currentPath ?? PathFromDesktop(fileName);
+        string? currentPath = Environment.ProcessPath?.Split("TextRPGGame")[0] + "TextRPGGame\\Data";
+        return currentPath ?? PathFromDesktop();
     }
 
     public T? LoadFile<T>(string fileName)
     {
-        string jsonString = File.ReadAllText(PathFromCurrent(fileName));
+        string jsonString = File.ReadAllText(Path.Combine(PathFromCurrent(), fileName));
         var item = JsonSerializer.Deserialize<T>(jsonString);
         return item;
     }
@@ -27,12 +27,15 @@ public class JsonFileIOStream
     public void SaveFile<T>(string fileName, T items)
     {
         string jsonString = JsonSerializer.Serialize(items, jsonOptions);
-        File.WriteAllText(PathFromCurrent(fileName), jsonString);
+        string path = PathFromCurrent();
+        if (Directory.Exists(path) == false)
+            Directory.CreateDirectory(path);
+        File.WriteAllText(Path.Combine(path, fileName), jsonString);
     }
 
     public bool CheckFile(string fileName)
     {
-        return File.Exists(PathFromCurrent(fileName));
+        return File.Exists(PathFromCurrent());
     }
 
 
@@ -73,4 +76,30 @@ public class JsonFileIOStream
     //        }
     //    }
     //}
+
+    string mWeaponFileName = "Weapon.json";
+    string mArmorFileName = "Armor.json";
+    public void SaveItemDataBase()
+    {
+        Weapon[] weapons = new Weapon[]
+        {
+            new Weapon("가검", 10, "날이 뭉툭해서 뭉둥이와 다를바 없습니다.", 100),
+            new Weapon("야구방망이", 15, "때리는 손맛이 좋습니다.", 200),
+            new Weapon("소방도끼", 25, "빨간색이 인상적인 도끼입니다.", 450),
+            new Weapon("스파타", 30, "로마 제국에서 사용하던 검입니다.", 600),
+            new Weapon("꽝꽝정어리", 50, "무기로 써도 될 만큼 꽝꽝 얼었습니다.", 1000),
+            new Weapon("생생정어리", 100, "강력하게 펄떡이는 정어리입니다.", 2000)
+        };
+        SaveFile<Weapon[]>(mWeaponFileName, weapons);
+
+        Armor[] armors = new Armor[]
+        {
+            new Armor("천갑옷",10,"손때가 뭍어있는 천으로 이루어진 갑옷입니다.", 100),
+            new Armor("가죽갑옷",15,"약간 쿰쿰한 냄새가 나는 가죽 갑옷입니다.", 200),
+            new Armor("체인메일",25,"왠만한 무기는 이를 뚫을 수 없을 겁니다.", 450),
+            new Armor("풀플레이트",30,"무한한 자신감을 불어넣어 주는 풀 플래이트입니다.", 600),
+            new Armor("프라이팬",100,"당신의 엉덩이를 지켜주는 소중한 친구입니다.", 1000)
+        };
+        SaveFile<Armor[]>(mArmorFileName, armors);
+    }
 }

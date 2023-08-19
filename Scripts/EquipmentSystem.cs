@@ -6,66 +6,96 @@ internal partial class TextRPG
 {
     public class EquipmentSystem
     {
+        public LinkedList<EquipItemData> EquipItemList { get; }
 
-        public LinkedList<Equipment> ItemList { get; set; }
-        
         [JsonConstructor]
         public EquipmentSystem()
         {
-            ItemList = new LinkedList<Equipment>();
+            EquipItemList = new LinkedList<EquipItemData>();
         }
-        public void EquipItem(dynamic item)
+        public bool EquipItem(dynamic item)
         {
+            bool IsEquiped = false;
             if (IsEquipedItem(item))
             {
                 // 장비 해제
                 UnequipItem(item);
+                IsEquiped = false;
             }
             else
             {
                 if (item is Weapon)
                 {
-                    // 무기 해제 -> 장착
-                    var temp = item as Weapon;
-                    if (temp != null)
-                        ItemList.AddLast(new Equipment(temp));
+                    // 무기 해제
+                    foreach (var equipment in EquipItemList)
+                    {
+                        if (equipment.ItemRef.GetType() is Weapon)
+                        {
+                            UnequipItem(equipment.ItemRef);
+                            break;
+                        }
+                    }
+                    // 무기 장착
+                    var itemWeapon = item as Weapon;
+                    if (itemWeapon != null)
+                    {
+                        EquipItemList.AddLast(new EquipItemData(itemWeapon));
+                        IsEquiped = true;
+                    }
                 }
                 else if (item is Armor)
                 {
-                    // 갑옷 해제 -> 장착
-                    var temp = item as Armor;
-                    if (temp != null)
-                        ItemList.AddLast(new Equipment(temp));
+                    // 갑옷 해제
+                    foreach (var equipment in EquipItemList)
+                    {
+                        if (equipment.ItemRef.GetType() is Armor)
+                        {
+                            UnequipItem(equipment.ItemRef);
+                            break;
+                        }
+                    }
+                    // 갑옷 장착
+                    var itemArmor = item as Armor;
+                    if (itemArmor != null)
+                    {
+                        EquipItemList.AddLast(new EquipItemData(itemArmor));
+                        IsEquiped = true;
+                    }
                 }
             }
+            return IsEquiped;
         }
 
         public void UnequipItem(dynamic item)
         {
-            foreach (var equipment in ItemList)
+            foreach (var equipment in EquipItemList)
             {
-                if (item == equipment.Data)
-                    ItemList.Remove(equipment);
+                if (item.GetType() == equipment.ItemRef.GetType() && item == equipment.ItemRef)
+                {
+                    EquipItemList.Remove(equipment);
+                    return;
+                }
             }
         }
 
         public bool IsEquipedItem(dynamic item)
         {
-            foreach (var equipment in ItemList)
+            foreach (var equipment in EquipItemList)
             {
-                if (item == equipment.Data)
+                if (item.GetType() == equipment.ItemRef.GetType() && item == equipment.ItemRef)
                     return true;
             }
             return false;
         }
 
-        public class Equipment
+        public class EquipItemData
         {
-            public dynamic Data { get; set; }
+            public dynamic ItemRef { get; }
+
             [JsonConstructor]
-            public Equipment(dynamic item)
+            public EquipItemData(dynamic item)
             {
-                Data = item;
+                ItemRef = item;
             }
         }
     }

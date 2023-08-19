@@ -8,9 +8,23 @@
         {
             Inven = new Inventory();
         }
+
+        public void AddItems(Item[] items)
+        {
+            foreach (Item item in items)
+            {
+                Inven.AddItem(item);
+            }
+        }
         public int Display()
         {
-            return 1;
+            return Inven.Display();
+        }
+
+        public dynamic SellToPlayer(int index)
+        {
+            var item = Inven.GetItem(index);
+            return item.ValueRef;
         }
     }
 }
