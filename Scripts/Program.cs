@@ -3,14 +3,14 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 internal class Program
 {
+
     static void Main(string[] args)
     {
-        TextRPG game = new TextRPG();
-        game.GameStart();
+        //TextRPG game = new TextRPG();
+        //game.GameStart();
 
-        //JsonFileIOStream stream = new JsonFileIOStream();
-        //stream.TestSave();
-        //stream.TestLoad();
+        JsonFileIOStream JsonIO = new JsonFileIOStream();
+        
     }
 }
 

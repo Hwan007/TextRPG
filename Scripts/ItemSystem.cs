@@ -54,6 +54,15 @@ internal partial class TextRPG
             Console.Write(Name);
             return 1;
         }
+
+        public void EquipByCharacter(Character character)
+        {
+            character.Equipments.EquipItem(this);
+        }
+        public void UnquipByCharacter(Character character)
+        {
+            character.Equipments.UnequipItem(this);
+        }
     }
 
     public class Weapon : Item

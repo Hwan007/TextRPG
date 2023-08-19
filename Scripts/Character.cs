@@ -16,7 +16,7 @@ internal partial class TextRPG
         public int Gold { get; }
         public Inventory Inven { get; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
-        private EquipmentSystem Equipments;
+        public EquipmentSystem Equipments { get; }
 
         [JsonConstructor]
         public Character(string name, string job, int level, int atk, int def, int hp, int gold)

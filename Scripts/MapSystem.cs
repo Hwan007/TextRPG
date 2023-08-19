@@ -255,7 +255,8 @@
                     break;
                 case LocationType.EquipSetting:
                     // 장비를 착용
-                    //mPlayer.Inven.GetItem(i).ValueRef;
+                    // inventory의 i번째 아이템을 착용
+                    mPlayer.Inven.GetItem(i)?.ValueRef.EquipByCharacter(mPlayer);
                     break;
                 case LocationType.StoreBuy:
                     // 장비를 산다.

@@ -11,9 +11,15 @@ public class JsonFileIOStream
         return Path.Combine(desktopPath, fileName);
     }
 
+    private string PathFromCurrent(string fileName)
+    {
+        string? currentPath = Environment.ProcessPath;
+        return currentPath ?? PathFromDesktop(fileName);
+    }
+
     public T? LoadFile<T>(string fileName)
     {
-        string jsonString = File.ReadAllText(PathFromDesktop(fileName));
+        string jsonString = File.ReadAllText(PathFromCurrent(fileName));
         var item = JsonSerializer.Deserialize<T>(jsonString);
         return item;
     }
@@ -21,12 +27,12 @@ public class JsonFileIOStream
     public void SaveFile<T>(string fileName, T items)
     {
         string jsonString = JsonSerializer.Serialize(items, jsonOptions);
-        File.WriteAllText(PathFromDesktop(fileName), jsonString);
+        File.WriteAllText(PathFromCurrent(fileName), jsonString);
     }
 
     public bool CheckFile(string fileName)
     {
-        return File.Exists(PathFromDesktop(fileName));
+        return File.Exists(PathFromCurrent(fileName));
     }
 
 
