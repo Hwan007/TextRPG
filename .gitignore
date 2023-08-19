@@ -2,14 +2,6 @@
 # 이 .gitignore 파일은 Microsoft(R) Visual Studio에서 자동으로 만들어졌습니다.
 ################################################################################
 
-/bin/Debug/net7.0/TextRPGGame.pdb
-/obj/Debug/net7.0/ref/TextRPGGame.dll
-/bin/Debug/net7.0/TextRPGGame.dll
-/obj/Debug/net7.0/refint/TextRPGGame.dll
-/obj/Debug/net7.0/TextRPGGame.dll
-/obj/Debug/net7.0/TextRPGGame.pdb
-/Item.json
-/bin/Debug/net7.0/Item.json
 /bin/*
 /obj/*
 
