@@ -7,11 +7,39 @@ internal partial class TextRPG
         public string Name { get; }
         public string Job { get; }
         public int Level { get; }
-        public int Atk { get; }
+        public int Atk
+        {
+            get
+            {
+                int result = baseAtk;
+                foreach (var item in Equipments.EquipItemList)
+                {
+                    if (item.ItemRef.GetType() is Weapon)
+                    {
+                        result += item.ItemRef.Data.Point;
+                    }
+                }
+                return result;
+            }
+        }
         private int baseAtk;
-        public int Def { get; }
+        public int Def
+        {
+            get
+            {
+                int result = baseDef;
+                foreach (var item in Equipments.EquipItemList)
+                {
+                    if (item.ItemRef.GetType() is Armor)
+                    {
+                        result += item.ItemRef.Data.Point;
+                    }
+                }
+                return result;
+            }
+        }
         private int baseDef;
-        public int Hp { get; }
+        public int Hp { get => baseHP; }
         private int baseHP;
         public int Gold { get; private set; }
         public Inventory Inven { get; }
@@ -24,9 +52,9 @@ internal partial class TextRPG
             Name = name;
             Job = job;
             Level = level;
-            baseAtk = Atk = atk;
-            baseDef = Def = def;
-            baseHP = Hp = hp;
+            baseAtk = atk;
+            baseDef = def;
+            baseHP = hp;
             Gold = gold;
             Inven = new Inventory();
             Equipments = new EquipmentSystem();
@@ -56,9 +84,9 @@ internal partial class TextRPG
             var item = Inven.GetItem(index);
             if (item != null)
             {
-                if (item.ValueRef.Data.IsEquip == true)
+                if (item.ValueRef.IsEquip == true)
                     Equipments.UnequipItem(item);
-                GetGold(item.ValueRef.Data.Gold);
+                GetGold(item.ValueRef.Gold);
                 Inven.RemoveItem(index);
             }
         }
