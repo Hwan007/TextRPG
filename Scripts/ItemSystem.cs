@@ -111,7 +111,7 @@ internal partial class TextRPG
         public Armor(string name, int def, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
-            tempData.type = EquipType.Weapon;
+            tempData.type = EquipType.Armor;
             tempData.Point = def;
             Data = tempData;
         }

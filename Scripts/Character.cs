@@ -63,14 +63,14 @@ internal partial class TextRPG
         public int Display()
         {
             // 플래이어 스탯 정보 표시
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{Level}");
-            Console.WriteLine($"{Name}({Job})");
-            Console.WriteLine($"체력 : {Hp}");
-            Console.WriteLine($"공격력 : {Atk}");
-            Console.WriteLine($"방어력 : {Def}");
-            Console.WriteLine($"Gold : {Gold}");
-            Console.WriteLine();
+            Console.WriteLine(" =====================");
+            Console.WriteLine($" Lv.{Level}");
+            Console.WriteLine($" {Name} ({Job})");
+            Console.WriteLine($" 체력   : {Hp}");
+            Console.WriteLine($" 공격력 : {Atk}");
+            Console.WriteLine($" 방어력 : {Def}");
+            Console.WriteLine($" Gold   : {Gold}");
+            Console.WriteLine(" =====================");
             return 0;
         }
 

@@ -26,7 +26,16 @@ internal partial class TextRPG
             {
                 if (item is Weapon)
                 {
-                    // 무기 해제 -> 장착
+                    // 무기 해제
+                    foreach (var equipment in EquipItemList)
+                    {
+                        if (equipment.ItemRef.GetType() is Weapon)
+                        {
+                            UnequipItem(equipment.ItemRef);
+                            break;
+                        }
+                    }
+                    // 무기 장착
                     var itemWeapon = item as Weapon;
                     if (itemWeapon != null)
                     {
@@ -37,7 +46,16 @@ internal partial class TextRPG
                 }
                 else if (item is Armor)
                 {
-                    // 갑옷 해제 -> 장착
+                    // 갑옷 해제
+                    foreach (var equipment in EquipItemList)
+                    {
+                        if (equipment.ItemRef.GetType() is Armor)
+                        {
+                            UnequipItem(equipment.ItemRef);
+                            break;
+                        }
+                    }
+                    // 갑옷 장착
                     var itemArmor = item as Armor;
                     if (itemArmor != null)
                     {
@@ -53,7 +71,7 @@ internal partial class TextRPG
         {
             foreach (var equipment in EquipItemList)
             {
-                if (item.GetType() == equipment.GetType() && item == equipment.ItemRef)
+                if (item.GetType() == equipment.ItemRef.GetType() && item == equipment.ItemRef)
                 {
                     EquipItemList.Remove(equipment);
                     return;
@@ -65,7 +83,7 @@ internal partial class TextRPG
         {
             foreach (var equipment in EquipItemList)
             {
-                if (item.GetType() == equipment.GetType() && item == equipment.ItemRef)
+                if (item.GetType() == equipment.ItemRef.GetType() && item == equipment.ItemRef)
                     return true;
             }
             return false;
