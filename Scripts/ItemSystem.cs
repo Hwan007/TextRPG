@@ -24,7 +24,7 @@ internal partial class TextRPG
         public ItemData Data { get { return mData; } }
         public string Name { get => mData.Name; }
         public string Description { get => mData.Description; }
-        public bool IsEquip { get => mData.IsEquip; set => mData.IsEquip = value; }
+        public bool IsEquip { get => mData.IsEquip; private set => mData.IsEquip = value; }
 
         [JsonConstructor]
         public Item(string name, string description)

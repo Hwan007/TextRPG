@@ -27,10 +27,10 @@ internal partial class TextRPG
                 if (item is Weapon)
                 {
                     // 무기 해제 -> 장착
-                    var temp = item as Weapon;
-                    if (temp != null)
+                    var itemWeapon = item as Weapon;
+                    if (itemWeapon != null)
                     {
-                        EquipItemList.AddLast(new EquipItemData(item));
+                        EquipItemList.AddLast(new EquipItemData(itemWeapon));
                         IsEquiped = true;
                     }
                         
@@ -38,10 +38,10 @@ internal partial class TextRPG
                 else if (item is Armor)
                 {
                     // 갑옷 해제 -> 장착
-                    var temp = item as Armor;
-                    if (temp != null)
+                    var itemArmor = item as Armor;
+                    if (itemArmor != null)
                     {
-                        EquipItemList.AddLast(new EquipItemData(item));
+                        EquipItemList.AddLast(new EquipItemData(itemArmor));
                         IsEquiped = true;
                     }
                 }

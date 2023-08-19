@@ -4,13 +4,27 @@
     {
         public Inventory Inven { get; }
 
-        public Store()
+        public Store(Item[] items)
         {
             Inven = new Inventory();
+            foreach (Item item in items)
+            {
+                Inven.AddItem(item);
+            }
         }
         public int Display()
         {
-            return 1;
+            return Inven.Display();
+        }
+
+        public void SellItem(int index)
+        {
+            
+        }
+
+        public void BuyItem(int index)
+        {
+            
         }
     }
 }

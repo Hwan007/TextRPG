@@ -260,6 +260,7 @@
                     break;
                 case LocationType.StoreBuy:
                     // 장비를 산다.
+                    
                     break;
                 case LocationType.StoreSell:
                     // 장비를 판다.
