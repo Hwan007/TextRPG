@@ -13,7 +13,7 @@ internal partial class TextRPG
         private int baseDef;
         public int Hp { get; }
         private int baseHP;
-        public int Gold { get; }
+        public int Gold { get; private set; }
         public Inventory Inven { get; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
         public EquipmentSystem Equipments { get; }
@@ -49,6 +49,34 @@ internal partial class TextRPG
         public void TakeDamage()
         {
 
+        }
+
+        public void SellItem(int index)
+        {
+            var item = Inven.GetItem(index);
+            if (item != null)
+            {
+                if (item.ValueRef.Data.IsEquip == true)
+                    Equipments.UnequipItem(item);
+                GetGold(item.ValueRef.Data.Gold);
+                Inven.RemoveItem(index);
+            }
+        }
+
+        public void BuyItem(dynamic item)
+        {
+            if (item != null)
+            {
+                Gold -= item.Gold;
+                Inven.AddItem(item);
+            }
+            else
+                Console.WriteLine("아이템 정보가 없습니다.");
+        }
+
+        public void GetGold(int earning)
+        {
+            Gold += earning;
         }
     }
 }

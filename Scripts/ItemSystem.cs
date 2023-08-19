@@ -16,6 +16,7 @@ internal partial class TextRPG
         public string Description;
         public bool IsEquip;
         public int Point;
+        public int Gold;
     }
 
     public class Item : IDisplay
@@ -27,13 +28,14 @@ internal partial class TextRPG
         public bool IsEquip { get => mData.IsEquip; private set => mData.IsEquip = value; }
 
         [JsonConstructor]
-        public Item(string name, string description)
+        public Item(string name, string description, int gold)
         {
             mData = new ItemData()
             {
                 Name = name,
                 IsEquip = false,
-                Description = description
+                Description = description,
+                Gold = gold
             };
         }
         public Item(ItemData data)
@@ -72,7 +74,7 @@ internal partial class TextRPG
     {
         public int ATK { get => mData.Point; }
         [JsonConstructor]
-        public Weapon(string name, int atk, string description) : base(name, description)
+        public Weapon(string name, int atk, string description, int gold) : base(name, description, gold)
         {
             mData.type = EquipType.Weapon;
             mData.Point = atk;
@@ -95,7 +97,7 @@ internal partial class TextRPG
     {
         public int DEF { get => mData.Point; }
         [JsonConstructor]
-        public Armor(string name, int def, string description) : base(name, description)
+        public Armor(string name, int def, string description, int gold) : base(name, description, gold)
         {
             mData.type = EquipType.Armor;
             mData.Point = def;

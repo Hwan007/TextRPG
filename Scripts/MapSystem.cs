@@ -260,13 +260,15 @@
                     break;
                 case LocationType.StoreBuy:
                     // 장비를 산다.
-                    
+                    mPlayer.BuyItem(mStore.SellToPlayer(i));
                     break;
                 case LocationType.StoreSell:
                     // 장비를 판다.
+                    mPlayer.SellItem(i);
                     break;
                 case LocationType.Dungeon:
                     // 던전을 들어간다.
+                    mDungeon.EnterTheDungeon();
                     break;
                 case LocationType.Ending:
 

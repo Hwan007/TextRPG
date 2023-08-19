@@ -4,9 +4,13 @@
     {
         public Inventory Inven { get; }
 
-        public Store(Item[] items)
+        public Store()
         {
             Inven = new Inventory();
+        }
+
+        public void AddItems(Item[] items)
+        {
             foreach (Item item in items)
             {
                 Inven.AddItem(item);
@@ -17,14 +21,10 @@
             return Inven.Display();
         }
 
-        public void SellItem(int index)
+        public dynamic SellToPlayer(int index)
         {
-            
-        }
-
-        public void BuyItem(int index)
-        {
-            
+            var item = Inven.GetItem(index);
+            return item;
         }
     }
 }
