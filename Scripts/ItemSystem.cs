@@ -57,11 +57,14 @@ internal partial class TextRPG
 
         public void EquipByCharacter(Character character)
         {
-            character.Equipments.EquipItem(this);
+            IsEquip = character.Equipments.EquipItem(this);
         }
         public void UnquipByCharacter(Character character)
         {
+            if (IsEquip == false)
+                return;
             character.Equipments.UnequipItem(this);
+            IsEquip = false;
         }
     }
 
