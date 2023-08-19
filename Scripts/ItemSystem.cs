@@ -1,5 +1,6 @@
 ﻿using static TextRPG;
 using System.Text.Json.Serialization;
+using System.Text;
 
 internal partial class TextRPG
 {
@@ -60,9 +61,15 @@ internal partial class TextRPG
         {
             // 장착 여부 표시
             if (IsEquip)
-                Console.Write("[E]");
+                Console.Write("[E] ");
             // 이름을 표시
-            Console.Write(Name);
+            StringBuilder cout = new StringBuilder();
+            cout.Append(Name);
+            while (cout.Length < 14 - Name.Length)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             return 1;
         }
 
@@ -97,9 +104,23 @@ internal partial class TextRPG
         {
             base.Display();
             // 공격력 표시
-            Console.Write("공격력 +" + ATK);
+            StringBuilder cout = new StringBuilder();
+            cout.Append("| 공격력 + ");
+            cout.Append(ATK);
+            while (cout.Length < 11)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             // 설명 표시
-            Console.Write(Description);
+            cout.Clear();
+            cout.Append(" | ");
+            cout.Append(Description);
+            while (cout.Length < 40)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             return 1;
         }
     }
@@ -121,9 +142,23 @@ internal partial class TextRPG
         {
             base.Display();
             // 방어력 표시
-            Console.Write("방어력 +" + DEF);
+            StringBuilder cout = new StringBuilder();
+            cout.Append("| 방어력 + ");
+            cout.Append(DEF);
+            while (cout.Length < 11)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             // 설명 표시
-            Console.Write(Description);
+            cout.Clear();
+            cout.Append(" | ");
+            cout.Append(Description);
+            while (cout.Length < 40)
+            {
+                cout.Append(" ");
+            }
+            Console.Write(cout);
             return 1;
         }
     }

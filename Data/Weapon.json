@@ -10,7 +10,7 @@
   {
     "ATK": 15,
     "Data": {},
-    "Name": "\uC57C\uAD6C \uBC29\uB9DD\uC774",
+    "Name": "\uC57C\uAD6C\uBC29\uB9DD\uC774",
     "Description": "\uB54C\uB9AC\uB294 \uC190\uB9DB\uC774 \uC88B\uC2B5\uB2C8\uB2E4.",
     "IsEquip": false,
     "Gold": 200
@@ -18,7 +18,7 @@
   {
     "ATK": 25,
     "Data": {},
-    "Name": "\uC18C\uBC29 \uB3C4\uB07C",
+    "Name": "\uC18C\uBC29\uB3C4\uB07C",
     "Description": "\uBE68\uAC04\uC0C9\uC774 \uC778\uC0C1\uC801\uC778 \uB3C4\uB07C\uC785\uB2C8\uB2E4.",
     "IsEquip": false,
     "Gold": 450

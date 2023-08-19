@@ -103,7 +103,8 @@ internal partial class TextRPG
                         }
                         else
                         {
-                            sLocate.ChageLocation(route[id - sLocate.Choice]);
+                            if(id - sLocate.Choice < (int)LocationType.Ending)
+                                sLocate.ChageLocation(route[id - sLocate.Choice]);
                         }
                     }
                 }

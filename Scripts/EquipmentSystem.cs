@@ -42,7 +42,6 @@ internal partial class TextRPG
                         EquipItemList.AddLast(new EquipItemData(itemWeapon));
                         IsEquiped = true;
                     }
-                        
                 }
                 else if (item is Armor)
                 {

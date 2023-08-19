@@ -24,10 +24,12 @@
                     break;
                 case LocationType.Inventory:
                     map[i, (int)LocationType.Main] = 1;
+                    map[i, (int)LocationType.Status] = 1;
                     map[i, (int)LocationType.EquipSetting] = 1;
                     break;
                 case LocationType.EquipSetting:
                     map[i, (int)LocationType.Main] = 1;
+                    map[i, (int)LocationType.Status] = 1;
                     map[i, (int)LocationType.Inventory] = 1;
                     break;
                 case LocationType.StoreBuy:
@@ -159,7 +161,7 @@
                         Console.Write("인벤토리");
                         break;
                     case LocationType.EquipSetting:
-                        Console.Write("장비관리");
+                        Console.Write("장착 관리");
                         break;
                     case LocationType.StoreBuy:
                         if (Type == LocationType.StoreSell)
@@ -200,14 +202,14 @@
         public void DisplayInventory()
         {
             Console.WriteLine("인벤토리");
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("보유 중인 아이템입니다.");
             Console.WriteLine();
             Choice = mPlayer.Inven.Display();
         }
         public void DisplayEquipSetting()
         {
             Console.WriteLine("인벤토리 - 장착 관리");
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
             Choice = mPlayer.Inven.Display();
         }

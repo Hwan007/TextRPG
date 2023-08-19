@@ -1,4 +1,6 @@
-﻿internal partial class TextRPG
+﻿using System.Text;
+
+internal partial class TextRPG
 {
     public class Inventory : IDisplay
     {
@@ -13,9 +15,15 @@
             Console.WriteLine("[아이템 목록]");
             // 인벤토리 내용물 표시
             int i = 0;
+            StringBuilder cout = new StringBuilder();
             foreach (Item item in mItems)
             {
-                Console.Write($"- {i} ");
+                cout.Clear();
+                cout.Append($"- ");
+                if (i < 10)
+                    cout.Append(" ");
+                cout.Append($"{i} ");
+                Console.Write(cout);
                 item.Display();
                 Console.Write("\n");
                 ++i;
