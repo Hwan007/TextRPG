@@ -217,14 +217,14 @@
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
-            Console.WriteLine();
+            Console.WriteLine($"\n보유 골드 : {mPlayer.Gold}\n");
             Choice = mStore.Inven.Display();
         }
         public void DisplayStoreSell()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
-            Console.WriteLine();
+            Console.WriteLine($"\n보유 골드 : {mPlayer.Gold}\n");
             Choice = mPlayer.Inven.Display();
         }
         public void DisplayDungeon()

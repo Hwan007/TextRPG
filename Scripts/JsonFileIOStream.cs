@@ -88,7 +88,7 @@ public class JsonFileIOStream
             new Weapon("소방도끼", 25, "빨간색이 인상적인 도끼입니다.", 450),
             new Weapon("스파타", 30, "로마 제국에서 사용하던 검입니다.", 600),
             new Weapon("꽝꽝정어리", 50, "무기로 써도 될 만큼 꽝꽝 얼었습니다.", 1000),
-            new Weapon("생생정어리", 100, "강력하게 펄떡이는 정어리입니다.", 2000)
+            new Weapon("생생정어리", 100, "싱싱한 정어리입니다.", 2000)
         };
         SaveFile<Weapon[]>(mWeaponFileName, weapons);
 
@@ -98,7 +98,7 @@ public class JsonFileIOStream
             new Armor("가죽갑옷",15,"약간 쿰쿰한 냄새가 나는 가죽 갑옷입니다.", 200),
             new Armor("체인메일",25,"왠만한 무기는 이를 뚫을 수 없을 겁니다.", 450),
             new Armor("풀플레이트",30,"무한한 자신감을 불어넣어 주는 풀 플래이트입니다.", 600),
-            new Armor("프라이팬",100,"당신의 엉덩이를 지켜주는 소중한 친구입니다.", 1000)
+            new Armor("프라이팬",100,"총알도 뚫을 수 없는 프라이팬입니다.", 1000)
         };
         SaveFile<Armor[]>(mArmorFileName, armors);
     }
