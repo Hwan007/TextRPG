@@ -43,6 +43,10 @@
                 case LocationType.Dungeon:
                     map[i, (int)LocationType.Main] = 1;
                     map[i, (int)LocationType.Status] = 1;
+                    map[i, (int)LocationType.Dungeoning] = 1;
+                    break;
+                case LocationType.Dungeoning:
+                    map[i, (int)LocationType.Dungeon] = 1;
                     break;
                 case LocationType.Ending:
                     break;
@@ -62,6 +66,7 @@
         StoreBuy,
         StoreSell,
         Dungeon,
+        Dungeoning,
         Ending
     }
 
@@ -109,6 +114,9 @@
                 case LocationType.Dungeon:
                     DisplayDungeon();
                     break;
+                case LocationType.Dungeoning:
+                    DisplayDungeoning();
+                    break;
                 case LocationType.Ending:
                     DisplayEnding();
                     break;
@@ -134,6 +142,9 @@
             List<LocationType> route = new List<LocationType>();
             for (int i = 0; i <= (int)LocationType.Ending; ++i)
             {
+                // 엔딩과 던전 진행 중에는 맵 이동은 별도로 실행
+                if (Type == LocationType.Ending || Type == LocationType.Dungeoning)
+                    continue;
                 if (mMap[(int)Type, i] == 1)
                 {
                     route.Add((LocationType)i);
@@ -173,7 +184,13 @@
                         Console.Write("판매");
                         break;
                     case LocationType.Dungeon:
-                        Console.Write("던전");
+                        if (Type == LocationType.Dungeoning)
+                            Console.Write("탈출");
+                        else
+                            Console.Write("던전");
+                        break;
+                    case LocationType.Dungeoning:
+                        Console.Write("던전 진입");
                         break;
                     case LocationType.Ending:
                         Console.Write("Game Over");
@@ -235,6 +252,11 @@
             // 던전 함수
             Choice = mDungeon.Display();
         }
+        public void DisplayDungeoning()
+        {
+            Console.WriteLine("던전 탐험 진행 중");
+            Console.WriteLine();
+        }
         public void DisplayEnding()
         {
             Console.WriteLine("엔딩");
@@ -269,8 +291,12 @@
                     mPlayer.SellItem(i);
                     break;
                 case LocationType.Dungeon:
-                    // 던전을 들어간다.
-                    mDungeon.EnterTheDungeon();
+                    // 입력에 따른 행동을 한다.
+                    mDungeon.ChangeState(i);
+                    break;
+                case LocationType.Dungeoning:
+                    // 입력에 따른 행동을 한다.
+                    mDungeon.ChangeState(i);
                     break;
                 case LocationType.Ending:
 
