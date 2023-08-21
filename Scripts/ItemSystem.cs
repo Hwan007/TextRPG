@@ -16,7 +16,7 @@ internal partial class TextRPG
         public string Name;
         public string Description;
         public bool IsEquip;
-        public int Point;
+        public float Point;
         public int Gold;
     }
 
@@ -76,11 +76,10 @@ internal partial class TextRPG
         {
             IsEquip = character.Equipments.EquipItem(this);
         }
-        public void UnquipByCharacter(Character character)
+        public void Unequip()
         {
             if (IsEquip == false)
                 return;
-            character.Equipments.UnequipItem(this);
             IsEquip = false;
         }
         public void SetPrice(int gold)
@@ -93,9 +92,9 @@ internal partial class TextRPG
 
     public class Weapon : Item
     {
-        public int ATK { get => Data.Point; }
+        public float ATK { get => Data.Point; }
         [JsonConstructor]
-        public Weapon(string name, int atk, string description, int gold) : base(name, description, gold)
+        public Weapon(string name, float atk, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
             tempData.type = EquipType.Weapon;
@@ -140,9 +139,9 @@ internal partial class TextRPG
 
     public class Armor : Item
     {
-        public int DEF { get => Data.Point; }
+        public float DEF { get => Data.Point; }
         [JsonConstructor]
-        public Armor(string name, int def, string description, int gold) : base(name, description, gold)
+        public Armor(string name, float def, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
             tempData.type = EquipType.Armor;

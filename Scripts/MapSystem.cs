@@ -18,6 +18,7 @@ internal partial class TextRPG
                     map[i, (int)LocationType.Inventory] = 1;
                     map[i, (int)LocationType.StoreBuy] = 1;
                     map[i, (int)LocationType.Dungeon] = 1;
+                    map[i, (int)LocationType.RestForHeal] = 1;
                     break;
                 case LocationType.Status:
                     map[i, (int)LocationType.Main] = 1;
@@ -41,6 +42,9 @@ internal partial class TextRPG
                 case LocationType.StoreSell:
                     map[i, (int)LocationType.Main] = 1;
                     map[i, (int)LocationType.StoreBuy] = 1;
+                    break;
+                case LocationType.RestForHeal:
+                    map[i, (int)LocationType.Main] = 1;
                     break;
                 case LocationType.Dungeon:
                     map[i, (int)LocationType.Main] = 1;
@@ -66,6 +70,7 @@ internal partial class TextRPG
         EquipSetting,
         StoreBuy,
         StoreSell,
+        RestForHeal,
         Dungeon,
         Dungeoning,
         Ending
@@ -110,6 +115,9 @@ internal partial class TextRPG
                     break;
                 case LocationType.StoreSell:
                     DisplayStoreSell();
+                    break;
+                case LocationType.RestForHeal:
+                    DisplayRestForHeal();
                     break;
                 case LocationType.Dungeon:
                     DisplayDungeon();
@@ -186,6 +194,9 @@ internal partial class TextRPG
                     case LocationType.StoreSell:
                         Console.Write("판매");
                         break;
+                    case LocationType.RestForHeal:
+                        Console.Write("휴식하기");
+                        break;
                     case LocationType.Dungeon:
                         // Dungeoning에서는 전부 표시 안되므로 삭제함.
                         Console.Write("던전");
@@ -213,7 +224,7 @@ internal partial class TextRPG
         public void DisplayStatus()
         {
             //WriteWithColor("상태 보기\n", ConsoleColor.White, ConsoleColor.DarkBlue);
-            WriteWithCustomColor("상태 보기\n", 75, 0);
+            WriteWithCustomColor("상태 보기\n", ColorType.PurpleBlue);
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
             Choice = mPlayer.Display();
@@ -221,7 +232,7 @@ internal partial class TextRPG
         public void DisplayInventory()
         {
             //WriteWithColor("인벤토리\n", ConsoleColor.White, ConsoleColor.DarkGreen);
-            WriteWithCustomColor("인벤토리\n", 208, 0);
+            WriteWithCustomColor("인벤토리\n", ColorType.Orange);
             Console.WriteLine("보유 중인 아이템입니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
@@ -242,8 +253,8 @@ internal partial class TextRPG
         public void DisplayEquipSetting()
         {
             //WriteWithColor("인벤토리 - 장착 관리\n", ConsoleColor.White, ConsoleColor.DarkRed);
-            WriteWithCustomColor("인벤토리", 208, 0);
-            WriteWithCustomColor(" - 장착 관리\n", 7, 0);
+            WriteWithCustomColor("인벤토리", ColorType.Orange);
+            WriteWithCustomColor(" - 장착 관리\n", ColorType.Gray);
             Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
@@ -275,7 +286,7 @@ internal partial class TextRPG
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             //Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             WriteWithCustomColor("\n[보유 골드]");
-            WriteWithCustomColor($"\n{mPlayer.Gold:N0} G\n\n", 178);
+            WriteWithCustomColor($"\n{mPlayer.Gold:N0} G\n\n", ColorType.Gold);
             var outputString = mStore.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
             foreach (var info in outputString)
@@ -293,7 +304,7 @@ internal partial class TextRPG
             WriteWithCustomColor("상점\n", 83, 0);
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             WriteWithCustomColor("\n[보유 골드]");
-            WriteWithCustomColor($"\n{mPlayer.Gold:N0} G\n\n", 178);
+            WriteWithCustomColor($"\n{mPlayer.Gold:N0} G\n\n", ColorType.Gold);
             //Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mPlayer.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
@@ -317,14 +328,24 @@ internal partial class TextRPG
                     Console.Write(output);
             }
         }
+        public void DisplayRestForHeal()
+        {
+            WriteWithCustomColor("휴식하기\n", ColorType.PurpleBlue);
+            WriteWithCustomColor("500 G", ColorType.Gold);
+            Console.Write("를 내면 체력을 회복할 수 있습니다. (보유 골드 : ");
+            WriteWithCustomColor($"{mPlayer.Gold} G", ColorType.Gold);
+            Console.WriteLine(")\n");
+            Console.WriteLine("[1] 휴식하기");
+            Choice = 1;
+        }
         public void DisplayDungeon()
         {
             //WriteWithColor("던전\n", ConsoleColor.Red, ConsoleColor.White);
-            WriteWithCustomColor("던전\n", 160, 0);
+            WriteWithCustomColor("던전\n", ColorType.Red, 0);
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
             //WriteWithColor("[1] 던전 진입", ConsoleColor.Red, ConsoleColor.White);
-            WriteWithCustomColor("[1] 던전 진입\n", 160, 0);
+            WriteWithCustomColor("[1] 던전 진입\n", ColorType.Red, 0);
             Choice = 1; // 진입
         }
         public void DisplayDungeoning()
@@ -368,6 +389,19 @@ internal partial class TextRPG
                     // 장비를 판다.
                     mPlayer.SellItem(i);
                     break;
+                case LocationType.RestForHeal:
+                    if (mPlayer.LoseGold(500))
+                    {
+                        mPlayer.TakeHeal(10000);
+                        Console.WriteLine("체력을 회복하였습니다.");
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("금액이 부족합니다.");
+                        Thread.Sleep(1000);
+                    }
+                    break;
                 case LocationType.Dungeon:
                     // 입력에 따른 행동을 한다.
                     if (i == 0)
@@ -407,5 +441,22 @@ internal partial class TextRPG
     {
         Console.Write("\x1b[38;5;" + foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
         Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
+    }
+
+    public static void WriteWithCustomColor(string cout, ColorType foreColor, int backColor = 0)
+    {
+        Console.Write("\x1b[38;5;" + (int)foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
+        Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
+    }
+
+    public enum ColorType
+    {
+        Gold = 178,
+        Red = 160,
+        Gray = 7,
+        White = 15,
+        Black = 16,
+        Orange = 208,
+        PurpleBlue = 75
     }
 }

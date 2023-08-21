@@ -6,12 +6,12 @@ internal partial class TextRPG
     {
         public string Name { get; }
         public string Job { get; }
-        public int Level { get; }
-        public int Atk
+        public int Level { get; private set; }
+        public float Atk
         {
             get
             {
-                int result = baseAtk;
+                float result = baseAtk;
                 foreach (var item in Equipments.EquipItemList)
                 {
                     if (item.ItemRef is Weapon)
@@ -22,12 +22,12 @@ internal partial class TextRPG
                 return result;
             }
         }
-        private int baseAtk;
-        public int Def
+        private float baseAtk;
+        public float Def
         {
             get
             {
-                int result = baseDef;
+                float result = baseDef;
                 foreach (var item in Equipments.EquipItemList)
                 {
                     if (item.ItemRef is Armor)
@@ -38,13 +38,14 @@ internal partial class TextRPG
                 return result;
             }
         }
-        private int baseDef;
-        public int Hp { get => baseHP; }
+        private float baseDef;
+        public int Hp { get; private set; }
         private int baseHP;
         public int Gold { get; private set; }
         public Inventory Inven { get; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
         public EquipmentSystem Equipments { get; }
+        public int Exp { get; private set; }
 
         [JsonConstructor]
         public Character(string name, string job, int level, int atk, int def, int hp, int gold)
@@ -54,7 +55,7 @@ internal partial class TextRPG
             Level = level;
             baseAtk = atk;
             baseDef = def;
-            baseHP = hp;
+            baseHP = Hp= hp;
             Gold = gold;
             Inven = new Inventory();
             Equipments = new EquipmentSystem();
@@ -76,10 +77,10 @@ internal partial class TextRPG
             WriteWithCustomColor(" ===================\n");
             WriteWithCustomColor($" Lv.{Level}\n");
             WriteWithCustomColor($" {Name, -4} ({Job})\n");
-            WriteWithCustomColor($" {"체력",-6}   : {Hp}\n");
-            int tmpAtk = Atk;
+            WriteWithCustomColor($" {"체력",-6}   : {Hp}/{baseHP}\n");
+            float tmpAtk = Atk;
             WriteWithCustomColor($" {"공격력",-7} : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n");
-            int tmpDef = Def;
+            float tmpDef = Def;
             WriteWithCustomColor($" {"방어력",-7} : {tmpDef} {(tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "")}\n");
             WriteWithCustomColor($" {"골드",-6}   : ");
             WriteWithCustomColor($"{Gold:N0} G\n", 178);
@@ -87,9 +88,19 @@ internal partial class TextRPG
             return 0;
         }
 
-        public void TakeDamage()
+        public void TakeDamage(int damage)
         {
+            if (Hp - damage <= 0)
+            {
+                Hp = 0;
+            }
+            else
+                Hp -= damage;
+        }
 
+        public void TakeHeal(int heal)
+        {
+            Hp = Hp + heal >= baseHP ? baseHP : Hp + heal;
         }
 
         public void SellItem(int index)
@@ -125,6 +136,32 @@ internal partial class TextRPG
         public void GetGold(int earning)
         {
             Gold += earning;
+        }
+
+        public void GetExp(int exp)
+        {
+            Exp += exp;
+            while (Exp >= 100)
+            {
+                Exp -= 100;
+                LevelUP();
+            }
+        }
+
+        public void LevelUP()
+        {
+            TakeHeal(baseHP);
+            baseAtk += 0.5f;
+            baseDef += 1f;
+            ++Level;
+        }
+
+        public bool LoseGold(int lose)
+        {
+            if (Gold < lose)
+                return false;
+            Gold -= lose;
+            return true;
         }
     }
 }
