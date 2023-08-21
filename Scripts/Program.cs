@@ -21,14 +21,14 @@ internal class Program
         SetConsoleMode(handle, mode | 0x4);
 
         //for (int i = 0; i < 255; i++)
-        //{
-        //    //Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{i}");
-        //    //Console.Write("\x1b[38;5;" + i + $"m");
-        //    //Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
-        //    //Console.Write("\x1b[38;5;" + i + $"m■{i}\t");
-        //    //Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
-        //}
-
+        //    Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{i}");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
+        //for (int i = 0; i < 255; i++)
+        //    Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
+        //for (int i = 0; i < 255; i++)
+        //    Console.Write("\x1b[38;5;" + i + $"m■{i}\t");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
         //Console.ReadLine();
 
         //for (int i = 0; i <= (int)ConsoleColor.White; ++i)

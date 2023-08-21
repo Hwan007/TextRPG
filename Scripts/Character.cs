@@ -75,13 +75,14 @@ internal partial class TextRPG
             //Console.WriteLine(" ===================");
             WriteWithCustomColor(" ===================\n");
             WriteWithCustomColor($" Lv.{Level}\n");
-            WriteWithCustomColor($" {Name} ({Job})\n");
-            WriteWithCustomColor($" 체력   : {Hp}\n");
+            WriteWithCustomColor($" {Name, -4} ({Job})\n");
+            WriteWithCustomColor($" {"체력",-6}   : {Hp}\n");
             int tmpAtk = Atk;
-            WriteWithCustomColor($" 공격력 : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n");
+            WriteWithCustomColor($" {"공격력",-7} : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n");
             int tmpDef = Def;
-            WriteWithCustomColor($" 방어력 : {tmpDef} {(tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "")}\n");
-            WriteWithCustomColor($" Gold   : {Gold}\n");
+            WriteWithCustomColor($" {"방어력",-7} : {tmpDef} {(tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "")}\n");
+            WriteWithCustomColor($" {"골드",-6}   : ");
+            WriteWithCustomColor($"{Gold:N0} G\n", 178);
             WriteWithCustomColor(" ===================\n");
             return 0;
         }

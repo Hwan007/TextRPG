@@ -275,7 +275,7 @@ internal partial class TextRPG
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             //Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             WriteWithCustomColor("\n[보유 골드]");
-            WriteWithCustomColor($"\n{mPlayer.Gold} G\n\n", 178);
+            WriteWithCustomColor($"\n{mPlayer.Gold:N0} G\n\n", 178);
             var outputString = mStore.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
             foreach (var info in outputString)
@@ -293,7 +293,7 @@ internal partial class TextRPG
             WriteWithCustomColor("상점\n", 83, 0);
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             WriteWithCustomColor("\n[보유 골드]");
-            WriteWithCustomColor($"\n{mPlayer.Gold} G\n\n", 178);
+            WriteWithCustomColor($"\n{mPlayer.Gold:N0} G\n\n", 178);
             //Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mPlayer.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
