@@ -76,16 +76,15 @@
         private int[,] mMap;
         private Character mPlayer;
         private Store mStore;
-        private Dungeon mDungeon;
+        private Dungeon? mDungeon;
         public int Choice { get; private set; }
 
-        public Location(int[,] map, Character player, Store store, Dungeon dungeon)
+        public Location(int[,] map, Character player, Store store)
         {
             Type = LocationType.Main;
             mMap = map;
             mPlayer = player;
             mStore = store;
-            mDungeon = dungeon;
         }
         public int Display()
         {
@@ -128,6 +127,10 @@
 
         public bool ChageLocation(LocationType type)
         {
+            // 엔딩과 던전 진행 중에는 맵 이동은 별도로 실행
+            if (Type == LocationType.Ending || Type == LocationType.Dungeoning)
+                return false;
+
             if (mMap[(int)Type, (int)type] == 1)
             {
                 Type = type;
@@ -145,6 +148,7 @@
                 // 엔딩과 던전 진행 중에는 맵 이동은 별도로 실행
                 if (Type == LocationType.Ending || Type == LocationType.Dungeoning)
                     continue;
+
                 if (mMap[(int)Type, i] == 1)
                 {
                     route.Add((LocationType)i);
@@ -184,10 +188,8 @@
                         Console.Write("판매");
                         break;
                     case LocationType.Dungeon:
-                        if (Type == LocationType.Dungeoning)
-                            Console.Write("탈출");
-                        else
-                            Console.Write("던전");
+                        // Dungeoning에서는 전부 표시 안되므로 삭제함.
+                        Console.Write("던전");
                         break;
                     case LocationType.Dungeoning:
                         Console.Write("던전 진입");
@@ -249,13 +251,15 @@
             Console.WriteLine("던전");
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
-            // 던전 함수
-            Choice = mDungeon.Display();
+            Choice = 1; // 진입
         }
         public void DisplayDungeoning()
         {
             Console.WriteLine("던전 탐험 진행 중");
             Console.WriteLine();
+            // 던전 함수
+            if (mDungeon != null)
+                Choice = mDungeon.Display();
         }
         public void DisplayEnding()
         {
@@ -292,11 +296,19 @@
                     break;
                 case LocationType.Dungeon:
                     // 입력에 따른 행동을 한다.
-                    mDungeon.ChangeState(i);
+                    // 0 진입
+                    if (i == 0)
+                    {
+                        mDungeon = new Dungeon(mPlayer);
+                        ChageLocation(LocationType.Dungeoning);
+                    }
                     break;
                 case LocationType.Dungeoning:
                     // 입력에 따른 행동을 한다.
-                    mDungeon.ChangeState(i);
+                    if (mDungeon != null)
+                        mDungeon.ChangeState(i);
+                    else
+                        ChageLocation(LocationType.Dungeon);
                     break;
                 case LocationType.Ending:
 

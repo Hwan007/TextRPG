@@ -67,12 +67,11 @@ internal partial class TextRPG
 
             sStore.AddItems(weapons);
             sStore.AddItems(armors);
-            sDungeon = new Dungeon();
 
             // 맵 연결 정보를 가져오기
             // map은 LocationType의 최대개수 정사각행렬
             int[,] map = MapSetting();
-            sLocate = new Location(map, sPlayer, sStore, sDungeon);
+            sLocate = new Location(map, sPlayer, sStore);
         }
     }
 
