@@ -393,20 +393,19 @@ internal partial class TextRPG
                     break;
             }
         }
+    }
+    public static void WriteWithColor(string cout, ConsoleColor charColor, ConsoleColor backColor = ConsoleColor.Black)
+    {
+        Console.ForegroundColor = charColor;
+        Console.BackgroundColor = backColor;
+        Console.Write(cout);
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.BackgroundColor = ConsoleColor.Black;
+    }
 
-        public void WriteWithColor(string cout, ConsoleColor charColor, ConsoleColor backColor = ConsoleColor.Black)
-        {
-            Console.ForegroundColor = charColor;
-            Console.BackgroundColor = backColor;
-            Console.Write(cout);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.Black;
-        }
-
-        public void WriteWithCustomColor(string cout, int foreColor = 7, int backColor = 0)
-        {
-            Console.Write("\x1b[38;5;" + foreColor + "m\x1b[48;5;" + backColor + $"m{cout}");
-            Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
-        }
+    public static void WriteWithCustomColor(string cout, int foreColor = 7, int backColor = 0)
+    {
+        Console.Write("\x1b[38;5;" + foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
+        Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
     }
 }

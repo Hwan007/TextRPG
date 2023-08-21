@@ -123,8 +123,6 @@ internal partial class TextRPG
         }
     }
 
-
-
     public void RunGame()
     {
         if (sPlayer is Character && sLocate is Location)
@@ -141,7 +139,7 @@ internal partial class TextRPG
                 while (IsValidInput == false)
                 {
                     Console.WriteLine("\n원하시는 행동을 입력해주세요");
-                    sLocate.WriteWithCustomColor(">> ", 166);
+                    WriteWithCustomColor(">> ", 166);
                     var input = Console.ReadLine();
                     // 입력을 받고 위치를 바꾸거나 행동의 취한다.
                     if (input is string)

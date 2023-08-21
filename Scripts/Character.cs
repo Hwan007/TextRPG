@@ -63,16 +63,26 @@ internal partial class TextRPG
         public int Display()
         {
             // 플래이어 스탯 정보 표시
-            Console.WriteLine(" ===================");
-            Console.WriteLine($" Lv.{Level}");
-            Console.WriteLine($" {Name} ({Job})");
-            Console.WriteLine($" 체력   : {Hp}");
+            //Console.WriteLine(" ===================");
+            //Console.WriteLine($" Lv.{Level}");
+            //Console.WriteLine($" {Name} ({Job})");
+            //Console.WriteLine($" 체력   : {Hp}");
+            //int tmpAtk = Atk;
+            //Console.WriteLine(" 공격력 : {0} {1}", tmpAtk, tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "");
+            //int tmpDef = Def;
+            //Console.WriteLine(" 방어력 : {0} {1}", tmpDef, tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "");
+            //Console.WriteLine($" Gold   : {Gold}");
+            //Console.WriteLine(" ===================");
+            WriteWithCustomColor(" ===================\n");
+            WriteWithCustomColor($" Lv.{Level}\n");
+            WriteWithCustomColor($" {Name} ({Job})\n");
+            WriteWithCustomColor($" 체력   : {Hp}\n");
             int tmpAtk = Atk;
-            Console.WriteLine(" 공격력 : {0} {1}", tmpAtk, tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "");
+            WriteWithCustomColor($" 공격력 : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n");
             int tmpDef = Def;
-            Console.WriteLine(" 방어력 : {0} {1}", tmpDef, tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "");
-            Console.WriteLine($" Gold   : {Gold}");
-            Console.WriteLine(" ===================");
+            WriteWithCustomColor($" 방어력 : {tmpDef} {(tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "")}\n");
+            WriteWithCustomColor($" Gold   : {Gold}\n");
+            WriteWithCustomColor(" ===================\n");
             return 0;
         }
 
