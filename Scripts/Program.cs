@@ -1,12 +1,32 @@
 ﻿using System.Data;
 using System.Data.Common;
+using System.Runtime.InteropServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 internal class Program
 {
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool GetConsoleMode(IntPtr handle, out int mode);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern IntPtr GetStdHandle(int handle);
 
     static void Main(string[] args)
     {
+        var handle = GetStdHandle(-11);
+        int mode;
+        GetConsoleMode(handle, out mode);
+        // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
+        SetConsoleMode(handle, mode | 0x4);
+
+        //for (int i = 0; i < 255; i++)
+        //{
+        //    Console.Write("\x1b[38;5;" + i + $"m■{i}\t");
+        //}
+
+        //Console.ReadLine();
+
         //for (int i = 0; i <= (int)ConsoleColor.White; ++i)
         //{
         //    if (i < 6)
@@ -27,6 +47,7 @@ internal class Program
         //}
         //Console.ForegroundColor = ConsoleColor.White;
         //Console.BackgroundColor = ConsoleColor.Black;
+
         JsonFileIOStream JsonIO = new JsonFileIOStream();
         JsonIO.SaveItemDataBase();
 

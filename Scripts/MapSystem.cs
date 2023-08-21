@@ -387,5 +387,6 @@ internal partial class TextRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
         }
+        
     }
 }
