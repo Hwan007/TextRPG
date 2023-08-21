@@ -20,7 +20,6 @@ internal partial class TextRPG
     private Character? sPlayer;
     private Location? sLocate;
     private Store? sStore;
-    private Dungeon? sDungeon;
     private JsonFileIOStream? sJsonIO;
 
     public void GameStart()
@@ -102,7 +101,7 @@ internal partial class TextRPG
                         }
                         else
                         {
-                            if(id - sLocate.Choice < (int)LocationType.Ending)
+                            if(id - sLocate.Choice < (int)LocationType.Ending && route.Length > id - sLocate.Choice)
                                 sLocate.ChageLocation(route[id - sLocate.Choice]);
                         }
                     }

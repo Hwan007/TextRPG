@@ -1,4 +1,6 @@
-﻿internal partial class TextRPG
+﻿using System.Runtime.CompilerServices;
+
+internal partial class TextRPG
 {
     /// <summary>
     /// 미리 정의한 이동 가능한 경로입니다.
@@ -42,7 +44,6 @@
                     break;
                 case LocationType.Dungeon:
                     map[i, (int)LocationType.Main] = 1;
-                    map[i, (int)LocationType.Status] = 1;
                     map[i, (int)LocationType.Dungeoning] = 1;
                     break;
                 case LocationType.Dungeoning:
@@ -127,10 +128,6 @@
 
         public bool ChageLocation(LocationType type)
         {
-            // 엔딩과 던전 진행 중에는 맵 이동은 별도로 실행
-            if (Type == LocationType.Ending || Type == LocationType.Dungeoning)
-                return false;
-
             if (mMap[(int)Type, (int)type] == 1)
             {
                 Type = type;
@@ -147,6 +144,8 @@
             {
                 // 엔딩과 던전 진행 중에는 맵 이동은 별도로 실행
                 if (Type == LocationType.Ending || Type == LocationType.Dungeoning)
+                    continue;
+                else if (i == (int)LocationType.Dungeoning)
                     continue;
 
                 if (mMap[(int)Type, i] == 1)
@@ -192,7 +191,7 @@
                         Console.Write("던전");
                         break;
                     case LocationType.Dungeoning:
-                        Console.Write("던전 진입");
+                        // Console.Write("던전 진입");
                         break;
                     case LocationType.Ending:
                         Console.Write("Game Over");
@@ -251,6 +250,7 @@
             Console.WriteLine("던전");
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
+            Console.WriteLine("[0] 던전 진입");
             Choice = 1; // 진입
         }
         public void DisplayDungeoning()
@@ -306,7 +306,10 @@
                 case LocationType.Dungeoning:
                     // 입력에 따른 행동을 한다.
                     if (mDungeon != null)
-                        mDungeon.ChangeState(i);
+                    {
+                        if (mDungeon.ChangeState(i) == false)
+                            ChageLocation(LocationType.Dungeon);
+                    }
                     else
                         ChageLocation(LocationType.Dungeon);
                     break;
