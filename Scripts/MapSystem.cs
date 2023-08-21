@@ -212,14 +212,16 @@ internal partial class TextRPG
         }
         public void DisplayStatus()
         {
-            WriteWithColor("상태 보기\n", ConsoleColor.White, ConsoleColor.DarkBlue);
+            //WriteWithColor("상태 보기\n", ConsoleColor.White, ConsoleColor.DarkBlue);
+            WriteWithCustomColor("상태 보기\n", 75, 0);
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
             Choice = mPlayer.Display();
         }
         public void DisplayInventory()
         {
-            WriteWithColor("인벤토리\n", ConsoleColor.White, ConsoleColor.DarkGreen);
+            //WriteWithColor("인벤토리\n", ConsoleColor.White, ConsoleColor.DarkGreen);
+            WriteWithCustomColor("인벤토리\n", 208, 0);
             Console.WriteLine("보유 중인 아이템입니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
@@ -229,7 +231,8 @@ internal partial class TextRPG
                 {
                     var tempStr = output.ToString().Split("[E]");
                     Console.Write(tempStr[0]);
-                    WriteWithColor("[E]", ConsoleColor.Yellow);
+                    //WriteWithColor("[E]", ConsoleColor.Yellow);
+                    WriteWithCustomColor("[E]", 220, 0);
                     Console.Write(tempStr[1]);
                 }
                 else
@@ -238,14 +241,16 @@ internal partial class TextRPG
         }
         public void DisplayEquipSetting()
         {
-            WriteWithColor("인벤토리 - 장착 관리\n", ConsoleColor.White, ConsoleColor.DarkRed);
+            //WriteWithColor("인벤토리 - 장착 관리\n", ConsoleColor.White, ConsoleColor.DarkRed);
+            WriteWithCustomColor("인벤토리", 208, 0);
+            WriteWithCustomColor(" - 장착 관리\n", 7, 0);
             Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
             int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
-                info.Insert(0, $"[{i}]");
+                info.Insert(0, $"[{i}]{(i >= 10 ? "" : " ")}");
                 ++i;
             }
             Choice = outputString.Length;
@@ -255,7 +260,8 @@ internal partial class TextRPG
                 {
                     var tempStr = output.ToString().Split("[E]");
                     Console.Write(tempStr[0]);
-                    WriteWithColor("[E]", ConsoleColor.Yellow);
+                    //WriteWithColor("[E]", ConsoleColor.Yellow);
+                    WriteWithCustomColor("[E]", 220, 0);
                     Console.Write(tempStr[1]);
                 }
                 else
@@ -264,14 +270,17 @@ internal partial class TextRPG
         }
         public void DisplayStoreBuy()
         {
-            WriteWithColor("상점\n", ConsoleColor.White, ConsoleColor.DarkMagenta);
+            //WriteWithColor("상점\n", ConsoleColor.White, ConsoleColor.DarkMagenta);
+            WriteWithCustomColor("상점\n", 83, 0);
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
-            Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
+            //Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
+            WriteWithCustomColor("\n[보유 골드]");
+            WriteWithCustomColor($"\n{mPlayer.Gold} G\n\n", 178);
             var outputString = mStore.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
-                info.Insert(0, $"[{i}]");
+                info.Insert(0, $"[{i}]{(i >= 10 ? "" : " ")}");
                 ++i;
             }
             Choice = outputString.Length;
@@ -280,14 +289,17 @@ internal partial class TextRPG
         }
         public void DisplayStoreSell()
         {
-            WriteWithColor("상점\n", ConsoleColor.White, ConsoleColor.DarkYellow);
+            //WriteWithColor("상점\n", ConsoleColor.White, ConsoleColor.DarkYellow);
+            WriteWithCustomColor("상점\n", 83, 0);
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
-            Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
+            WriteWithCustomColor("\n[보유 골드]");
+            WriteWithCustomColor($"\n{mPlayer.Gold} G\n\n", 178);
+            //Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mPlayer.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
-                info.Insert(0, $"[{i}]");
+                info.Insert(0, $"[{i}]{(i >= 10 ? "" : " ")}");
                 ++i;
             }
             Choice = outputString.Length;
@@ -297,7 +309,8 @@ internal partial class TextRPG
                 {
                     var tempStr = output.ToString().Split("[E]");
                     Console.Write(tempStr[0]);
-                    WriteWithColor("[E]", ConsoleColor.Yellow);
+                    //WriteWithColor("[E]", ConsoleColor.Yellow);
+                    WriteWithCustomColor("[E]", 220, 0);
                     Console.Write(tempStr[1]);
                 }
                 else
@@ -306,10 +319,12 @@ internal partial class TextRPG
         }
         public void DisplayDungeon()
         {
-            WriteWithColor("던전\n", ConsoleColor.Red, ConsoleColor.White);
+            //WriteWithColor("던전\n", ConsoleColor.Red, ConsoleColor.White);
+            WriteWithCustomColor("던전\n", 160, 0);
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
-            WriteWithColor("[1] 던전 진입", ConsoleColor.Red, ConsoleColor.White);
+            //WriteWithColor("[1] 던전 진입", ConsoleColor.Red, ConsoleColor.White);
+            WriteWithCustomColor("[1] 던전 진입\n", 160, 0);
             Choice = 1; // 진입
         }
         public void DisplayDungeoning()
@@ -387,10 +402,11 @@ internal partial class TextRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        
-        public void WriteWithCustomColor(string cout, int foreColor, int backColor)
+
+        public void WriteWithCustomColor(string cout, int foreColor = 7, int backColor = 0)
         {
-            Console.Write("\x1b[38;5;" + foreColor + "\x1b[48;5;" + backColor + $"m{cout}");
+            Console.Write("\x1b[38;5;" + foreColor + "m\x1b[48;5;" + backColor + $"m{cout}");
+            Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
         }
     }
 }

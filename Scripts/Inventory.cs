@@ -20,10 +20,7 @@ internal partial class TextRPG
             foreach (Item item in mItems)
             {
                 StringBuilder sb = new StringBuilder();
-                if (i < 10)
-                    sb.Append(" ");
                 sb.Append($"- ");
-
                 sb.Append(item.Display(showGold));
                 sb.Append("\n");
                 couts.Add(sb);
