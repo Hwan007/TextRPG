@@ -20,12 +20,16 @@ internal class Program
         // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
         SetConsoleMode(handle, mode | 0x4);
 
-        //for (int i = 0; i < 255; i++)
-        //{
-        //    Console.Write("\x1b[38;5;" + i + $"m■{i}\t");
-        //}
+        for (int i = 0; i < 255; i++)
+        {
+            //Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{i}");
+            //Console.Write("\x1b[38;5;" + i + $"m");
+            //Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
+            //Console.Write("\x1b[38;5;" + i + $"m■{i}\t");
+            //Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
+        }
 
-        //Console.ReadLine();
+        Console.ReadLine();
 
         //for (int i = 0; i <= (int)ConsoleColor.White; ++i)
         //{
@@ -48,11 +52,11 @@ internal class Program
         //Console.ForegroundColor = ConsoleColor.White;
         //Console.BackgroundColor = ConsoleColor.Black;
 
-        JsonFileIOStream JsonIO = new JsonFileIOStream();
-        JsonIO.SaveItemDataBase();
+        //JsonFileIOStream JsonIO = new JsonFileIOStream();
+        //JsonIO.SaveItemDataBase();
 
-        TextRPG game = new TextRPG();
-        game.GameStart();
+        //TextRPG game = new TextRPG();
+        //game.GameStart();
     }
 }
 
@@ -119,7 +123,7 @@ internal partial class TextRPG
         }
     }
 
-    
+
 
     public void RunGame()
     {

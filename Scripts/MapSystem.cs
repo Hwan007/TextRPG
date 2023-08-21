@@ -388,5 +388,9 @@ internal partial class TextRPG
             Console.BackgroundColor = ConsoleColor.Black;
         }
         
+        public void WriteWithCustomColor(string cout, int foreColor, int backColor)
+        {
+            Console.Write("\x1b[38;5;" + foreColor + "\x1b[48;5;" + backColor + $"m{cout}");
+        }
     }
 }
