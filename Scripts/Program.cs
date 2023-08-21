@@ -127,7 +127,7 @@ internal partial class TextRPG
     }
 
     /// <summary>
-    /// 화면에 뿌리는 내용만 담당하는 클래스
+    /// 화면에 뿌리는 함수 표현 인터페이스
     /// </summary>
     public interface IDisplay
     {

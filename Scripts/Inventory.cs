@@ -5,6 +5,7 @@ internal partial class TextRPG
     public class Inventory
     {
         private LinkedList<Item> mItems;
+        public int Count { get => mItems.Count; }
 
         public Inventory()
         {

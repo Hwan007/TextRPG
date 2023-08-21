@@ -98,8 +98,8 @@ internal partial class TextRPG
             if (item != null)
             {
                 Gold -= item.Gold;
-                item.SetPrice(item.Gold * 85 / 100);
                 Inven.AddItem(item);
+                Inven.GetItem(Inven.Count-1)?.ValueRef.SetPrice(item.Gold * 85 / 100);
             }
             else
                 Console.WriteLine("아이템 정보가 없습니다.");
