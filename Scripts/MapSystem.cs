@@ -222,28 +222,57 @@ internal partial class TextRPG
             Console.WriteLine("인벤토리");
             Console.WriteLine("보유 중인 아이템입니다.");
             Console.WriteLine();
-            Choice = mPlayer.Inven.Display(false);
+            var outputString = mPlayer.Inven.GetDisplayString(false);
+            foreach (var output in  outputString)
+                Console.Write(output);
         }
         public void DisplayEquipSetting()
         {
             Console.WriteLine("인벤토리 - 장착 관리");
             Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
-            Choice = mPlayer.Inven.Display(false);
+            var outputString = mPlayer.Inven.GetDisplayString(false);
+            int i = 0;
+            foreach (var info in outputString)
+            {
+                info.Insert(0, $"[{i}]");
+                ++i;
+            }
+            Choice = outputString.Length;
+            foreach (var output in outputString)
+                Console.Write(output);
         }
         public void DisplayStoreBuy()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
-            Choice = mStore.Inven.Display(true);
+            var outputString = mStore.Inven.GetDisplayString(true);
+            int i = 0;
+            foreach (var info in outputString)
+            {
+                info.Insert(0,$"[{i}]");
+                ++i;
+            }
+            Choice = outputString.Length;
+            foreach (var output in outputString)
+                Console.Write(output);
         }
         public void DisplayStoreSell()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
-            Choice = mPlayer.Inven.Display(true);
+            var outputString = mPlayer.Inven.GetDisplayString(true);
+            int i = 0;
+            foreach (var info in outputString)
+            {
+                info.Insert(0, $"[{i}]");
+                ++i;
+            }
+            Choice = outputString.Length;
+            foreach (var output in outputString)
+                Console.Write(output);
         }
         public void DisplayDungeon()
         {

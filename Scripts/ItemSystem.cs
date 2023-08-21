@@ -57,20 +57,19 @@ internal partial class TextRPG
             Data = item.Data;
         }
 
-        public virtual int Display(bool showGold)
+        public virtual string Display(bool showGold)
         {
+            StringBuilder cout = new StringBuilder();
             // 장착 여부 표시
             if (IsEquip)
-                Console.Write("[E] ");
+                cout.Append("[E] ");
             // 이름을 표시
-            StringBuilder cout = new StringBuilder();
             cout.Append(Name);
             while (cout.Length < 14 - Name.Length)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
-            return 1;
+            return cout.ToString();
         }
 
         public void EquipByCharacter(Character character)
@@ -106,38 +105,36 @@ internal partial class TextRPG
         public Weapon(ItemData data) : base(data) { }
         public Weapon(Item data) : base(data) { }
 
-        public override int Display(bool showGold)
+        public override string Display(bool showGold)
         {
-            base.Display(showGold);
-            // 공격력 표시
             StringBuilder cout = new StringBuilder();
+            cout.Append(base.Display(showGold));
+            // 공격력 표시
+            int startPoint = cout.Length;
             cout.Append("| 공격력 +");
             cout.Append(ATK);
-            while (cout.Length < 10)
+            while (cout.Length < 10 + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
             // 설명 표시
-            cout.Clear();
+            startPoint = cout.Length;
             cout.Append(" | ");
             cout.Append(Description);
             int spaceCount = Description.Count(c => c.Equals(' '));
-            while (cout.Length < 50 - Description.Length + spaceCount)
+            while (cout.Length < 50 - Description.Length + spaceCount + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
             // 금액 표시
             if (showGold)
             {
-                cout.Clear();
+                startPoint = cout.Length;
                 cout.Append(" | ");
                 cout.Append(Gold);
                 cout.Append(" G");
-                Console.Write(cout);
             }
-            return 1;
+            return cout.ToString();
         }
     }
 
@@ -154,38 +151,36 @@ internal partial class TextRPG
         }
         public Armor(ItemData data) : base(data) { }
         public Armor(Item data) : base(data) { }
-        public override int Display(bool showGold)
+        public override string Display(bool showGold)
         {
-            base.Display(showGold);
-            // 방어력 표시
             StringBuilder cout = new StringBuilder();
+            cout.Append(base.Display(showGold));
+            // 방어력 표시
+            int startPoint = cout.Length;
             cout.Append("| 방어력 +");
             cout.Append(DEF);
-            while (cout.Length < 10)
+            while (cout.Length < 10 + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
             // 설명 표시
-            cout.Clear();
+            startPoint = cout.Length;
             cout.Append(" | ");
             cout.Append(Description);
             int spaceCount = Description.Count(c => c.Equals(' '));
-            while (cout.Length < 50 - Description.Length + spaceCount)
+            while (cout.Length < 50 - Description.Length + spaceCount + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
             // 금액 표시
             if (showGold)
             {
-                cout.Clear();
+                startPoint = cout.Length;
                 cout.Append(" | ");
                 cout.Append(Gold);
                 cout.Append(" G");
-                Console.Write(cout);
             }
-            return 1;
+            return cout.ToString();
         }
     }
 }
