@@ -90,6 +90,8 @@ internal partial class TextRPG
 
         public void TakeDamage(int damage)
         {
+            if (damage < 0)
+                damage = 1;
             if (Hp - damage <= 0)
             {
                 Hp = 0;

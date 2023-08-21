@@ -41,18 +41,23 @@
                 {
                     if (mPlayer.IsDead)
                     {
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"{mStage.Result.Damage}", 160);
                         WriteWithCustomColor(" 대미지를 입었습니다.\n");
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"플래이어의 HP가 0이 되어 ");
                         WriteWithCustomColor("사망", 160);
                         WriteWithCustomColor("하였습니다.\n");
                     }
                     else if(mStage.Result.Damage != 0)
                     {
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"{mStage.Result.Damage}", 160);
                         WriteWithCustomColor(" 대미지를 입었습니다.\n");
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"{mStage.Result.Gold} G", 178);
                         WriteWithCustomColor(" 를 얻었습니다.\n");
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"지금까지 총 ");
                         WriteWithCustomColor($"{mStage.TotalGold} G", 178);
                         WriteWithCustomColor(" 를 얻었습니다.\n");
@@ -91,8 +96,10 @@
                 {
                     if (mStage.Result.Damage != 0)
                     {
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"{mStage.Result.Heal}", 34);
                         WriteWithCustomColor(" 체력을 회복하였습니다.\n");
+                        Thread.Sleep(1000);
                         WriteWithCustomColor($"지금까지 총 ");
                         WriteWithCustomColor($"{mStage.TotalGold} G", 178);
                         WriteWithCustomColor(" 를 얻었습니다.\n");
@@ -184,7 +191,7 @@
                     else if (input == 1)
                     {
                         if (mStage != null)
-                            mStage.ExitStage();
+                            State = mStage.ExitStage();
                         mInput = 0;
                     }
                     else if (input == 2)
@@ -266,7 +273,7 @@
                 if (fightOrRest > 2)
                 {
                     // 전투
-                    int damage = mRand.Next(Convert.ToInt32(20f + (mRecommendedDEF[Level] - mPlayer.Def)), 36);
+                    int damage = Math.Clamp(mRand.Next(Convert.ToInt32(20f + (mRecommendedDEF[Level] - mPlayer.Def)), Convert.ToInt32(36f + (mRecommendedDEF[Level] - mPlayer.Def))), 1, 1000);
                     int gold = mRand.Next(Convert.ToInt32(mReward[Level] * (100f + mPlayer.Atk * 2f) / 200f), Convert.ToInt32(mReward[Level] * (100f + mPlayer.Atk * 2f) * 3f / 200f));
                     mPlayer.TakeDamage(damage);
                     Result.Gold = gold;
@@ -276,9 +283,10 @@
                 else
                 {
                     // 휴식
-                    int heal = mRand.Next(mPlayer.Hp / 5);
+                    int heal = mRand.Next(1, mPlayer.Hp / 5);
                     mPlayer.TakeHeal(heal);
                     Result.Heal = heal;
+                    result = DungeonState.Rest;
                 }
 
                 return result;
