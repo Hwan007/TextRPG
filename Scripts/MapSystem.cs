@@ -166,7 +166,7 @@ internal partial class TextRPG
                 switch (route[i])
                 {
                     case LocationType.Main:
-                        Console.Write("마을");
+                        Console.Write("나가기");
                         break;
                     case LocationType.Status:
                         Console.Write("상태창");
@@ -212,23 +212,33 @@ internal partial class TextRPG
         }
         public void DisplayStatus()
         {
-            Console.WriteLine("상태 보기");
+            WriteWithColor("상태 보기\n", ConsoleColor.White, ConsoleColor.DarkBlue);
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
             Choice = mPlayer.Display();
         }
         public void DisplayInventory()
         {
-            Console.WriteLine("인벤토리");
+            WriteWithColor("인벤토리\n", ConsoleColor.White, ConsoleColor.DarkGreen);
             Console.WriteLine("보유 중인 아이템입니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
-            foreach (var output in  outputString)
-                Console.Write(output);
+            foreach (var output in outputString)
+            {
+                if (output.ToString().Contains("[E]"))
+                {
+                    var tempStr = output.ToString().Split("[E]");
+                    Console.Write(tempStr[0]);
+                    WriteWithColor("[E]", ConsoleColor.Yellow);
+                    Console.Write(tempStr[1]);
+                }
+                else
+                    Console.Write(output);
+            }
         }
         public void DisplayEquipSetting()
         {
-            Console.WriteLine("인벤토리 - 장착 관리");
+            WriteWithColor("인벤토리 - 장착 관리\n", ConsoleColor.White, ConsoleColor.DarkRed);
             Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
@@ -240,18 +250,28 @@ internal partial class TextRPG
             }
             Choice = outputString.Length;
             foreach (var output in outputString)
-                Console.Write(output);
+            {
+                if (output.ToString().Contains("[E]"))
+                {
+                    var tempStr = output.ToString().Split("[E]");
+                    Console.Write(tempStr[0]);
+                    WriteWithColor("[E]", ConsoleColor.Yellow);
+                    Console.Write(tempStr[1]);
+                }
+                else
+                    Console.Write(output);
+            }
         }
         public void DisplayStoreBuy()
         {
-            Console.WriteLine("상점");
+            WriteWithColor("상점\n", ConsoleColor.White, ConsoleColor.DarkMagenta);
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mStore.Inven.GetDisplayString(true);
             int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
-                info.Insert(0,$"[{i}]");
+                info.Insert(0, $"[{i}]");
                 ++i;
             }
             Choice = outputString.Length;
@@ -260,7 +280,7 @@ internal partial class TextRPG
         }
         public void DisplayStoreSell()
         {
-            Console.WriteLine("상점");
+            WriteWithColor("상점\n", ConsoleColor.White, ConsoleColor.DarkYellow);
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mPlayer.Inven.GetDisplayString(true);
@@ -272,14 +292,24 @@ internal partial class TextRPG
             }
             Choice = outputString.Length;
             foreach (var output in outputString)
-                Console.Write(output);
+            {
+                if (output.ToString().Contains("[E]"))
+                {
+                    var tempStr = output.ToString().Split("[E]");
+                    Console.Write(tempStr[0]);
+                    WriteWithColor("[E]", ConsoleColor.Yellow);
+                    Console.Write(tempStr[1]);
+                }
+                else
+                    Console.Write(output);
+            }
         }
         public void DisplayDungeon()
         {
-            Console.WriteLine("던전");
+            WriteWithColor("던전\n", ConsoleColor.Red, ConsoleColor.White);
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
-            Console.WriteLine("[1] 던전 진입");
+            WriteWithColor("[1] 던전 진입", ConsoleColor.Red, ConsoleColor.White);
             Choice = 1; // 진입
         }
         public void DisplayDungeoning()
@@ -347,6 +377,15 @@ internal partial class TextRPG
                 default:
                     break;
             }
+        }
+
+        public void WriteWithColor(string cout, ConsoleColor charColor, ConsoleColor backColor = ConsoleColor.Black)
+        {
+            Console.ForegroundColor = charColor;
+            Console.BackgroundColor = backColor;
+            Console.Write(cout);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
     }
 }

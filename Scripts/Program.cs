@@ -7,6 +7,26 @@ internal class Program
 
     static void Main(string[] args)
     {
+        //for (int i = 0; i <= (int)ConsoleColor.White; ++i)
+        //{
+        //    if (i < 6)
+        //        Console.BackgroundColor = ConsoleColor.Gray;
+        //    else
+        //        Console.BackgroundColor = ConsoleColor.Black;
+        //    Console.ForegroundColor = (ConsoleColor)i;
+        //    Console.WriteLine("{0} {1} 글씨색깔을 미리보기 위한 테스트입니다.\n", i, (ConsoleColor)i);
+        //}
+        //for (int i = 0; i <= (int)ConsoleColor.White; ++i)
+        //{
+        //    if (i < 7)
+        //        Console.ForegroundColor = ConsoleColor.White;
+        //    else
+        //        Console.ForegroundColor = ConsoleColor.Black;
+        //    Console.BackgroundColor = (ConsoleColor)i;
+        //    Console.WriteLine("{0} {1} 배경색을 미리보기 위한 테스트입니다.\n", i, (ConsoleColor)i);
+        //}
+        //Console.ForegroundColor = ConsoleColor.White;
+        //Console.BackgroundColor = ConsoleColor.Black;
         JsonFileIOStream JsonIO = new JsonFileIOStream();
         JsonIO.SaveItemDataBase();
 
