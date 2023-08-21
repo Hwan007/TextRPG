@@ -1,6 +1,8 @@
-﻿internal partial class TextRPG
+﻿using System.Text;
+
+internal partial class TextRPG
 {
-    public class Store : IDisplay
+    public class Store
     {
         public Inventory Inven { get; }
 
@@ -16,9 +18,9 @@
                 Inven.AddItem(item);
             }
         }
-        public int Display()
+        public StringBuilder[] Display()
         {
-            return Inven.Display();
+            return Inven.GetDisplayString(true);
         }
 
         public dynamic SellToPlayer(int index)

@@ -16,11 +16,11 @@ internal partial class TextRPG
         public string Name;
         public string Description;
         public bool IsEquip;
-        public int Point;
+        public float Point;
         public int Gold;
     }
 
-    public class Item : IDisplay
+    public class Item
     {
         public ItemData Data { get; protected set; }
         public string Name { get => Data.Name; }
@@ -57,40 +57,44 @@ internal partial class TextRPG
             Data = item.Data;
         }
 
-        public virtual int Display()
+        public virtual string Display(bool showGold)
         {
+            StringBuilder cout = new StringBuilder();
             // 장착 여부 표시
             if (IsEquip)
-                Console.Write("[E] ");
+                cout.Append("[E] ");
             // 이름을 표시
-            StringBuilder cout = new StringBuilder();
             cout.Append(Name);
             while (cout.Length < 14 - Name.Length)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
-            return 1;
+            return cout.ToString();
         }
 
         public void EquipByCharacter(Character character)
         {
             IsEquip = character.Equipments.EquipItem(this);
         }
-        public void UnquipByCharacter(Character character)
+        public void Unequip()
         {
             if (IsEquip == false)
                 return;
-            character.Equipments.UnequipItem(this);
             IsEquip = false;
+        }
+        public void SetPrice(int gold)
+        {
+            var tempData = Data;
+            tempData.Gold = gold;
+            Data = tempData;
         }
     }
 
     public class Weapon : Item
     {
-        public int ATK { get => Data.Point; }
+        public float ATK { get => Data.Point; }
         [JsonConstructor]
-        public Weapon(string name, int atk, string description, int gold) : base(name, description, gold)
+        public Weapon(string name, float atk, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
             tempData.type = EquipType.Weapon;
@@ -100,36 +104,44 @@ internal partial class TextRPG
         public Weapon(ItemData data) : base(data) { }
         public Weapon(Item data) : base(data) { }
 
-        public override int Display()
+        public override string Display(bool showGold)
         {
-            base.Display();
-            // 공격력 표시
             StringBuilder cout = new StringBuilder();
-            cout.Append("| 공격력 + ");
+            cout.Append(base.Display(showGold));
+            // 공격력 표시
+            int startPoint = cout.Length;
+            cout.Append("| 공격력 +");
             cout.Append(ATK);
-            while (cout.Length < 11)
+            while (cout.Length < 10 + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
             // 설명 표시
-            cout.Clear();
+            startPoint = cout.Length;
             cout.Append(" | ");
             cout.Append(Description);
-            while (cout.Length < 40)
+            int spaceCount = Description.Count(c => c.Equals(' '));
+            while (cout.Length < 50 - Description.Length + spaceCount + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
-            return 1;
+            // 금액 표시
+            if (showGold)
+            {
+                startPoint = cout.Length;
+                cout.Append(" | ");
+                cout.Append(Gold);
+                cout.Append(" G");
+            }
+            return cout.ToString();
         }
     }
 
     public class Armor : Item
     {
-        public int DEF { get => Data.Point; }
+        public float DEF { get => Data.Point; }
         [JsonConstructor]
-        public Armor(string name, int def, string description, int gold) : base(name, description, gold)
+        public Armor(string name, float def, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
             tempData.type = EquipType.Armor;
@@ -138,28 +150,36 @@ internal partial class TextRPG
         }
         public Armor(ItemData data) : base(data) { }
         public Armor(Item data) : base(data) { }
-        public override int Display()
+        public override string Display(bool showGold)
         {
-            base.Display();
-            // 방어력 표시
             StringBuilder cout = new StringBuilder();
-            cout.Append("| 방어력 + ");
+            cout.Append(base.Display(showGold));
+            // 방어력 표시
+            int startPoint = cout.Length;
+            cout.Append("| 방어력 +");
             cout.Append(DEF);
-            while (cout.Length < 11)
+            while (cout.Length < 10 + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
             // 설명 표시
-            cout.Clear();
+            startPoint = cout.Length;
             cout.Append(" | ");
             cout.Append(Description);
-            while (cout.Length < 40)
+            int spaceCount = Description.Count(c => c.Equals(' '));
+            while (cout.Length < 50 - Description.Length + spaceCount + startPoint)
             {
                 cout.Append(" ");
             }
-            Console.Write(cout);
-            return 1;
+            // 금액 표시
+            if (showGold)
+            {
+                startPoint = cout.Length;
+                cout.Append(" | ");
+                cout.Append(Gold);
+                cout.Append(" G");
+            }
+            return cout.ToString();
         }
     }
 }

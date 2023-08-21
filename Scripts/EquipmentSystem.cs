@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using static TextRPG.EquipmentSystem;
 
@@ -29,7 +30,7 @@ internal partial class TextRPG
                     // 무기 해제
                     foreach (var equipment in EquipItemList)
                     {
-                        if (equipment.ItemRef.GetType() is Weapon)
+                        if (equipment.ItemRef is Weapon)
                         {
                             UnequipItem(equipment.ItemRef);
                             break;
@@ -48,7 +49,7 @@ internal partial class TextRPG
                     // 갑옷 해제
                     foreach (var equipment in EquipItemList)
                     {
-                        if (equipment.ItemRef.GetType() is Armor)
+                        if (equipment.ItemRef is Armor)
                         {
                             UnequipItem(equipment.ItemRef);
                             break;
@@ -73,6 +74,7 @@ internal partial class TextRPG
                 if (item.GetType() == equipment.ItemRef.GetType() && item == equipment.ItemRef)
                 {
                     EquipItemList.Remove(equipment);
+                    equipment.ItemRef.Unequip();
                     return;
                 }
             }

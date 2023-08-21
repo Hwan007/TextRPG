@@ -2,33 +2,31 @@
 
 internal partial class TextRPG
 {
-    public class Inventory : IDisplay
+    public class Inventory
     {
         private LinkedList<Item> mItems;
+        public int Count { get => mItems.Count; }
 
         public Inventory()
         {
             mItems = new LinkedList<Item>();
         }
-        public int Display()
+        public StringBuilder[] GetDisplayString(bool showGold)
         {
             Console.WriteLine("[아이템 목록]");
             // 인벤토리 내용물 표시
             int i = 0;
-            StringBuilder cout = new StringBuilder();
+            List<StringBuilder> couts = new List<StringBuilder>();
             foreach (Item item in mItems)
             {
-                cout.Clear();
-                cout.Append($"- ");
-                if (i < 10)
-                    cout.Append(" ");
-                cout.Append($"{i} ");
-                Console.Write(cout);
-                item.Display();
-                Console.Write("\n");
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"- ");
+                sb.Append(item.Display(showGold));
+                sb.Append("\n");
+                couts.Add(sb);
                 ++i;
             }
-            return i;
+            return couts.ToArray();
         }
         public void AddItem(Item addItem)
         {

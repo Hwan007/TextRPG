@@ -1,12 +1,57 @@
 ﻿using System.Data;
 using System.Data.Common;
+using System.Runtime.InteropServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 internal class Program
 {
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool GetConsoleMode(IntPtr handle, out int mode);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern IntPtr GetStdHandle(int handle);
 
     static void Main(string[] args)
     {
+        var handle = GetStdHandle(-11);
+        int mode;
+        GetConsoleMode(handle, out mode);
+        // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
+        SetConsoleMode(handle, mode | 0x4);
+
+        //for (int i = 0; i < 255; i++)
+        //    Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{(i>15?((i-15)%(6)==0?"\n":""):(i==15)?"\n":"")}");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
+        //for (int i = 0; i < 255; i++)
+        //    Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
+        //for (int i = 0; i < 255; i++)
+        //    Console.Write("\x1b[38;5;" + i + $"m■{i}\t");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
+        //Console.ReadLine();
+
+        //for (int i = 0; i <= (int)ConsoleColor.White; ++i)
+        //{
+        //    if (i < 6)
+        //        Console.BackgroundColor = ConsoleColor.Gray;
+        //    else
+        //        Console.BackgroundColor = ConsoleColor.Black;
+        //    Console.ForegroundColor = (ConsoleColor)i;
+        //    Console.WriteLine("{0} {1} 글씨색깔을 미리보기 위한 테스트입니다.\n", i, (ConsoleColor)i);
+        //}
+        //for (int i = 0; i <= (int)ConsoleColor.White; ++i)
+        //{
+        //    if (i < 7)
+        //        Console.ForegroundColor = ConsoleColor.White;
+        //    else
+        //        Console.ForegroundColor = ConsoleColor.Black;
+        //    Console.BackgroundColor = (ConsoleColor)i;
+        //    Console.WriteLine("{0} {1} 배경색을 미리보기 위한 테스트입니다.\n", i, (ConsoleColor)i);
+        //}
+        //Console.ForegroundColor = ConsoleColor.White;
+        //Console.BackgroundColor = ConsoleColor.Black;
+
         JsonFileIOStream JsonIO = new JsonFileIOStream();
         JsonIO.SaveItemDataBase();
 
@@ -20,7 +65,6 @@ internal partial class TextRPG
     private Character? sPlayer;
     private Location? sLocate;
     private Store? sStore;
-    private Dungeon? sDungeon;
     private JsonFileIOStream? sJsonIO;
 
     public void GameStart()
@@ -54,8 +98,12 @@ internal partial class TextRPG
         // 1번째 아이템은 플래이어에 인벤토리에 넣고 장착시키기
         if (sPlayer != null && weapons != null && armors != null)
         {
-            sPlayer.Inven.AddItem(weapons[0]);
-            sPlayer.Inven.AddItem(armors[0]);
+            //sPlayer.Inven.AddItem(weapons[0]);
+            //sPlayer.Inven.AddItem(armors[0]);
+            sPlayer.GetGold(weapons[0].Gold);
+            sPlayer.GetGold(armors[0].Gold);
+            sPlayer.BuyItem(weapons[0]);
+            sPlayer.BuyItem(armors[0]);
             sPlayer.Inven.GetItem(0)?.Value.EquipByCharacter(sPlayer);
             sPlayer.Inven.GetItem(1)?.Value.EquipByCharacter(sPlayer);
 
@@ -67,16 +115,13 @@ internal partial class TextRPG
 
             sStore.AddItems(weapons);
             sStore.AddItems(armors);
-            sDungeon = new Dungeon();
 
             // 맵 연결 정보를 가져오기
             // map은 LocationType의 최대개수 정사각행렬
             int[,] map = MapSetting();
-            sLocate = new Location(map, sPlayer, sStore, sDungeon);
+            sLocate = new Location(map, sPlayer, sStore);
         }
     }
-
-    
 
     public void RunGame()
     {
@@ -90,21 +135,33 @@ internal partial class TextRPG
                 sLocate.Display();
                 var route = sLocate.DisplayEnableRoute();
                 // 입력을 기다린다.
-                var input = Console.ReadLine();
-                // 입력을 받고 위치를 바꾸거나 행동의 취한다.
-                if (input is string)
+                bool IsValidInput = false;
+                while (IsValidInput == false)
                 {
-                    if (int.TryParse(input, out var id))
+                    Console.WriteLine("\n원하시는 행동을 입력해주세요");
+                    WriteWithCustomColor(">> ", 166);
+                    var input = Console.ReadLine();
+                    // 입력을 받고 위치를 바꾸거나 행동의 취한다.
+                    if (input is string)
                     {
-                        if (id < sLocate.Choice)
+                        if (int.TryParse(input, out var id))
                         {
-                            // 상황에 맞는 동작을 해야 한다.
-                            sLocate.ActByInput(id);
-                        }
-                        else
-                        {
-                            if(id - sLocate.Choice < (int)LocationType.Ending)
-                                sLocate.ChageLocation(route[id - sLocate.Choice]);
+                            if (id < route.Length)
+                            {
+                                // 상황에 맞는 동작을 해야 한다.
+                                sLocate.ChageLocation(route[id]);
+                                IsValidInput = true;
+                            }
+                            else
+                            {
+                                if (id - route.Length < sLocate.Choice)
+                                {
+                                    sLocate.ActByInput(id - route.Length);
+                                    IsValidInput = true;
+                                }
+                                else
+                                    Console.WriteLine("잘못된 입력입니다.");
+                            }
                         }
                     }
                 }
@@ -115,7 +172,7 @@ internal partial class TextRPG
     }
 
     /// <summary>
-    /// 화면에 뿌리는 내용만 담당하는 클래스
+    /// 화면에 뿌리는 함수 표현 인터페이스
     /// </summary>
     public interface IDisplay
     {
