@@ -108,6 +108,12 @@ internal partial class TextRPG
         {
             if (item != null)
             {
+                if (item.Gold > Gold)
+                {
+                    Console.WriteLine("보유 자금이 부족합니다. 진행하시려면 엔터를 눌러주세요.");
+                    Console.ReadLine();
+                    return;
+                }
                 Gold -= item.Gold;
                 Inven.AddItem(item);
                 Inven.GetItem(Inven.Count-1)?.ValueRef.SetPrice(item.Gold * 85 / 100);
