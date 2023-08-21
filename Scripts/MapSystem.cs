@@ -235,14 +235,14 @@ internal partial class TextRPG
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
-            Console.WriteLine($"\n보유 골드 : {mPlayer.Gold}\n");
+            Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             Choice = mStore.Inven.Display(true);
         }
         public void DisplayStoreSell()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
-            Console.WriteLine($"\n보유 골드 : {mPlayer.Gold}\n");
+            Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             Choice = mPlayer.Inven.Display(true);
         }
         public void DisplayDungeon()

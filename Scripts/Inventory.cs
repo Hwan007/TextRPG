@@ -21,9 +21,9 @@ internal partial class TextRPG
             {
                 cout.Clear();
                 cout.Append($"[{i}]");
-                cout.Append($" -");
                 if (i < 10)
                     cout.Append(" ");
+                cout.Append($"- ");
                 Console.Write(cout);
                 item.Display(showGold);
                 Console.Write("\n");

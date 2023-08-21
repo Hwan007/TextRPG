@@ -6,7 +6,6 @@
         private int mInput;
         private Stage? mStage;
         private Character mPlayer;
-        private Random mRand;
         public enum DungeonState
         {
             Enter,
@@ -19,7 +18,6 @@
             State = DungeonState.Enter;
             mPlayer = player;
             mInput = 0;
-            mRand = new Random();
         }
 
         public int EnterDisplay()
@@ -198,10 +196,12 @@
         public class Stage
         {
             public int Level { get; private set; }
+            private Random mRand;
 
             public Stage(int level) 
             {
                 Level = level;
+                mRand = new Random();
             }
 
             public DungeonState OnGoing()

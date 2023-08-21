@@ -134,7 +134,7 @@ internal partial class TextRPG
                 cout.Clear();
                 cout.Append(" | ");
                 cout.Append(Gold);
-                cout.Append("G");
+                cout.Append(" G");
                 Console.Write(cout);
             }
             return 1;
@@ -182,7 +182,7 @@ internal partial class TextRPG
                 cout.Clear();
                 cout.Append(" | ");
                 cout.Append(Gold);
-                cout.Append("G");
+                cout.Append(" G");
                 Console.Write(cout);
             }
             return 1;
