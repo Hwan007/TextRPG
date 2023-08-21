@@ -101,17 +101,17 @@ internal partial class TextRPG
                     {
                         if (int.TryParse(input, out var id))
                         {
-                            if (id < sLocate.Choice)
+                            if (id < route.Length)
                             {
                                 // 상황에 맞는 동작을 해야 한다.
-                                sLocate.ActByInput(id);
+                                sLocate.ChageLocation(route[id]);
                                 IsValidInput = true;
                             }
                             else
                             {
-                                if (id - sLocate.Choice < (int)LocationType.Ending && route.Length > id - sLocate.Choice)
+                                if (id - route.Length < sLocate.Choice)
                                 {
-                                    sLocate.ChageLocation(route[id - sLocate.Choice]);
+                                    sLocate.ActByInput(id - route.Length);
                                     IsValidInput = true;
                                 }
                                 else

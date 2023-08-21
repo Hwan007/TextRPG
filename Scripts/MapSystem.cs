@@ -160,10 +160,10 @@ internal partial class TextRPG
         {
             Console.WriteLine();
             var route = GetEnableRoute();
-            for (int i = Choice; i < Choice + route.Length; ++i)
+            for (int i = 0; i < route.Length; ++i)
             {
                 Console.Write($"[{i}] ");
-                switch (route[i - Choice])
+                switch (route[i])
                 {
                     case LocationType.Main:
                         Console.Write("마을");
@@ -232,7 +232,7 @@ internal partial class TextRPG
             Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
             var outputString = mPlayer.Inven.GetDisplayString(false);
-            int i = 0;
+            int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
                 info.Insert(0, $"[{i}]");
@@ -248,7 +248,7 @@ internal partial class TextRPG
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mStore.Inven.GetDisplayString(true);
-            int i = 0;
+            int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
                 info.Insert(0,$"[{i}]");
@@ -264,7 +264,7 @@ internal partial class TextRPG
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n[보유 골드]\n{mPlayer.Gold} G\n");
             var outputString = mPlayer.Inven.GetDisplayString(true);
-            int i = 0;
+            int i = GetEnableRoute().Length;
             foreach (var info in outputString)
             {
                 info.Insert(0, $"[{i}]");
@@ -279,7 +279,7 @@ internal partial class TextRPG
             Console.WriteLine("던전");
             Console.WriteLine("던전에 들어갈 수 있습니다.");
             Console.WriteLine();
-            Console.WriteLine("[0] 던전 진입");
+            Console.WriteLine("[1] 던전 진입");
             Choice = 1; // 진입
         }
         public void DisplayDungeoning()
@@ -325,7 +325,6 @@ internal partial class TextRPG
                     break;
                 case LocationType.Dungeon:
                     // 입력에 따른 행동을 한다.
-                    // 0 진입
                     if (i == 0)
                     {
                         mDungeon = new Dungeon(mPlayer);
