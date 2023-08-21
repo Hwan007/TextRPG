@@ -53,8 +53,12 @@ internal partial class TextRPG
         // 1번째 아이템은 플래이어에 인벤토리에 넣고 장착시키기
         if (sPlayer != null && weapons != null && armors != null)
         {
-            sPlayer.Inven.AddItem(weapons[0]);
-            sPlayer.Inven.AddItem(armors[0]);
+            //sPlayer.Inven.AddItem(weapons[0]);
+            //sPlayer.Inven.AddItem(armors[0]);
+            sPlayer.GetGold(weapons[0].Gold);
+            sPlayer.GetGold(armors[0].Gold);
+            sPlayer.BuyItem(weapons[0]);
+            sPlayer.BuyItem(armors[0]);
             sPlayer.Inven.GetItem(0)?.Value.EquipByCharacter(sPlayer);
             sPlayer.Inven.GetItem(1)?.Value.EquipByCharacter(sPlayer);
 
@@ -88,21 +92,31 @@ internal partial class TextRPG
                 sLocate.Display();
                 var route = sLocate.DisplayEnableRoute();
                 // 입력을 기다린다.
-                var input = Console.ReadLine();
-                // 입력을 받고 위치를 바꾸거나 행동의 취한다.
-                if (input is string)
+                bool IsValidInput = false;
+                while (IsValidInput == false)
                 {
-                    if (int.TryParse(input, out var id))
+                    var input = Console.ReadLine();
+                    // 입력을 받고 위치를 바꾸거나 행동의 취한다.
+                    if (input is string)
                     {
-                        if (id < sLocate.Choice)
+                        if (int.TryParse(input, out var id))
                         {
-                            // 상황에 맞는 동작을 해야 한다.
-                            sLocate.ActByInput(id);
-                        }
-                        else
-                        {
-                            if(id - sLocate.Choice < (int)LocationType.Ending && route.Length > id - sLocate.Choice)
-                                sLocate.ChageLocation(route[id - sLocate.Choice]);
+                            if (id < sLocate.Choice)
+                            {
+                                // 상황에 맞는 동작을 해야 한다.
+                                sLocate.ActByInput(id);
+                                IsValidInput = true;
+                            }
+                            else
+                            {
+                                if (id - sLocate.Choice < (int)LocationType.Ending && route.Length > id - sLocate.Choice)
+                                {
+                                    sLocate.ChageLocation(route[id - sLocate.Choice]);
+                                    IsValidInput = true;
+                                }
+                                else
+                                    Console.WriteLine("잘못된 입력입니다.");
+                            }
                         }
                     }
                 }

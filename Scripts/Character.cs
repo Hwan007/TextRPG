@@ -98,6 +98,7 @@ internal partial class TextRPG
             if (item != null)
             {
                 Gold -= item.Gold;
+                item.SetPrice(item.Gold * 85 / 100);
                 Inven.AddItem(item);
             }
             else

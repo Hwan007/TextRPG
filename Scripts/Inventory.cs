@@ -2,7 +2,7 @@
 
 internal partial class TextRPG
 {
-    public class Inventory : IDisplay
+    public class Inventory
     {
         private LinkedList<Item> mItems;
 
@@ -10,7 +10,7 @@ internal partial class TextRPG
         {
             mItems = new LinkedList<Item>();
         }
-        public int Display()
+        public int Display(bool showGold)
         {
             Console.WriteLine("[아이템 목록]");
             // 인벤토리 내용물 표시
@@ -19,12 +19,12 @@ internal partial class TextRPG
             foreach (Item item in mItems)
             {
                 cout.Clear();
-                cout.Append($"- ");
+                cout.Append($"[{i}]");
+                cout.Append($" -");
                 if (i < 10)
                     cout.Append(" ");
-                cout.Append($"{i} ");
                 Console.Write(cout);
-                item.Display();
+                item.Display(showGold);
                 Console.Write("\n");
                 ++i;
             }

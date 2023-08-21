@@ -222,28 +222,28 @@ internal partial class TextRPG
             Console.WriteLine("인벤토리");
             Console.WriteLine("보유 중인 아이템입니다.");
             Console.WriteLine();
-            Choice = mPlayer.Inven.Display();
+            Choice = mPlayer.Inven.Display(false);
         }
         public void DisplayEquipSetting()
         {
             Console.WriteLine("인벤토리 - 장착 관리");
             Console.WriteLine("보유 중인 아이템을 장착 관리할 수 있습니다.");
             Console.WriteLine();
-            Choice = mPlayer.Inven.Display();
+            Choice = mPlayer.Inven.Display(false);
         }
         public void DisplayStoreBuy()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n보유 골드 : {mPlayer.Gold}\n");
-            Choice = mStore.Inven.Display();
+            Choice = mStore.Inven.Display(true);
         }
         public void DisplayStoreSell()
         {
             Console.WriteLine("상점");
             Console.WriteLine("상인에게서 물건을 사고 팔 수 있습니다.");
             Console.WriteLine($"\n보유 골드 : {mPlayer.Gold}\n");
-            Choice = mPlayer.Inven.Display();
+            Choice = mPlayer.Inven.Display(true);
         }
         public void DisplayDungeon()
         {

@@ -18,7 +18,7 @@
         }
         public int Display()
         {
-            return Inven.Display();
+            return Inven.Display(true);
         }
 
         public dynamic SellToPlayer(int index)
