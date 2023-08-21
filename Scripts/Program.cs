@@ -20,9 +20,9 @@ internal class Program
         // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
         SetConsoleMode(handle, mode | 0x4);
 
-        for (int i = 0; i < 255; i++)
-            Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{(i>15?((i-15)%(6)==0?"\n":""):(i==15)?"\n":"")}");
-        Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
+        //for (int i = 0; i < 255; i++)
+        //    Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{(i>15?((i-15)%(6)==0?"\n":""):(i==15)?"\n":"")}");
+        //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
         //for (int i = 0; i < 255; i++)
         //    Console.Write("\x1b[48;5;" + i + $"m■{i}\t");
         //Console.Write("\x1b[38;5;7m\x1b[48;5;0m");
