@@ -5,7 +5,6 @@
         private CharacterSystem? sPlayer;
         private Location? sLocate;
         private StoreSystem? sStore;
-        private JsonFileIOStream? sJsonIO;
 
         public void GameStart()
         {

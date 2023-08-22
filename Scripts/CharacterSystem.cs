@@ -1,12 +1,15 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices.ObjectiveC;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
 internal partial class TextRPG
 {
     public class CharacterSystem : DisplaySystem
     {
-        public string Name { get; }
-        public string Job { get; }
+        public string Name { get; private set; }
+        public string Job { get; private set; }
         public int Level { get; private set; }
         public float Atk
         {
@@ -23,7 +26,7 @@ internal partial class TextRPG
                 return result;
             }
         }
-        private float baseAtk;
+        public float baseAtk { get; private set; }
         public float Def
         {
             get
@@ -39,27 +42,42 @@ internal partial class TextRPG
                 return result;
             }
         }
-        private float baseDef;
+        public float baseDef { get; private set; }
         public int Hp { get; private set; }
-        private int baseHP;
+        public int baseHP { get; private set; }
         public int Gold { get; private set; }
-        public InventorySystem Inven { get; }
+        public InventorySystem Inven { get; private set; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
-        public EquipmentSystem Equipments { get; }
+        public EquipmentSystem Equipments { get; private set; }
         public int Exp { get; private set; }
 
-        [JsonConstructor]
-        public CharacterSystem(string name, string job, int level, int atk, int def, int hp, int gold)
+        public CharacterSystem(string name, string job, int level, int baseatk, int basedef, int basehp, int gold, int exp, int hp, InventorySystem inven, EquipmentSystem equipments)
         {
             Name = name;
             Job = job;
             Level = level;
-            baseAtk = atk;
-            baseDef = def;
-            baseHP = Hp= hp;
+            baseAtk = baseatk;
+            baseDef = basedef;
+            baseHP = basehp;
+            Hp = hp;
             Gold = gold;
+            Exp = exp;
+            Inven = inven;
+            Equipments = equipments;
+        }
+
+        public CharacterSystem(string name, string job, int level, int baseatk, int basedef, int basehp, int gold)
+        {
+            Name = name;
+            Job = job;
+            Level = level;
+            baseAtk = baseatk;
+            baseDef = basedef;
+            baseHP = Hp = basehp;
             Inven = new InventorySystem();
             Equipments = new EquipmentSystem();
+            Gold = gold;
+            Exp = 0;
         }
 
         public override int SetDisplayString()
