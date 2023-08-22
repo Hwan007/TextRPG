@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 
 internal partial class TextRPG
 {
@@ -308,7 +309,10 @@ internal partial class TextRPG
                         mPlayer.TakeHeal(1000);
                         Console.Write("체력을 회복하였습니다.\n");
                         Thread.Sleep(1000);
-                        JsonFileIOStream.SaveFile<CharacterSystem>("SaveData.json", mPlayer);
+                        CharacterConverter converter = new CharacterConverter();
+                        JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true };
+                        options.Converters.Add(converter);
+                        JsonFileIOStream.SaveFile<CharacterSystem>("SaveData.json", mPlayer, options);
                         Console.Write("저장하였습니다.\n");
                         Thread.Sleep(1000);
                     }

@@ -3,11 +3,11 @@
     "DEF": 10,
     "Data": {
       "type": 1,
-      "Name": "\uCC9C\uAC11\uC637",
+      "ItemName": "\uCC9C\uAC11\uC637",
       "Description": "\uC190\uB54C\uAC00 \uBB4D\uC5B4\uC788\uB294 \uCC9C\uC73C\uB85C \uC774\uB8E8\uC5B4\uC9C4 \uAC11\uC637\uC785\uB2C8\uB2E4.",
       "IsEquip": false,
       "Point": 10,
-      "Gold": 100
+      "Price": 100
     },
     "Name": "\uCC9C\uAC11\uC637",
     "Description": "\uC190\uB54C\uAC00 \uBB4D\uC5B4\uC788\uB294 \uCC9C\uC73C\uB85C \uC774\uB8E8\uC5B4\uC9C4 \uAC11\uC637\uC785\uB2C8\uB2E4.",
@@ -18,11 +18,11 @@
     "DEF": 15,
     "Data": {
       "type": 1,
-      "Name": "\uAC00\uC8FD\uAC11\uC637",
+      "ItemName": "\uAC00\uC8FD\uAC11\uC637",
       "Description": "\uC57D\uAC04 \uCFF0\uCFF0\uD55C \uB0C4\uC0C8\uAC00 \uB098\uB294 \uAC00\uC8FD \uAC11\uC637\uC785\uB2C8\uB2E4.",
       "IsEquip": false,
       "Point": 15,
-      "Gold": 200
+      "Price": 200
     },
     "Name": "\uAC00\uC8FD\uAC11\uC637",
     "Description": "\uC57D\uAC04 \uCFF0\uCFF0\uD55C \uB0C4\uC0C8\uAC00 \uB098\uB294 \uAC00\uC8FD \uAC11\uC637\uC785\uB2C8\uB2E4.",
@@ -33,11 +33,11 @@
     "DEF": 25,
     "Data": {
       "type": 1,
-      "Name": "\uCCB4\uC778\uBA54\uC77C",
+      "ItemName": "\uCCB4\uC778\uBA54\uC77C",
       "Description": "\uC660\uB9CC\uD55C \uBB34\uAE30\uB294 \uC774\uB97C \uB6AB\uC744 \uC218 \uC5C6\uC744 \uAC81\uB2C8\uB2E4.",
       "IsEquip": false,
       "Point": 25,
-      "Gold": 450
+      "Price": 450
     },
     "Name": "\uCCB4\uC778\uBA54\uC77C",
     "Description": "\uC660\uB9CC\uD55C \uBB34\uAE30\uB294 \uC774\uB97C \uB6AB\uC744 \uC218 \uC5C6\uC744 \uAC81\uB2C8\uB2E4.",
@@ -48,11 +48,11 @@
     "DEF": 30,
     "Data": {
       "type": 1,
-      "Name": "\uD480\uD50C\uB808\uC774\uD2B8",
+      "ItemName": "\uD480\uD50C\uB808\uC774\uD2B8",
       "Description": "\uC790\uC2E0\uAC10\uC744 \uBD88\uC5B4\uB123\uC5B4 \uC8FC\uB294 \uAC11\uC637\uC785\uB2C8\uB2E4.",
       "IsEquip": false,
       "Point": 30,
-      "Gold": 600
+      "Price": 600
     },
     "Name": "\uD480\uD50C\uB808\uC774\uD2B8",
     "Description": "\uC790\uC2E0\uAC10\uC744 \uBD88\uC5B4\uB123\uC5B4 \uC8FC\uB294 \uAC11\uC637\uC785\uB2C8\uB2E4.",
@@ -63,11 +63,11 @@
     "DEF": 100,
     "Data": {
       "type": 1,
-      "Name": "\uD504\uB77C\uC774\uD32C",
+      "ItemName": "\uD504\uB77C\uC774\uD32C",
       "Description": "\uCD1D\uC54C\uB3C4 \uB6AB\uC744 \uC218 \uC5C6\uB294 \uD504\uB77C\uC774\uD32C\uC785\uB2C8\uB2E4.",
       "IsEquip": false,
       "Point": 100,
-      "Gold": 1000
+      "Price": 1000
     },
     "Name": "\uD504\uB77C\uC774\uD32C",
     "Description": "\uCD1D\uC54C\uB3C4 \uB6AB\uC744 \uC218 \uC5C6\uB294 \uD504\uB77C\uC774\uD32C\uC785\uB2C8\uB2E4.",

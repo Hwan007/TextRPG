@@ -94,9 +94,9 @@ internal partial class TextRPG
             public dynamic ItemRef { get; }
 
             [JsonConstructor]
-            public EquipItemData(dynamic item)
+            public EquipItemData(dynamic itemref)
             {
-                ItemRef = item;
+                ItemRef = itemref;
             }
         }
     }

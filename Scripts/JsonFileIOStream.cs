@@ -6,8 +6,6 @@ using static TextRPG;
 
 public class JsonFileIOStream
 {
-    public static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-
     private static string PathFromDesktop()
     {
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -20,16 +18,16 @@ public class JsonFileIOStream
         return currentPath ?? PathFromDesktop();
     }
 
-    public static T? LoadFile<T>(string fileName)
+    public static T? LoadFile<T>(string fileName, JsonSerializerOptions? options = null)
     {
         string jsonString = File.ReadAllText(Path.Combine(PathFromCurrent(), fileName));
-        var item = JsonSerializer.Deserialize<T>(jsonString);
+        var item = JsonSerializer.Deserialize<T>(jsonString, options);
         return item;
     }
 
-    public static void SaveFile<T>(string fileName, T items)
+    public static void SaveFile<T>(string fileName, T items, JsonSerializerOptions? options = null)
     {
-        string jsonString = JsonSerializer.Serialize(items, JsonOptions);
+        string jsonString = JsonSerializer.Serialize(items, options);
         string path = PathFromCurrent();
         if (Directory.Exists(path) == false)
             Directory.CreateDirectory(path);
@@ -54,7 +52,8 @@ public class JsonFileIOStream
             new Weapon("꽝꽝정어리", 50, "무기로 써도 될 만큼 꽝꽝 얼었습니다.", 1000),
             new Weapon("생생정어리", 100, "싱싱한 정어리입니다.", 2000)
         };
-        SaveFile<Weapon[]>(mWeaponFileName, weapons);
+        JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true };
+        SaveFile<Weapon[]>(mWeaponFileName, weapons, options);
 
         Armor[] armors = new Armor[]
         {
@@ -64,7 +63,8 @@ public class JsonFileIOStream
             new Armor("풀플레이트",30,"자신감을 불어넣어 주는 갑옷입니다.", 600),
             new Armor("프라이팬",100,"총알도 뚫을 수 없는 프라이팬입니다.", 1000)
         };
-        SaveFile<Armor[]>(mArmorFileName, armors);
+        options = new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true };
+        SaveFile<Armor[]>(mArmorFileName, armors, options);
     }
 }
 
@@ -166,8 +166,8 @@ internal partial class TextRPG
                 writer.WritePropertyName(nameof(value.baseHp));
                 writer.WriteNumberValue(value.baseHp);
                 // Gold
-                writer.WritePropertyName(nameof(value.Level));
-                writer.WriteNumberValue(value.Level);
+                writer.WritePropertyName(nameof(value.Gold));
+                writer.WriteNumberValue(value.Gold);
                 // Exp
                 writer.WritePropertyName(nameof(value.Exp));
                 writer.WriteNumberValue(value.Exp);
