@@ -17,20 +17,25 @@
             // 저장된 파일이 있는지 확인
             // 저장된 파일이 있는 경우에 가져오기
             // Json으로 된 아이템 정보 가져오기
-            sJsonIO = new JsonFileIOStream();
-            var weapons = sJsonIO.LoadFile<Weapon[]>("Weapon.json");
-            var armors = sJsonIO.LoadFile<Armor[]>("Armor.json");
+            
+            var weapons = JsonFileIOStream.LoadFile<Weapon[]>("Weapon.json");
+            var armors = JsonFileIOStream.LoadFile<Armor[]>("Armor.json");
 
-            if (sJsonIO.CheckFile("SaveData.json") == false)
+            if (JsonFileIOStream.CheckFile("SaveData.json") == false)
             // 캐릭터 정보 세팅
             {
                 // 이름 입력할 수 있게 하기.
                 // 능력치를 랜덤으로 정하게 하기.
-                sPlayer = new CharacterSystem("철수", "전사", 1, 10, 5, 100, 1500);
+                Console.Write("이름을 입력해주세요 : ");
+                string? name = Console.ReadLine();
+                if (name != null)
+                    sPlayer = new CharacterSystem(name, "전사", 1, 10, 5, 100, 1500);
+                else
+                    sPlayer = new CharacterSystem("철수", "전사", 1, 10, 5, 100, 1500);
             }
             else
             {
-                var save = sJsonIO.LoadFile<CharacterSystem>("SaveData.json");
+                var save = JsonFileIOStream.LoadFile<CharacterSystem>("SaveData.json");
                 sPlayer = save;
             }
 
@@ -67,7 +72,7 @@
         {
             if (sPlayer is CharacterSystem && sLocate is Location)
             {
-                while (sPlayer.IsDead == false)
+                while (true)
                 {
                     // 주요 로직으로 while으로 State에 따라서 Display를 한다.
 
@@ -87,7 +92,7 @@
                         {
                             if (int.TryParse(input, out var id))
                             {
-                                if (id < route.Length)
+                                if (id < route.Length && id >= 0)
                                 {
                                     // 상황에 맞는 동작을 해야 한다.
                                     sLocate.ChageLocation(route[id]);
@@ -95,7 +100,7 @@
                                 }
                                 else
                                 {
-                                    if (id - route.Length < sLocate.Choice)
+                                    if (id - route.Length < sLocate.Choice && id >= 0)
                                     {
                                         sLocate.ActByInput(id - route.Length);
                                         IsValidInput = true;

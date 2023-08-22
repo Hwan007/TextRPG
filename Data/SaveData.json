@@ -1,0 +1,38 @@
+{
+  "Name": "\uCC44\uC774\uD658",
+  "Job": "\uC804\uC0AC",
+  "Level": 1,
+  "Atk": 20,
+  "Def": 15,
+  "Hp": 100,
+  "Gold": 1000,
+  "Inven": {
+    "Count": 2
+  },
+  "IsDead": false,
+  "Equipments": {
+    "EquipItemList": [
+      {
+        "ItemRef": {
+          "ATK": 10,
+          "Data": {},
+          "Name": "\uAC00\uAC80",
+          "Description": "\uB0A0\uC774 \uBB49\uD22D\uD574\uC11C \uBB49\uB465\uC774\uC640 \uB2E4\uB97C\uBC14 \uC5C6\uC2B5\uB2C8\uB2E4.",
+          "IsEquip": true,
+          "Gold": 85
+        }
+      },
+      {
+        "ItemRef": {
+          "DEF": 10,
+          "Data": {},
+          "Name": "\uCC9C\uAC11\uC637",
+          "Description": "\uC190\uB54C\uAC00 \uBB4D\uC5B4\uC788\uB294 \uCC9C\uC73C\uB85C \uC774\uB8E8\uC5B4\uC9C4 \uAC11\uC637\uC785\uB2C8\uB2E4.",
+          "IsEquip": true,
+          "Gold": 85
+        }
+      }
+    ]
+  },
+  "Exp": 0
+}

@@ -3,28 +3,28 @@ using static TextRPG;
 
 public class JsonFileIOStream
 {
-    JsonSerializerOptions jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+    static JsonSerializerOptions jsonOptions = new JsonSerializerOptions { WriteIndented = true };
 
-    private string PathFromDesktop()
+    private static string PathFromDesktop()
     {
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         return desktopPath;
     }
 
-    private string PathFromCurrent()
+    private static string PathFromCurrent()
     {
         string? currentPath = Environment.ProcessPath?.Split("TextRPGGame")[0] + "TextRPGGame\\Data";
         return currentPath ?? PathFromDesktop();
     }
 
-    public T? LoadFile<T>(string fileName)
+    public static T? LoadFile<T>(string fileName)
     {
         string jsonString = File.ReadAllText(Path.Combine(PathFromCurrent(), fileName));
         var item = JsonSerializer.Deserialize<T>(jsonString);
         return item;
     }
 
-    public void SaveFile<T>(string fileName, T items)
+    public static void SaveFile<T>(string fileName, T items)
     {
         string jsonString = JsonSerializer.Serialize(items, jsonOptions);
         string path = PathFromCurrent();
@@ -33,7 +33,7 @@ public class JsonFileIOStream
         File.WriteAllText(Path.Combine(path, fileName), jsonString);
     }
 
-    public bool CheckFile(string fileName)
+    public static bool CheckFile(string fileName)
     {
         return File.Exists(PathFromCurrent());
     }
