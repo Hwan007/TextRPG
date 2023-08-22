@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -33,7 +34,7 @@ internal class Program
         innerClasses.Add(new InnerClass(new TestStruct() { str = "날아가라", num = 54 }));
         LinkedList<TestStruct> testStructs = new LinkedList<TestStruct>();
         testStructs.AddLast(new TestStruct() { str = "여친구함", num = 5959 });
-        
+
         TestClass test = new TestClass(innerClasses, testStructs);
         TestConverter testConverter = new TestConverter();
         JsonFileIOStream.JsonOptions.Converters.Add(testConverter);
@@ -89,6 +90,7 @@ internal class Program
         public LinkedList<TestStruct> TestStructs { get; private set; } = new LinkedList<TestStruct>();
         public int Num { get; private set; }
 
+        [JsonConstructor]
         public TestClass(List<InnerClass> innerClasses, LinkedList<TestStruct> testStructs)
         {
             Num = 0;
@@ -99,6 +101,7 @@ internal class Program
     public class InnerClass
     {
         public TestStruct testStruct { get; private set; } = new TestStruct();
+        [JsonConstructor]
         public InnerClass(TestStruct st)
         {
             testStruct = st;
@@ -114,15 +117,48 @@ internal class Program
     {
         public override TestClass? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            TestClass value = reader.TokenType switch
+            int Num;
+            List<InnerClass>? InnerClasses = new List<InnerClass>();
+            LinkedList<TestStruct>? TestStructs = new LinkedList<TestStruct>();
+            foreach (var (propertyName, value) in JsonNode.Parse(ref reader)!.AsObject())
             {
-                
-            };
-            return value;
+                if (value is null) continue;
+
+                switch (propertyName)
+                {
+                    case "Num":
+                        Num = value.GetValue<int>();
+                        break;
+                    case "InnerClasses":
+                        InnerClasses = value.Deserialize<List<InnerClass>>();
+                        break;
+                    case "TestStructs":
+                        TestStructs = value.Deserialize<LinkedList<TestStruct>>();
+                        break;
+                    default:
+                        throw new InvalidOperationException($"unknown \"{propertyName}\".");
+                }
+            }
+            return new TestClass(InnerClasses, TestStructs);
         }
         public override void Write(Utf8JsonWriter writer, TestClass value, JsonSerializerOptions options)
         {
-            JsonSerializer.Serialize(writer, value);
+            writer.WriteStartObject();
+            writer.WriteStartArray("InnerClasses");
+            foreach (var node in value.InnerClasses)
+            {
+                JsonSerializer.Serialize(writer, node, options);
+            }
+            writer.WriteEndArray();
+            writer.WriteStartArray("TestStructs");
+            foreach (var node in value.TestStructs)
+            {
+                JsonSerializer.Serialize(writer, node, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName(nameof(value.Num));
+            writer.WriteNumberValue(value.Num);
+            writer.WriteEndObject();
         }
     }
 }

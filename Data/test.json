@@ -1,3 +1,17 @@
 {
+  "InnerClasses": [
+    {
+      "testStruct": {
+        "str": "\uB0A0\uC544\uAC00\uB77C",
+        "num": 54
+      }
+    }
+  ],
+  "TestStructs": [
+    {
+      "str": "\uC5EC\uCE5C\uAD6C\uD568",
+      "num": 5959
+    }
+  ],
   "Num": 0
 }
