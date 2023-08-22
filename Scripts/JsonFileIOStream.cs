@@ -1,9 +1,11 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using static TextRPG;
 
 public class JsonFileIOStream
 {
-    JsonSerializerOptions jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+    static JsonSerializerOptions jsonOptions = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
 
     private string PathFromDesktop()
     {
@@ -35,7 +37,7 @@ public class JsonFileIOStream
 
     public bool CheckFile(string fileName)
     {
-        return File.Exists(PathFromCurrent());
+        return File.Exists(Path.Combine(PathFromCurrent(), fileName));
     }
 
 
@@ -101,5 +103,100 @@ public class JsonFileIOStream
             new Armor("프라이팬",100,"총알도 뚫을 수 없는 프라이팬입니다.", 1000)
         };
         SaveFile<Armor[]>(mArmorFileName, armors);
+    }
+
+    private class CharacterConverter : JsonConverter<CharacterSystem>
+    {
+        public override CharacterSystem? Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
+        {
+            JsonNode? jn = JsonObject.Parse(ref reader);
+            string? name = jn["Name"].ToString();
+
+            throw new NotImplementedException();
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CharacterSystem value,
+            JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            // Name
+            writer.WritePropertyName(nameof(value.Name));
+            writer.WriteStringValue(value.Name);
+            // Job
+            writer.WritePropertyName(nameof(value.Job));
+            writer.WriteStringValue(value.Job);
+            // Level
+            writer.WritePropertyName(nameof(value.Level));
+            writer.WriteNumberValue(value.Level);
+            // baseAtk
+            writer.WritePropertyName(nameof(value.baseAtk));
+            writer.WriteNumberValue(value.baseAtk);
+            // baseDef
+            writer.WritePropertyName(nameof(value.baseDef));
+            writer.WriteNumberValue(value.baseDef);
+            // Hp
+            writer.WritePropertyName(nameof(value.Hp));
+            writer.WriteNumberValue(value.Hp);
+            // baseHP
+            writer.WritePropertyName(nameof(value.baseHP));
+            writer.WriteNumberValue(value.baseHP);
+            // Gold
+            writer.WritePropertyName(nameof(value.Level));
+            writer.WriteNumberValue(value.Level);
+            // Inven
+            writer.WritePropertyName(nameof(value.Inven));
+            writer.WriteStartObject();
+            {
+                // mItems
+                writer.WritePropertyName(nameof(value.Inven.mItems));
+                writer.WriteStartObject();
+                {
+                    // Data
+                    var itemData = value.Inven.mItems.First;
+                    for (int i = 0; i < value.Inven.mItems.Count; ++i)
+                    {
+                        if (itemData == null)
+                            break;
+                        writer.WritePropertyName(nameof(itemData.ValueRef.Data));
+                        writer.WriteStartObject();
+                        // type
+                        writer.WritePropertyName(nameof(itemData.ValueRef.Data));
+                        // Name
+                        // Description
+                        // IsEquip
+                        // Point
+                        // Gold
+                        writer.WriteEndObject();
+                        itemData = itemData?.Next;
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            // Equipments
+            {
+                // EquipItemList
+                {
+                    // ItemRef
+                    {
+                        // ATK
+                        // Data
+                        // type
+                        // Name
+                        // Description
+                        // IsEquip
+                        // Point
+                        // Gold
+                    }
+                }
+            }
+            // Exp
+            writer.WriteEndObject();
+        }
+
     }
 }

@@ -1,12 +1,16 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 
 internal partial class TextRPG
 {
     public class InventorySystem : DisplaySystem
     {
-        private LinkedList<Item> mItems;
+        public LinkedList<Item> mItems { get; private set; }
         public int Count { get => mItems.Count; }
-
+        public InventorySystem(LinkedList<Item> mitems)
+        {
+            mItems = mitems;
+        }
         public InventorySystem()
         {
             mItems = new LinkedList<Item>();

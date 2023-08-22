@@ -7,9 +7,11 @@ internal partial class TextRPG
 {
     public class EquipmentSystem
     {
-        public LinkedList<EquipItemData> EquipItemList { get; }
-
-        [JsonConstructor]
+        public LinkedList<EquipItemData> EquipItemList { get; private set; }
+        public EquipmentSystem(LinkedList<EquipItemData> equipitmelist)
+        {
+            EquipItemList = equipitmelist;
+        }
         public EquipmentSystem()
         {
             EquipItemList = new LinkedList<EquipItemData>();

@@ -5,7 +5,6 @@
         private CharacterSystem? sPlayer;
         private Location? sLocate;
         private StoreSystem? sStore;
-        private JsonFileIOStream? sJsonIO;
 
         public void GameStart()
         {
@@ -17,20 +16,24 @@
             // 저장된 파일이 있는지 확인
             // 저장된 파일이 있는 경우에 가져오기
             // Json으로 된 아이템 정보 가져오기
-            sJsonIO = new JsonFileIOStream();
-            var weapons = sJsonIO.LoadFile<Weapon[]>("Weapon.json");
-            var armors = sJsonIO.LoadFile<Armor[]>("Armor.json");
-
-            if (sJsonIO.CheckFile("SaveData.json") == false)
+            
+            var weapons = JsonFileIOStream.LoadFile<Weapon[]>("Weapon.json");
+            var armors = JsonFileIOStream.LoadFile<Armor[]>("Armor.json");
+            if (JsonFileIOStream.CheckFile("SaveData.json") == false)
             // 캐릭터 정보 세팅
             {
                 // 이름 입력할 수 있게 하기.
                 // 능력치를 랜덤으로 정하게 하기.
-                sPlayer = new CharacterSystem("철수", "전사", 1, 10, 5, 100, 1500);
+                Console.Write("이름을 입력해주세요 : ");
+                string? name = Console.ReadLine();
+                if (name != null)
+                    sPlayer = new CharacterSystem(name, "전사", 1, 10, 5, 100, 1500);
+                else
+                    sPlayer = new CharacterSystem("철수", "전사", 1, 10, 5, 100, 1500);
             }
             else
             {
-                var save = sJsonIO.LoadFile<CharacterSystem>("SaveData.json");
+                var save = JsonFileIOStream.LoadFile<CharacterSystem>("SaveData.json");
                 sPlayer = save;
             }
 
