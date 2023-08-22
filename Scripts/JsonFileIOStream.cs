@@ -112,8 +112,8 @@ public class JsonFileIOStream
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            JsonNode? jn = JsonObject.Parse(ref reader);
-            string? name = jn["Name"].ToString();
+            JsonNode? jsonNode = JsonObject.Parse(ref reader);
+            string? name = jsonNode["Name"].ToString();
 
             throw new NotImplementedException();
         }
@@ -149,12 +149,10 @@ public class JsonFileIOStream
             writer.WritePropertyName(nameof(value.Level));
             writer.WriteNumberValue(value.Level);
             // Inven
-            writer.WritePropertyName(nameof(value.Inven));
-            writer.WriteStartObject();
+            writer.WriteStartObject(nameof(value.Inven));
             {
                 // mItems
-                writer.WritePropertyName(nameof(value.Inven.mItems));
-                writer.WriteStartObject();
+                writer.WriteStartArray(nameof(value.Inven.mItems));
                 {
                     // Data
                     var itemData = value.Inven.mItems.First;
@@ -162,35 +160,57 @@ public class JsonFileIOStream
                     {
                         if (itemData == null)
                             break;
-                        writer.WritePropertyName(nameof(itemData.ValueRef.Data));
-                        writer.WriteStartObject();
-                        // type
-                        writer.WritePropertyName(nameof(itemData.ValueRef.Data));
-                        // Name
-                        // Description
-                        // IsEquip
-                        // Point
-                        // Gold
+                        writer.WriteStartObject(nameof(itemData.ValueRef.Data));
+                        {
+                            // Name
+                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Name));
+                            writer.WriteStringValue(itemData.ValueRef.Data.Name);
+                            // Description
+                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Description));
+                            writer.WriteStringValue(itemData.ValueRef.Data.Description);
+                            // IsEquip
+                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.IsEquip));
+                            writer.WriteBooleanValue(itemData.ValueRef.Data.IsEquip);
+                            // Point
+                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Point));
+                            writer.WriteNumberValue(itemData.ValueRef.Data.Point);
+                            // Gold
+                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Gold));
+                            writer.WriteNumberValue(itemData.ValueRef.Data.Gold);
+                        }
                         writer.WriteEndObject();
                         itemData = itemData?.Next;
                     }
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
             // Equipments
+            writer.WriteStartObject(nameof(value.Equipments));
             {
+                writer.WriteStartArray(nameof(value.Equipments.EquipItemList));
                 // EquipItemList
                 {
                     // ItemRef
+                    var item = value.Equipments.EquipItemList.First;
+                    for (int i=0; i<value.Equipments.EquipItemList.Count; ++i)
                     {
-                        // ATK
+                        if (item == null)
+                            break;
+                        writer.WriteStartObject(nameof(item.ValueRef.ItemRef));
                         // Data
-                        // type
-                        // Name
-                        // Description
-                        // IsEquip
-                        // Point
-                        // Gold
+                        writer.WriteStartObject(nameof(item.ValueRef.ItemRef.Data));
+                        {
+                            // type
+                            writer.WritePropertyName(item.ValueRef.ItemRef.Data.type);
+                            writer.WriteNumberValue((int)item.ValueRef.ItemRef.Data.type);
+                            // Name
+                            // Description
+                            // IsEquip
+                            // Point
+                            // Gold
+                        }
+                        writer.WriteEndObject();
+                        item = item.Next;
                     }
                 }
             }

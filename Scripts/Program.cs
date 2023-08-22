@@ -53,8 +53,6 @@ internal class Program
         //}
         //Console.ForegroundColor = ConsoleColor.White;
         //Console.BackgroundColor = ConsoleColor.Black;
-
-        JsonFileIOStream JsonIO = new JsonFileIOStream();
         //JsonIO.SaveItemDataBase();
 
         GamaManager game = new GamaManager();
