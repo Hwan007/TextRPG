@@ -27,22 +27,6 @@ internal class Program
         // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
         SetConsoleMode(handle, mode | 0x4);
 
-        //JsonFileIOStream.jsonOptions.Converters.Add(new CharacterConverter());
-        //JsonFileIOStream.SaveFile<CharacterSystem>("save1.json", new CharacterSystem("test", "ttest", 2, 2, 2, 2, 2));
-        //JsonFileIOStream.LoadFile<CharacterSystem>("save1.json");
-        List<InnerClass> innerClasses = new List<InnerClass>();
-        innerClasses.Add(new InnerClass(new TestStruct() { str = "날아가라", num = 54 }));
-        LinkedList<TestStruct> testStructs = new LinkedList<TestStruct>();
-        testStructs.AddLast(new TestStruct() { str = "여친구함", num = 5959 });
-
-        TestClass test = new TestClass(innerClasses, testStructs);
-        TestConverter testConverter = new TestConverter();
-        JsonFileIOStream.JsonOptions.Converters.Add(testConverter);
-
-        JsonFileIOStream.SaveFile<TestClass>("test.json", test);
-        var output = JsonFileIOStream.LoadFile<TestClass>("test.json");
-        Console.WriteLine(output);
-
         /*
         for (int i = 0; i < 255; i++)
             Console.Write("\x1b[38;5;" + i + "m" + "\x1b[48;5;" + i + $"m■{(i > 15 ? ((i - 15) % (6) == 0 ? "\n" : "") : (i == 15) ? "\n" : "")}");
@@ -102,9 +86,9 @@ internal class Program
     {
         public TestStruct testStruct { get; private set; } = new TestStruct();
         [JsonConstructor]
-        public InnerClass(TestStruct st)
+        public InnerClass(TestStruct teststruct)
         {
-            testStruct = st;
+            testStruct = teststruct;
         }
     }
     public struct TestStruct
