@@ -5,7 +5,7 @@ using static TextRPG;
 
 public class JsonFileIOStream
 {
-    static JsonSerializerOptions jsonOptions = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
+    public static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
 
     private static string PathFromDesktop()
     {
@@ -28,7 +28,7 @@ public class JsonFileIOStream
 
     public static void SaveFile<T>(string fileName, T items)
     {
-        string jsonString = JsonSerializer.Serialize(items, jsonOptions);
+        string jsonString = JsonSerializer.Serialize(items, JsonOptions);
         string path = PathFromCurrent();
         if (Directory.Exists(path) == false)
             Directory.CreateDirectory(path);
@@ -104,8 +104,11 @@ public class JsonFileIOStream
         };
         SaveFile<Armor[]>(mArmorFileName, armors);
     }
+}
 
-    private class CharacterConverter : JsonConverter<CharacterSystem>
+internal partial class TextRPG
+{
+    public class CharacterConverter : JsonConverter<CharacterSystem>
     {
         public override CharacterSystem? Read(
             ref Utf8JsonReader reader,
@@ -113,7 +116,10 @@ public class JsonFileIOStream
             JsonSerializerOptions options)
         {
             JsonNode? jsonNode = JsonObject.Parse(ref reader);
-            string? name = jsonNode["Name"].ToString();
+            JsonNode? jsonNode1 = JsonObject.Parse(ref reader);
+            JsonNode? jsonNode2 = JsonObject.Parse(ref reader);
+            //Character
+
 
             throw new NotImplementedException();
         }
@@ -124,65 +130,71 @@ public class JsonFileIOStream
             JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            // Name
-            writer.WritePropertyName(nameof(value.Name));
-            writer.WriteStringValue(value.Name);
-            // Job
-            writer.WritePropertyName(nameof(value.Job));
-            writer.WriteStringValue(value.Job);
-            // Level
-            writer.WritePropertyName(nameof(value.Level));
-            writer.WriteNumberValue(value.Level);
-            // baseAtk
-            writer.WritePropertyName(nameof(value.baseAtk));
-            writer.WriteNumberValue(value.baseAtk);
-            // baseDef
-            writer.WritePropertyName(nameof(value.baseDef));
-            writer.WriteNumberValue(value.baseDef);
-            // Hp
-            writer.WritePropertyName(nameof(value.Hp));
-            writer.WriteNumberValue(value.Hp);
-            // baseHP
-            writer.WritePropertyName(nameof(value.baseHP));
-            writer.WriteNumberValue(value.baseHP);
-            // Gold
-            writer.WritePropertyName(nameof(value.Level));
-            writer.WriteNumberValue(value.Level);
+            {
+                // Name
+                writer.WritePropertyName(nameof(value.Name));
+                writer.WriteStringValue(value.Name);
+                // Job
+                writer.WritePropertyName(nameof(value.Job));
+                writer.WriteStringValue(value.Job);
+                // Level
+                writer.WritePropertyName(nameof(value.Level));
+                writer.WriteNumberValue(value.Level);
+                // baseAtk
+                writer.WritePropertyName(nameof(value.baseAtk));
+                writer.WriteNumberValue(value.baseAtk);
+                // baseDef
+                writer.WritePropertyName(nameof(value.baseDef));
+                writer.WriteNumberValue(value.baseDef);
+                // Hp
+                writer.WritePropertyName(nameof(value.Hp));
+                writer.WriteNumberValue(value.Hp);
+                // baseHP
+                writer.WritePropertyName(nameof(value.baseHP));
+                writer.WriteNumberValue(value.baseHP);
+                // Gold
+                writer.WritePropertyName(nameof(value.Level));
+                writer.WriteNumberValue(value.Level);
+                // Exp
+                writer.WritePropertyName(nameof(value.Exp));
+                writer.WriteNumberValue(value.Exp);
+            }
+            
             // Inven
             writer.WriteStartObject(nameof(value.Inven));
             {
                 // mItems
-                writer.WriteStartArray(nameof(value.Inven.mItems));
-                {
-                    // Data
-                    var itemData = value.Inven.mItems.First;
-                    for (int i = 0; i < value.Inven.mItems.Count; ++i)
-                    {
-                        if (itemData == null)
-                            break;
-                        writer.WriteStartObject(nameof(itemData.ValueRef.Data));
-                        {
-                            // Name
-                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Name));
-                            writer.WriteStringValue(itemData.ValueRef.Data.Name);
-                            // Description
-                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Description));
-                            writer.WriteStringValue(itemData.ValueRef.Data.Description);
-                            // IsEquip
-                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.IsEquip));
-                            writer.WriteBooleanValue(itemData.ValueRef.Data.IsEquip);
-                            // Point
-                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Point));
-                            writer.WriteNumberValue(itemData.ValueRef.Data.Point);
-                            // Gold
-                            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Gold));
-                            writer.WriteNumberValue(itemData.ValueRef.Data.Gold);
-                        }
-                        writer.WriteEndObject();
-                        itemData = itemData?.Next;
-                    }
-                }
-                writer.WriteEndArray();
+                //writer.WriteStartArray(nameof(value.Inven.mItems));
+                //{
+                //    // Data
+                //    var itemData = value.Inven.mItems.First;
+                //    for (int i = 0; i < value.Inven.mItems.Count; ++i)
+                //    {
+                //        if (itemData == null)
+                //            break;
+                //        writer.WriteStartObject(nameof(itemData.ValueRef.Data));
+                //        {
+                //            // Name
+                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Name));
+                //            writer.WriteStringValue(itemData.ValueRef.Data.Name);
+                //            // Description
+                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Description));
+                //            writer.WriteStringValue(itemData.ValueRef.Data.Description);
+                //            // IsEquip
+                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.IsEquip));
+                //            writer.WriteBooleanValue(itemData.ValueRef.Data.IsEquip);
+                //            // Point
+                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Point));
+                //            writer.WriteNumberValue(itemData.ValueRef.Data.Point);
+                //            // Gold
+                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Gold));
+                //            writer.WriteNumberValue(itemData.ValueRef.Data.Gold);
+                //        }
+                //        writer.WriteEndObject();
+                //        itemData = itemData?.Next;
+                //    }
+                //}
+                //writer.WriteEndArray();
             }
             // Equipments
             writer.WriteStartObject(nameof(value.Equipments));
@@ -191,32 +203,43 @@ public class JsonFileIOStream
                 // EquipItemList
                 {
                     // ItemRef
-                    var item = value.Equipments.EquipItemList.First;
-                    for (int i=0; i<value.Equipments.EquipItemList.Count; ++i)
-                    {
-                        if (item == null)
-                            break;
-                        writer.WriteStartObject(nameof(item.ValueRef.ItemRef));
-                        // Data
-                        writer.WriteStartObject(nameof(item.ValueRef.ItemRef.Data));
-                        {
-                            // type
-                            writer.WritePropertyName(item.ValueRef.ItemRef.Data.type);
-                            writer.WriteNumberValue((int)item.ValueRef.ItemRef.Data.type);
-                            // Name
-                            // Description
-                            // IsEquip
-                            // Point
-                            // Gold
-                        }
-                        writer.WriteEndObject();
-                        item = item.Next;
-                    }
+                    //var item = value.Equipments.EquipItemList.First;
+                    //for (int i = 0; i < value.Equipments.EquipItemList.Count; ++i)
+                    //{
+                    //    if (item == null)
+                    //        break;
+                    //    writer.WriteStartObject(nameof(item.ValueRef.ItemRef));
+                    //    // Data
+                    //    writer.WriteStartObject(nameof(item.ValueRef.ItemRef.Data));
+                    //    {
+                    //        // type
+                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.type);
+                    //        writer.WriteNumberValue((int)item.ValueRef.ItemRef.Data.type);
+                    //        // Name
+                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Name);
+                    //        writer.WriteStringValue(item.ValueRef.ItemRef.Data.Name);
+                    //        // Description
+                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Description);
+                    //        writer.WriteStringValue(item.ValueRef.ItemRef.Data.Description);
+                    //        // IsEquip
+                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.IsEquip);
+                    //        writer.WriteBooleanValue(item.ValueRef.ItemRef.Data.IsEquip);
+                    //        // Point
+                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Point);
+                    //        writer.WriteNumberValue(item.ValueRef.ItemRef.Data.Point);
+                    //        // Gold
+                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Gold);
+                    //        writer.WriteNumberValue(item.ValueRef.ItemRef.Data.Gold);
+                    //    }
+                    //    writer.WriteEndObject();
+                    //    writer.WriteEndObject();
+                    //    item = item.Next;
+                    //}
                 }
+                writer.WriteEndArray();
             }
-            // Exp
             writer.WriteEndObject();
+            
         }
-
     }
 }
