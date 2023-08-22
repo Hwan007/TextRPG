@@ -1,5 +1,4 @@
-﻿using static TextRPG;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using System.Text;
 
 internal partial class TextRPG
@@ -13,17 +12,17 @@ internal partial class TextRPG
     public struct ItemData
     {
         public EquipType type;
-        public string Name;
+        public string ItemName;
         public string Description;
         public bool IsEquip;
         public float Point;
-        public int Gold;
+        public int Price;
     }
 
     public class Item
     {
         public ItemData Data { get; protected set; }
-        public string Name { get => Data.Name; }
+        public string Name { get => Data.ItemName; }
         public string Description { get => Data.Description; }
         public bool IsEquip
         {
@@ -35,17 +34,17 @@ internal partial class TextRPG
                 Data = tempData;
             }
         }
-        public int Gold { get => Data.Gold; }
+        public int Gold { get => Data.Price; }
 
         [JsonConstructor]
         public Item(string name, string description, int gold)
         {
             Data = new ItemData()
             {
-                Name = name,
+                ItemName = name,
                 IsEquip = false,
                 Description = description,
-                Gold = gold
+                Price = gold
             };
         }
         public Item(ItemData data)
@@ -85,7 +84,7 @@ internal partial class TextRPG
         public void SetPrice(int gold)
         {
             var tempData = Data;
-            tempData.Gold = gold;
+            tempData.Price = gold;
             Data = tempData;
         }
     }

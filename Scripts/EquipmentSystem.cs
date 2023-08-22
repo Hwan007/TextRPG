@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Text.Json.Serialization;
-using static TextRPG.EquipmentSystem;
+﻿using System.Text.Json.Serialization;
 
 internal partial class TextRPG
 {
@@ -97,9 +94,9 @@ internal partial class TextRPG
             public dynamic ItemRef { get; }
 
             [JsonConstructor]
-            public EquipItemData(dynamic item)
+            public EquipItemData(dynamic itemref)
             {
-                ItemRef = item;
+                ItemRef = itemref;
             }
         }
     }

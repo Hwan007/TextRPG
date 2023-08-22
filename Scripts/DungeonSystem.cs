@@ -33,7 +33,7 @@
         {
             if (mPlayer.IsDead)
             {
-                AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Damage}", 160) + " 대미지를 입었습니다.\n");
+                AddStringToDisplayList(StringWithCustomColor($"{mStage?.Result.Damage}", 160) + " 대미지를 입었습니다.\n");
                 AddStringToDisplayList($"플래이어의 HP가 0이 되어 " + StringWithCustomColor("사망", 160) + "하였습니다.\n");
                 AddStringToDisplayList("\n[0] 탈출\n");
                 return 1;

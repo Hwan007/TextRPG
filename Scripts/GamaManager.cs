@@ -1,4 +1,6 @@
-﻿internal partial class TextRPG
+﻿using System.Text.Json;
+
+internal partial class TextRPG
 {
     public class GamaManager
     {
@@ -16,9 +18,10 @@
             // 저장된 파일이 있는지 확인
             // 저장된 파일이 있는 경우에 가져오기
             // Json으로 된 아이템 정보 가져오기
-            
-            var weapons = JsonFileIOStream.LoadFile<Weapon[]>("Weapon.json");
-            var armors = JsonFileIOStream.LoadFile<Armor[]>("Armor.json");
+            JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true };
+            var weapons = JsonFileIOStream.LoadFile<Weapon[]>("Weapon.json", options);
+            options = new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true };
+            var armors = JsonFileIOStream.LoadFile<Armor[]>("Armor.json", options);
 
             if (JsonFileIOStream.CheckFile("SaveData.json") == false)
             // 캐릭터 정보 세팅
@@ -34,7 +37,10 @@
             }
             else
             {
-                var save = JsonFileIOStream.LoadFile<CharacterSystem>("SaveData.json");
+                CharacterConverter converter = new CharacterConverter();
+                options = new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true };
+                options.Converters.Add(converter);
+                var save = JsonFileIOStream.LoadFile<CharacterSystem>("SaveData.json", options);
                 sPlayer = save;
             }
 
