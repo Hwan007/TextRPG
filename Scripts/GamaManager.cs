@@ -19,6 +19,7 @@
             
             var weapons = JsonFileIOStream.LoadFile<Weapon[]>("Weapon.json");
             var armors = JsonFileIOStream.LoadFile<Armor[]>("Armor.json");
+
             if (JsonFileIOStream.CheckFile("SaveData.json") == false)
             // 캐릭터 정보 세팅
             {
@@ -70,7 +71,7 @@
         {
             if (sPlayer is CharacterSystem && sLocate is Location)
             {
-                while (sPlayer.IsDead == false)
+                while (true)
                 {
                     // 주요 로직으로 while으로 State에 따라서 Display를 한다.
 
@@ -90,7 +91,7 @@
                         {
                             if (int.TryParse(input, out var id))
                             {
-                                if (id < route.Length)
+                                if (id < route.Length && id >= 0)
                                 {
                                     // 상황에 맞는 동작을 해야 한다.
                                     sLocate.ChageLocation(route[id]);
@@ -98,7 +99,7 @@
                                 }
                                 else
                                 {
-                                    if (id - route.Length < sLocate.Choice)
+                                    if (id - route.Length < sLocate.Choice && id >= 0)
                                     {
                                         sLocate.ActByInput(id - route.Length);
                                         IsValidInput = true;

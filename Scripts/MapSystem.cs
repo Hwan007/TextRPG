@@ -309,6 +309,9 @@ internal partial class TextRPG
                         mPlayer.TakeHeal(1000);
                         Console.Write("체력을 회복하였습니다.\n");
                         Thread.Sleep(1000);
+                        JsonFileIOStream.SaveFile<CharacterSystem>("SaveData.json", mPlayer);
+                        Console.Write("저장하였습니다.\n");
+                        Thread.Sleep(1000);
                     }
                     else
                     {
