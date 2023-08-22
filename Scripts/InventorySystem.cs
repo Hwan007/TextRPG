@@ -2,18 +2,24 @@
 
 internal partial class TextRPG
 {
-    public class Inventory
+    public class InventorySystem : DisplaySystem
     {
         private LinkedList<Item> mItems;
         public int Count { get => mItems.Count; }
 
-        public Inventory()
+        public InventorySystem()
         {
             mItems = new LinkedList<Item>();
         }
+
+        /// <summary>
+        /// 출력하고자 하는 StringBuilder 배열을 받는다.
+        /// </summary>
+        /// <param name="showGold">item.Gold를 보여주는지 여부</param>
+        /// <returns></returns>
         public StringBuilder[] GetDisplayString(bool showGold)
         {
-            Console.WriteLine("[아이템 목록]");
+            AddStringToDisplayList("[아이템 목록]\n");
             // 인벤토리 내용물 표시
             int i = 0;
             List<StringBuilder> couts = new List<StringBuilder>();
@@ -21,12 +27,33 @@ internal partial class TextRPG
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append($"- ");
-                sb.Append(item.Display(showGold));
+                sb.Append(item.GetDisplayString(showGold));
                 sb.Append("\n");
                 couts.Add(sb);
                 ++i;
             }
             return couts.ToArray();
+        }
+        /// <summary>
+        /// 보여주고자 하는 문자열을 DisplaySystem의 SBList에 넣는다.
+        /// </summary>
+        /// <param name="showGold">item.Gold를 보여주는지 여부</param>
+        /// <returns></returns>
+        public override int SetDisplayString(bool showGold = false)
+        {
+            AddStringToDisplayList("[아이템 목록]");
+            // 인벤토리 내용물 표시
+            int i = 0;
+            foreach (Item item in mItems)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"- ");
+                sb.Append(item.GetDisplayString(showGold));
+                sb.Append("\n");
+                AddStringToDisplayList(sb.ToString());
+                ++i;
+            }
+            return i;
         }
         public void AddItem(Item addItem)
         {

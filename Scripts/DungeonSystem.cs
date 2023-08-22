@@ -1,11 +1,11 @@
 ﻿internal partial class TextRPG
 {
-    public class Dungeon : IDisplay
+    public class DungeonSystem : DisplaySystem
     {
         public DungeonState State { get; private set; }
         private int mInput;
         private Stage? mStage;
-        private Character mPlayer;
+        private CharacterSystem mPlayer;
         public enum DungeonState
         {
             Enter,
@@ -13,7 +13,7 @@
             Rest,
             Exit
         }
-        public Dungeon(Character player)
+        public DungeonSystem(CharacterSystem player)
         {
             State = DungeonState.Enter;
             mPlayer = player;
@@ -22,40 +22,39 @@
 
         public int EnterDisplay()
         {
-            Console.WriteLine("던전에 진입 중입니다.");
-            Console.WriteLine("난이도를 선택해주세요.");
+            AddStringToDisplayList("던전에 진입 중입니다.\n");
+            AddStringToDisplayList("난이도를 선택해주세요.\n");
             // 0 이지, 1 노말, 2 하드
-            Console.WriteLine();
-            Console.WriteLine("[0] Easy");
-            Console.WriteLine("[1] Normal");
-            Console.WriteLine("[2] Hard");
-            Console.WriteLine();
+            AddStringToDisplayList("[0]\t [1]\t [2]\n");
+            AddStringToDisplayList("Easy\tNormal\tHard\n");
             return 3;
         }
         public int FightDisplay()
         {
+            // 0 진행, 1 탈출, 2 상태창 보기
+
             if (mInput == 0)
             {
-                Console.WriteLine($"{mStage?.Level}\n전투 진행 중입니다.");
+                AddStringToDisplayList($"{mStage?.Level}\n전투 진행 중입니다.\n");
                 if (mStage != null)
                 {
                     if (mPlayer.IsDead)
                     {
-                        WriteWithCustomColor($"{mStage.Result.Damage}", 160);
-                        WriteWithCustomColor(" 대미지를 입었습니다.\n");
-                        WriteWithCustomColor($"플래이어의 HP가 0이 되어 ");
-                        WriteWithCustomColor("사망", 160);
-                        WriteWithCustomColor("하였습니다.\n");
+                        AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Damage}", 160));
+                        AddStringToDisplayList(StringWithCustomColor(" 대미지를 입었습니다.\n"));
+                        AddStringToDisplayList(StringWithCustomColor($"플래이어의 HP가 0이 되어 "));
+                        AddStringToDisplayList(StringWithCustomColor("사망", 160));
+                        AddStringToDisplayList(StringWithCustomColor("하였습니다.\n"));
                     }
                     else if(mStage.Result.Damage != 0)
                     {
-                        WriteWithCustomColor($"{mStage.Result.Damage}", 160);
-                        WriteWithCustomColor(" 대미지를 입었습니다.\n");
-                        WriteWithCustomColor($"{mStage.Result.Gold} G", 178);
-                        WriteWithCustomColor(" 를 얻었습니다.\n");
-                        WriteWithCustomColor($"지금까지 총 ");
-                        WriteWithCustomColor($"{mStage.TotalGold} G", 178);
-                        WriteWithCustomColor(" 를 얻었습니다.\n");
+                        AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Damage}", 160));
+                        AddStringToDisplayList(StringWithCustomColor(" 대미지를 입었습니다.\n"));
+                        AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Gold} G", 178));
+                        AddStringToDisplayList(StringWithCustomColor(" 를 얻었습니다.\n"));
+                        AddStringToDisplayList(StringWithCustomColor($"지금까지 총 "));
+                        AddStringToDisplayList(StringWithCustomColor($"{mStage.TotalGold} G", 178));
+                        AddStringToDisplayList(StringWithCustomColor(" 를 얻었습니다.\n"));
                     }
                 }
             }
@@ -65,39 +64,40 @@
             }
             else if (mInput == 2)
             {
-                mPlayer.Display();
+                mPlayer.SetDisplayString();
             }
-            // 0 진행, 1 탈출, 2 상태창 보기
-            Console.WriteLine();
+            
+            AddStringToDisplayList("\n");
             if (mPlayer.IsDead)
             {
-                Console.WriteLine("[0] 탈출");
+                AddStringToDisplayList("[0] 탈출");
             }
             else
             {
-                Console.WriteLine("[0] 진행");
-                Console.WriteLine("[1] 탈출");
-                Console.WriteLine("[2] 상태창 보기");
+                AddStringToDisplayList("[0] 진행");
+                AddStringToDisplayList("[1] 탈출");
+                AddStringToDisplayList("[2] 상태창 보기");
             }
-            Console.WriteLine();
+            AddStringToDisplayList("\n");
             return 3;
         }
         public int RestDisplay()
         {
+            AddStringToDisplayList("휴식 중입니다.");
+            if (mStage != null)
+            {
+                if (mStage.Result.Damage != 0)
+                {
+                    AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Heal}", 34));
+                    AddStringToDisplayList(StringWithCustomColor(" 체력을 회복하였습니다.\n"));
+                    AddStringToDisplayList(StringWithCustomColor($"지금까지 총 "));
+                    AddStringToDisplayList(StringWithCustomColor($"{mStage.TotalGold} G", 178));
+                    AddStringToDisplayList(StringWithCustomColor(" 를 얻었습니다.\n"));
+                }
+            }
             if (mInput == 0)
             {
-                Console.WriteLine("휴식 중입니다.");
-                if (mStage != null)
-                {
-                    if (mStage.Result.Damage != 0)
-                    {
-                        WriteWithCustomColor($"{mStage.Result.Heal}", 34);
-                        WriteWithCustomColor(" 체력을 회복하였습니다.\n");
-                        WriteWithCustomColor($"지금까지 총 ");
-                        WriteWithCustomColor($"{mStage.TotalGold} G", 178);
-                        WriteWithCustomColor(" 를 얻었습니다.\n");
-                    }
-                }
+                
             }
             else if (mInput == 1)
             {
@@ -105,35 +105,30 @@
             }
             else if (mInput == 2)
             {
-                mPlayer.Display();
+                mPlayer.SetDisplayString();
             }
             // 0 진행, 1 탈출, 2 상태창 보기
-            Console.WriteLine();
-            Console.WriteLine("[0] 진행");
-            Console.WriteLine("[1] 탈출");
-            Console.WriteLine("[2] 상태창 보기");
-            Console.WriteLine();
+            AddStringToDisplayList("\n[0] 진행\n");
+            AddStringToDisplayList("[1] 탈출\n");
+            AddStringToDisplayList("[2] 상태창 보기\n\n");
             return 3;
         }
         public int ExitDisplay()
         {
+            AddStringToDisplayList("던전 탐험 결과입니다.\n");
+            AddStringToDisplayList("지금까지 총 " + StringWithCustomColor($"{mStage?.TotalGold} G", 178) + " 를 얻었습니다.\n");
+            // 결과 표시
             if (mInput == 0)
             {
-                Console.WriteLine("던전 탐험 결과입니다.");
-                WriteWithCustomColor($"지금까지 총 ");
-                WriteWithCustomColor($"{mStage?.TotalGold} G", 178);
-                WriteWithCustomColor(" 를 얻었습니다.\n");
-                // 결과 표시
+
             }
             else if (mInput == 1)
             {
-                mPlayer.Display();
+                mPlayer.SetDisplayString();
             }
             // 0 확인, 1 상태창 보기
-            Console.WriteLine();
-            Console.WriteLine("[0] 확인");
-            Console.WriteLine("[1] 상태창 보기");
-            Console.WriteLine();
+            AddStringToDisplayList("\n[0] 확인\n");
+            AddStringToDisplayList("[1] 상태창 보기\n\n");
             return 2;
         }
         public bool ChangeState(int input)
@@ -184,7 +179,7 @@
                     else if (input == 1)
                     {
                         if (mStage != null)
-                            mStage.ExitStage();
+                            State = mStage.ExitStage();
                         mInput = 0;
                     }
                     else if (input == 2)
@@ -211,7 +206,7 @@
             return result;
         }
 
-        public int Display()
+        public override int SetDisplayString()
         {
             int choiceNumber;
             switch (State)
@@ -246,10 +241,10 @@
             private Random mRand;
             private int[] mRecommendedDEF = new int[3] { 5, 15, 40 };
             private int[] mReward = new int[3] { 100, 170, 250 };
-            private Character mPlayer;
+            private CharacterSystem mPlayer;
             public FightResult Result { get; private set; }
 
-            public Stage(Character player, int level)
+            public Stage(CharacterSystem player, int level)
             {
                 Level = level;
                 mRand = new Random();
@@ -266,7 +261,7 @@
                 if (fightOrRest > 2)
                 {
                     // 전투
-                    int damage = mRand.Next(Convert.ToInt32(20f + (mRecommendedDEF[Level] - mPlayer.Def)), 36);
+                    int damage = Math.Clamp(mRand.Next(Convert.ToInt32(20f + (mRecommendedDEF[Level] - mPlayer.Def)), Convert.ToInt32(36f + (mRecommendedDEF[Level] - mPlayer.Def))), 1, 1000);
                     int gold = mRand.Next(Convert.ToInt32(mReward[Level] * (100f + mPlayer.Atk * 2f) / 200f), Convert.ToInt32(mReward[Level] * (100f + mPlayer.Atk * 2f) * 3f / 200f));
                     mPlayer.TakeDamage(damage);
                     Result.Gold = gold;
@@ -276,9 +271,10 @@
                 else
                 {
                     // 휴식
-                    int heal = mRand.Next(mPlayer.Hp / 5);
+                    int heal = mRand.Next(1, mPlayer.Hp / 5);
                     mPlayer.TakeHeal(heal);
                     Result.Heal = heal;
+                    result = DungeonState.Rest;
                 }
 
                 return result;

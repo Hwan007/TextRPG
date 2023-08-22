@@ -2,13 +2,13 @@
 
 internal partial class TextRPG
 {
-    public class Store
+    public class StoreSystem
     {
-        public Inventory Inven { get; }
+        public InventorySystem Inven { get; }
 
-        public Store()
+        public StoreSystem()
         {
-            Inven = new Inventory();
+            Inven = new InventorySystem();
         }
 
         public void AddItems(Item[] items)
