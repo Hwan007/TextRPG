@@ -1,14 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using static Program;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static TextRPG;
+﻿using System.Runtime.InteropServices;
 
 internal class Program
 {

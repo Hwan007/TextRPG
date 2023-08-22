@@ -1,5 +1,4 @@
-﻿using static TextRPG;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using System.Text;
 
 internal partial class TextRPG
