@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text;
+using System.Text.Json.Serialization;
 
 internal partial class TextRPG
 {
-    public class Character : IDisplay
+    public class CharacterSystem : DisplaySystem
     {
         public string Name { get; }
         public string Job { get; }
@@ -42,13 +43,13 @@ internal partial class TextRPG
         public int Hp { get; private set; }
         private int baseHP;
         public int Gold { get; private set; }
-        public Inventory Inven { get; }
+        public InventorySystem Inven { get; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
         public EquipmentSystem Equipments { get; }
         public int Exp { get; private set; }
 
         [JsonConstructor]
-        public Character(string name, string job, int level, int atk, int def, int hp, int gold)
+        public CharacterSystem(string name, string job, int level, int atk, int def, int hp, int gold)
         {
             Name = name;
             Job = job;
@@ -57,35 +58,24 @@ internal partial class TextRPG
             baseDef = def;
             baseHP = Hp= hp;
             Gold = gold;
-            Inven = new Inventory();
+            Inven = new InventorySystem();
             Equipments = new EquipmentSystem();
         }
 
-        public int Display()
+        public override int SetDisplayString()
         {
-            // 플래이어 스탯 정보 표시
-            //Console.WriteLine(" ===================");
-            //Console.WriteLine($" Lv.{Level}");
-            //Console.WriteLine($" {Name} ({Job})");
-            //Console.WriteLine($" 체력   : {Hp}");
-            //int tmpAtk = Atk;
-            //Console.WriteLine(" 공격력 : {0} {1}", tmpAtk, tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "");
-            //int tmpDef = Def;
-            //Console.WriteLine(" 방어력 : {0} {1}", tmpDef, tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "");
-            //Console.WriteLine($" Gold   : {Gold}");
-            //Console.WriteLine(" ===================");
-            WriteWithCustomColor(" ===================\n");
-            WriteWithCustomColor($" Lv.{Level}\n");
-            WriteWithCustomColor($" {Name, -4} ({Job})\n");
-            WriteWithCustomColor($" {"체력",-6}   : {Hp}/{baseHP}\n");
+            int start = AddStringToDisplayList(StringWithCustomColor(" ===================\n"));
+            AddStringToDisplayList(StringWithCustomColor($" Lv.{Level}\n"));
+            AddStringToDisplayList(StringWithCustomColor($" {Name, -4} ({Job})\n"));
+            AddStringToDisplayList(StringWithCustomColor($" {"체력",-6}   : {Hp}/{baseHP}\n"));
             float tmpAtk = Atk;
-            WriteWithCustomColor($" {"공격력",-7} : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n");
+            AddStringToDisplayList(StringWithCustomColor($" {"공격력",-7} : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n"));
             float tmpDef = Def;
-            WriteWithCustomColor($" {"방어력",-7} : {tmpDef} {(tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "")}\n");
-            WriteWithCustomColor($" {"골드",-6}   : ");
-            WriteWithCustomColor($"{Gold:N0} G\n", 178);
-            WriteWithCustomColor(" ===================\n");
-            return 0;
+            AddStringToDisplayList(StringWithCustomColor($" {"방어력",-7} : {tmpDef} {(tmpDef > baseDef ? $" (+{tmpDef - baseDef})" : "")}\n"));
+            AddStringToDisplayList(StringWithCustomColor($" {"골드",-6}   : "));
+            AddStringToDisplayList(StringWithCustomColor($"{Gold:N0} G\n", 178));
+            int end = AddStringToDisplayList(StringWithCustomColor(" ===================\n"));
+            return end - start;
         }
 
         public void TakeDamage(int damage)

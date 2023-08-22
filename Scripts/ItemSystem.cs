@@ -57,7 +57,7 @@ internal partial class TextRPG
             Data = item.Data;
         }
 
-        public virtual string Display(bool showGold)
+        public virtual string GetDisplayString(bool showGold)
         {
             StringBuilder cout = new StringBuilder();
             // 장착 여부 표시
@@ -72,7 +72,7 @@ internal partial class TextRPG
             return cout.ToString();
         }
 
-        public void EquipByCharacter(Character character)
+        public void EquipByCharacter(CharacterSystem character)
         {
             IsEquip = character.Equipments.EquipItem(this);
         }
@@ -104,10 +104,10 @@ internal partial class TextRPG
         public Weapon(ItemData data) : base(data) { }
         public Weapon(Item data) : base(data) { }
 
-        public override string Display(bool showGold)
+        public override string GetDisplayString(bool showGold)
         {
             StringBuilder cout = new StringBuilder();
-            cout.Append(base.Display(showGold));
+            cout.Append(base.GetDisplayString(showGold));
             // 공격력 표시
             int startPoint = cout.Length;
             cout.Append("| 공격력 +");
@@ -150,10 +150,10 @@ internal partial class TextRPG
         }
         public Armor(ItemData data) : base(data) { }
         public Armor(Item data) : base(data) { }
-        public override string Display(bool showGold)
+        public override string GetDisplayString(bool showGold)
         {
             StringBuilder cout = new StringBuilder();
-            cout.Append(base.Display(showGold));
+            cout.Append(base.GetDisplayString(showGold));
             // 방어력 표시
             int startPoint = cout.Length;
             cout.Append("| 방어력 +");
