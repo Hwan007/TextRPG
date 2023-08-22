@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using static TextRPG;
@@ -76,13 +77,64 @@ internal partial class TextRPG
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            JsonNode? jsonNode = JsonObject.Parse(ref reader);
-            JsonNode? jsonNode1 = JsonObject.Parse(ref reader);
-            JsonNode? jsonNode2 = JsonObject.Parse(ref reader);
-            //Character
+            string name = "";
+            string job = "";
+            int level = 0;
+            float baseatk = 1f;
+            float basedef = 1f;
+            int hp = 0;
+            int basehp = 0;
+            int gold = 0;
+            int exp = 0;
+            LinkedList<Item> mItems = new LinkedList<Item>();
+            LinkedList<EquipmentSystem.EquipItemData> EquipItemList = new LinkedList<EquipmentSystem.EquipItemData>();
 
+            foreach (var (propertyName, value) in JsonNode.Parse(ref reader)!.AsObject())
+            {
+                if (value is null) continue;
 
-            throw new NotImplementedException();
+                switch (propertyName)
+                {
+                    case "Name":
+                        name = value.GetValue<string>();
+                        break;
+                    case "Job":
+                        job = value.GetValue<string>();
+                        break;
+                    case "Level":
+                        level = value.GetValue<int>();
+                        break;
+                    case "baseAtk":
+                        baseatk = value.GetValue<float>();
+                        break;
+                    case "baseDef":
+                        basedef = value.GetValue<float>();
+                        break;
+                    case "Hp":
+                        hp = value.GetValue<int>();
+                        break;
+                    case "baseHp":
+                        basehp = value.GetValue<int>();
+                        break;
+                    case "Gold":
+                        gold = value.GetValue<int>();
+                        break;
+                    case "Exp":
+                        exp = value.GetValue<int>();
+                        break;
+                    case "Inven":
+                        var tempValue1 = value["mItems"]!.AsArray();
+                        mItems = tempValue1.Deserialize<LinkedList<Item>>()!;
+                        break;
+                    case "Equipments":
+                        var tempValue2 = value["EquipItemList"]!.AsArray();
+                        EquipItemList = tempValue2.Deserialize<LinkedList<EquipmentSystem.EquipItemData>>()!;
+                        break;
+                }
+            }
+            InventorySystem inven = new InventorySystem(mItems);
+            EquipmentSystem equipments = new EquipmentSystem(EquipItemList);
+            return new CharacterSystem(name, job, level, baseatk, basedef, basehp, gold, exp, hp, inven, equipments);
         }
 
         public override void Write(
@@ -111,8 +163,8 @@ internal partial class TextRPG
                 writer.WritePropertyName(nameof(value.Hp));
                 writer.WriteNumberValue(value.Hp);
                 // baseHP
-                writer.WritePropertyName(nameof(value.baseHP));
-                writer.WriteNumberValue(value.baseHP);
+                writer.WritePropertyName(nameof(value.baseHp));
+                writer.WriteNumberValue(value.baseHp);
                 // Gold
                 writer.WritePropertyName(nameof(value.Level));
                 writer.WriteNumberValue(value.Level);
@@ -120,87 +172,23 @@ internal partial class TextRPG
                 writer.WritePropertyName(nameof(value.Exp));
                 writer.WriteNumberValue(value.Exp);
             }
-            
-            // Inven
             writer.WriteStartObject(nameof(value.Inven));
+            writer.WriteStartArray(nameof(value.Inven.mItems));
+            foreach (var node in value.Inven.mItems)
             {
-                // mItems
-                //writer.WriteStartArray(nameof(value.Inven.mItems));
-                //{
-                //    // Data
-                //    var itemData = value.Inven.mItems.First;
-                //    for (int i = 0; i < value.Inven.mItems.Count; ++i)
-                //    {
-                //        if (itemData == null)
-                //            break;
-                //        writer.WriteStartObject(nameof(itemData.ValueRef.Data));
-                //        {
-                //            // Name
-                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Name));
-                //            writer.WriteStringValue(itemData.ValueRef.Data.Name);
-                //            // Description
-                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Description));
-                //            writer.WriteStringValue(itemData.ValueRef.Data.Description);
-                //            // IsEquip
-                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.IsEquip));
-                //            writer.WriteBooleanValue(itemData.ValueRef.Data.IsEquip);
-                //            // Point
-                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Point));
-                //            writer.WriteNumberValue(itemData.ValueRef.Data.Point);
-                //            // Gold
-                //            writer.WritePropertyName(nameof(itemData.ValueRef.Data.Gold));
-                //            writer.WriteNumberValue(itemData.ValueRef.Data.Gold);
-                //        }
-                //        writer.WriteEndObject();
-                //        itemData = itemData?.Next;
-                //    }
-                //}
-                //writer.WriteEndArray();
+                JsonSerializer.Serialize(writer, node, options);
             }
-            // Equipments
-            writer.WriteStartObject(nameof(value.Equipments));
-            {
-                writer.WriteStartArray(nameof(value.Equipments.EquipItemList));
-                // EquipItemList
-                {
-                    // ItemRef
-                    //var item = value.Equipments.EquipItemList.First;
-                    //for (int i = 0; i < value.Equipments.EquipItemList.Count; ++i)
-                    //{
-                    //    if (item == null)
-                    //        break;
-                    //    writer.WriteStartObject(nameof(item.ValueRef.ItemRef));
-                    //    // Data
-                    //    writer.WriteStartObject(nameof(item.ValueRef.ItemRef.Data));
-                    //    {
-                    //        // type
-                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.type);
-                    //        writer.WriteNumberValue((int)item.ValueRef.ItemRef.Data.type);
-                    //        // Name
-                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Name);
-                    //        writer.WriteStringValue(item.ValueRef.ItemRef.Data.Name);
-                    //        // Description
-                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Description);
-                    //        writer.WriteStringValue(item.ValueRef.ItemRef.Data.Description);
-                    //        // IsEquip
-                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.IsEquip);
-                    //        writer.WriteBooleanValue(item.ValueRef.ItemRef.Data.IsEquip);
-                    //        // Point
-                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Point);
-                    //        writer.WriteNumberValue(item.ValueRef.ItemRef.Data.Point);
-                    //        // Gold
-                    //        writer.WritePropertyName(item.ValueRef.ItemRef.Data.Gold);
-                    //        writer.WriteNumberValue(item.ValueRef.ItemRef.Data.Gold);
-                    //    }
-                    //    writer.WriteEndObject();
-                    //    writer.WriteEndObject();
-                    //    item = item.Next;
-                    //}
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
-            
+            writer.WriteStartObject(nameof(value.Equipments));
+            writer.WriteStartArray(nameof(value.Equipments.EquipItemList));
+            foreach (var node in value.Equipments.EquipItemList)
+            {
+                JsonSerializer.Serialize(writer, node, options);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+            writer.WriteEndObject();
         }
     }
 }

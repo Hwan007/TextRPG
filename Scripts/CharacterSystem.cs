@@ -38,21 +38,21 @@
         }
         public float baseDef { get; private set; }
         public int Hp { get; private set; }
-        public int baseHP { get; private set; }
+        public int baseHp { get; private set; }
         public int Gold { get; private set; }
         public InventorySystem Inven { get; private set; }
         public bool IsDead { get => Hp <= 0 ? true : false; }
         public EquipmentSystem Equipments { get; private set; }
         public int Exp { get; private set; }
 
-        public CharacterSystem(string name, string job, int level, int baseatk, int basedef, int basehp, int gold, int exp, int hp, InventorySystem inven, EquipmentSystem equipments)
+        public CharacterSystem(string name, string job, int level, float baseatk, float basedef, int basehp, int gold, int exp, int hp, InventorySystem inven, EquipmentSystem equipments)
         {
             Name = name;
             Job = job;
             Level = level;
             baseAtk = baseatk;
             baseDef = basedef;
-            baseHP = basehp;
+            baseHp = basehp;
             Hp = hp;
             Gold = gold;
             Exp = exp;
@@ -60,14 +60,14 @@
             Equipments = equipments;
         }
 
-        public CharacterSystem(string name, string job, int level, int baseatk, int basedef, int basehp, int gold)
+        public CharacterSystem(string name, string job, int level, float baseatk, float basedef, int basehp, int gold)
         {
             Name = name;
             Job = job;
             Level = level;
             baseAtk = baseatk;
             baseDef = basedef;
-            baseHP = Hp = basehp;
+            baseHp = Hp = basehp;
             Inven = new InventorySystem();
             Equipments = new EquipmentSystem();
             Gold = gold;
@@ -79,7 +79,7 @@
             int start = AddStringToDisplayList(StringWithCustomColor(" ===================\n"));
             AddStringToDisplayList(StringWithCustomColor($" Lv.{Level}\n"));
             AddStringToDisplayList(StringWithCustomColor($" {Name, -4} ({Job})\n"));
-            AddStringToDisplayList(StringWithCustomColor($" {"체력",-6}   : {Hp}/{baseHP}\n"));
+            AddStringToDisplayList(StringWithCustomColor($" {"체력",-6}   : {Hp}/{baseHp}\n"));
             float tmpAtk = Atk;
             AddStringToDisplayList(StringWithCustomColor($" {"공격력",-7} : {tmpAtk} {(tmpAtk > baseAtk ? $" (+{tmpAtk - baseAtk})" : "")}\n"));
             float tmpDef = Def;
@@ -104,7 +104,7 @@
 
         public void TakeHeal(int heal)
         {
-            Hp = Hp + heal >= baseHP ? baseHP : Hp + heal;
+            Hp = Hp + heal >= baseHp ? baseHp : Hp + heal;
         }
 
         public void SellItem(int index)
@@ -154,7 +154,7 @@
 
         public void LevelUP()
         {
-            TakeHeal(baseHP);
+            TakeHeal(baseHp);
             baseAtk += 0.5f;
             baseDef += 1f;
             ++Level;

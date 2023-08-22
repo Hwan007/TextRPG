@@ -19,6 +19,9 @@
             
             var weapons = JsonFileIOStream.LoadFile<Weapon[]>("Weapon.json");
             var armors = JsonFileIOStream.LoadFile<Armor[]>("Armor.json");
+            
+            CharacterConverter converter = new CharacterConverter();
+            JsonFileIOStream.JsonOptions.Converters.Add(converter);
 
             if (JsonFileIOStream.CheckFile("SaveData.json") == false)
             // 캐릭터 정보 세팅
