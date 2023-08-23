@@ -39,20 +39,21 @@
                 return 1;
             }
             // 0 진행, 1 탈출, 2 상태창 보기
+            AddStringToDisplayList($"{mStage?.Level}\n전투 진행 중입니다.\n");
+            if (mStage != null)
+            {
+                if (mStage.Result.Damage >= 0)
+                {
+                    AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Damage}", 160) + " 대미지를 입었습니다.\n");
+                    AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Gold} G", 178) + " 를 얻었습니다.\n");
+                    AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Exp}", 178) + " 경험치를 얻었습니다.\n");
+                    AddStringToDisplayList($"지금까지 총 " + StringWithCustomColor($"{mStage.TotalGold} G", 178) + " 를 얻었습니다.\n");
+                    AddStringToDisplayList("지금까지 총 " + StringWithCustomColor($"{mStage?.TotalExp}", 178) + " 경험치를 얻었습니다.\n");
+                }
+            }
             if (mInput == 0)
             {
-                AddStringToDisplayList($"{mStage?.Level}\n전투 진행 중입니다.\n");
-                if (mStage != null)
-                {
-                    if (mStage.Result.Damage >= 0)
-                    {
-                        AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Damage}", 160) + " 대미지를 입었습니다.\n");
-                        AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Gold} G", 178) + " 를 얻었습니다.\n");
-                        AddStringToDisplayList(StringWithCustomColor($"{mStage.Result.Exp}", 178) + " 경험치를 얻었습니다.\n");
-                        AddStringToDisplayList($"지금까지 총 " + StringWithCustomColor($"{mStage.TotalGold} G", 178) + " 를 얻었습니다.\n");
-                        AddStringToDisplayList("지금까지 총 " + StringWithCustomColor($"{mStage?.TotalExp}", 178) + " 경험치를 얻었습니다.\n");
-                    }
-                }
+
             }
             else if (mInput == 1)
             {
