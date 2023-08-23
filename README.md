@@ -1,5 +1,5 @@
 # TextRPG
-
+[Video Label](https://github.com/Hwan007/TextRPG/assets/96556920/f2d4b846-a6c4-436a-8b91-ef4ea5a21d99)
 ## 구현한 기능 중 일부
 1. 시작 시에 이름 입력하여 플래이어 이름 적용된다. (SaveData.json이 있으면 이를 불러옵니다.)
 2. 상태창에 플래이어가 장착한 아이템의 정보가 적용된다.
