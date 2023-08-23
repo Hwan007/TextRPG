@@ -6,7 +6,7 @@
   "baseDef": 5,
   "Hp": 100,
   "baseHp": 100,
-  "Gold": 0,
+  "Gold": 10000,
   "Exp": 0,
   "Inven": {
     "mItems": [
