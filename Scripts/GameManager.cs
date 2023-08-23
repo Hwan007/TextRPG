@@ -34,6 +34,15 @@ internal partial class TextRPG
                     sPlayer = new CharacterSystem(name, "전사", 1, 10, 5, 100, 1500);
                 else
                     sPlayer = new CharacterSystem("철수", "전사", 1, 10, 5, 100, 1500);
+
+                // 아이템 정보 세팅
+                // 1번째 아이템은 플래이어에 인벤토리에 넣고 장착시키기
+                sPlayer.GetGold(weapons[0].Gold);
+                sPlayer.GetGold(armors[0].Gold);
+                sPlayer.BuyItem(weapons[0]);
+                sPlayer.BuyItem(armors[0]);
+                sPlayer.Inven.GetItem(0)?.Value.EquipByCharacter(sPlayer);
+                sPlayer.Inven.GetItem(1)?.Value.EquipByCharacter(sPlayer);
             }
             else
             {
@@ -44,22 +53,10 @@ internal partial class TextRPG
                 sPlayer = save;
             }
 
-            // 아이템 정보 세팅
-            // 1번째 아이템은 플래이어에 인벤토리에 넣고 장착시키기
+
             if (sPlayer != null && weapons != null && armors != null)
             {
-                //sPlayer.Inven.AddItem(weapons[0]);
-                //sPlayer.Inven.AddItem(armors[0]);
-                sPlayer.GetGold(weapons[0].Gold);
-                sPlayer.GetGold(armors[0].Gold);
-                sPlayer.BuyItem(weapons[0]);
-                sPlayer.BuyItem(armors[0]);
-                sPlayer.Inven.GetItem(0)?.Value.EquipByCharacter(sPlayer);
-                sPlayer.Inven.GetItem(1)?.Value.EquipByCharacter(sPlayer);
-
                 // 나머지는 스토어에 넣기
-
-
                 // 아이템 리스트를 스토어에 넣어서 스토어가 가지고 있게 하기
                 sStore = new StoreSystem();
 
