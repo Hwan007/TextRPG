@@ -22,8 +22,11 @@ internal partial class TextRPG
     public class Item
     {
         public ItemData Data { get; protected set; }
+        [JsonIgnore]
         public string Name { get => Data.ItemName; }
+        [JsonIgnore]
         public string Description { get => Data.Description; }
+        [JsonIgnore]
         public bool IsEquip
         {
             get => Data.IsEquip;
@@ -34,6 +37,7 @@ internal partial class TextRPG
                 Data = tempData;
             }
         }
+        [JsonIgnore]
         public int Gold { get => Data.Price; }
 
         [JsonConstructor]
