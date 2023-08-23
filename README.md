@@ -79,14 +79,15 @@ CharacterSystem에 대한 JsonConverter인 CharacterConverter 클래스가 선언되어 있습
 
 <br>
 
-### << **MspSystem** >>
+### << **MapSystem** >>
 
 MaySystem.cs 파일에 있으며, 플래이어의 위치에 대한 정보와 위치에 따른 화면 출력을 담당합니다.
 
 Map은 방향성이 없는 2차원 그래프로 작성되어 있습니다. 장소에 대한 Enum을 선언하여 MapSetting에서 어디로 갈 수 있는지 추가하게 됩니다.
 
-GameManger에 작성된 순서와 밀접한 연관이 있습니다. 다음과 같은 순으로 작동합니다.
+<br>
 
+GameManger에 작성된 순서와 밀접한 연관이 있습니다. 다음과 같은 순으로 작동합니다.
 
 ```
 int[,] map = MapSystem.MapSetting();
@@ -156,6 +157,20 @@ Program.cs 파일에 작성된 내용에 대해 설명하겠습니다.
 ```
 [DllImport("kernel32.dll", SetLastError = true)]
 public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
+
+[DllImport("kernel32.dll", SetLastError = true)]
+public static extern bool GetConsoleMode(IntPtr handle, out int mode);
+
+[DllImport("kernel32.dll", SetLastError = true)]
+public static extern IntPtr GetStdHandle(int handle);
+
+static void Main(string[] args)
+{
+    var handle = GetStdHandle(-11);
+    int mode;
+    GetConsoleMode(handle, out mode);
+    // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
+    SetConsoleMode(handle, mode | 0x4);
 ```
 
 등등
