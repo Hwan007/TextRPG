@@ -157,6 +157,20 @@ Program.cs 파일에 작성된 내용에 대해 설명하겠습니다.
 ```
 [DllImport("kernel32.dll", SetLastError = true)]
 public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
+
+[DllImport("kernel32.dll", SetLastError = true)]
+public static extern bool GetConsoleMode(IntPtr handle, out int mode);
+
+[DllImport("kernel32.dll", SetLastError = true)]
+public static extern IntPtr GetStdHandle(int handle);
+
+static void Main(string[] args)
+{
+    var handle = GetStdHandle(-11);
+    int mode;
+    GetConsoleMode(handle, out mode);
+    // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
+    SetConsoleMode(handle, mode | 0x4);
 ```
 
 등등
