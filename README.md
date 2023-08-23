@@ -79,7 +79,7 @@ CharacterSystem에 대한 JsonConverter인 CharacterConverter 클래스가 선언되어 있습
 
 <br>
 
-### << **MspSystem** >>
+### << **MapSystem** >>
 
 MaySystem.cs 파일에 있으며, 플래이어의 위치에 대한 정보와 위치에 따른 화면 출력을 담당합니다.
 
