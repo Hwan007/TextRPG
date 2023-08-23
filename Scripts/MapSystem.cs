@@ -17,7 +17,7 @@ internal partial class TextRPG
         Ending
     }
 
-    public class Location : DisplaySystem
+    public class MapSystem : DisplaySystem
     {
         public LocationType Type { get; set; }
         private int[,] mMap;
@@ -26,7 +26,7 @@ internal partial class TextRPG
         private DungeonSystem? mDungeon;
         public int Choice { get; private set; }
 
-        public Location(int[,] map, CharacterSystem player, StoreSystem store)
+        public MapSystem(int[,] map, CharacterSystem player, StoreSystem store)
         {
             Type = LocationType.Main;
             mMap = map;
@@ -407,52 +407,5 @@ internal partial class TextRPG
             }
             return map;
         }
-    }
-    public static void WriteWithColor(string cout, ConsoleColor charColor, ConsoleColor backColor = ConsoleColor.Black)
-    {
-        Console.ForegroundColor = charColor;
-        Console.BackgroundColor = backColor;
-        Console.Write(cout);
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.BackgroundColor = ConsoleColor.Black;
-    }
-
-    public static void WriteWithCustomColor(string cout, int foreColor = 7, int backColor = 0)
-    {
-        Console.Write("\x1b[38;5;" + foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
-        Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
-    }
-
-    public static void WriteWithCustomColor(string cout, ColorType foreColor, int backColor = 0)
-    {
-        Console.Write("\x1b[38;5;" + (int)foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
-        Console.Write("\x1b[38;5;15m\x1b[48;5;0;m");
-    }
-
-    public static string StringWithCustomColor(string cout, int foreColor = 7, int backColor = 0)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("\x1b[38;5;" + foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
-        sb.Append("\x1b[38;5;15m\x1b[48;5;0;m");
-        return sb.ToString();
-    }
-
-    public static string StringWithCustomColor(string cout, ColorType foreColor, int backColor = 0)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("\x1b[38;5;" + (int)foreColor % 255 + "m\x1b[48;5;" + backColor % 255 + $"m{cout}");
-        sb.Append("\x1b[38;5;15m\x1b[48;5;0;m");
-        return sb.ToString();
-    }
-
-    public enum ColorType
-    {
-        Gold = 178,
-        Red = 160,
-        Gray = 7,
-        White = 15,
-        Black = 16,
-        Orange = 208,
-        PurpleBlue = 75
     }
 }

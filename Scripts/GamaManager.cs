@@ -5,7 +5,7 @@ internal partial class TextRPG
     public class GamaManager
     {
         private CharacterSystem? sPlayer;
-        private Location? sLocate;
+        private MapSystem? sLocate;
         private StoreSystem? sStore;
 
         public void GameStart()
@@ -68,14 +68,14 @@ internal partial class TextRPG
 
                 // 맵 연결 정보를 가져오기
                 // map은 LocationType의 최대개수 정사각행렬
-                int[,] map = Location.MapSetting();
-                sLocate = new Location(map, sPlayer, sStore);
+                int[,] map = MapSystem.MapSetting();
+                sLocate = new MapSystem(map, sPlayer, sStore);
             }
         }
 
         public void RunGame()
         {
-            if (sPlayer is CharacterSystem && sLocate is Location)
+            if (sPlayer is CharacterSystem && sLocate is MapSystem)
             {
                 while (true)
                 {
