@@ -95,8 +95,9 @@ internal partial class TextRPG
 
     public class Weapon : Item
     {
+        [JsonIgnore]
         public float ATK { get => Data.Point; }
-        [JsonConstructor]
+        
         public Weapon(string name, float atk, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
@@ -104,6 +105,7 @@ internal partial class TextRPG
             tempData.Point = atk;
             Data = tempData;
         }
+        [JsonConstructor]
         public Weapon(ItemData data) : base(data) { }
         public Weapon(Item data) : base(data) { }
 
@@ -143,7 +145,7 @@ internal partial class TextRPG
     public class Armor : Item
     {
         public float DEF { get => Data.Point; }
-        [JsonConstructor]
+        
         public Armor(string name, float def, string description, int gold) : base(name, description, gold)
         {
             var tempData = Data;
@@ -151,6 +153,7 @@ internal partial class TextRPG
             tempData.Point = def;
             Data = tempData;
         }
+        [JsonConstructor]
         public Armor(ItemData data) : base(data) { }
         public Armor(Item data) : base(data) { }
         public override string GetDisplayString(bool showGold)

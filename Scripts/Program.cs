@@ -18,8 +18,8 @@ internal class Program
         // You need set flag ENABLE_VIRTUAL_TERMINAL_PROCESSING(0x4) by SetConsoleMode
         SetConsoleMode(handle, mode | 0x4);
 
-        //JsonFileIOStream JsonIO = new JsonFileIOStream();
-        //JsonIO.SaveItemDataBase();
+        JsonFileIOStream JsonIO = new JsonFileIOStream();
+        JsonIO.SaveItemDataBase();
 
         TextRPG.GameManager game = new TextRPG.GameManager();
         game.GameStart();
