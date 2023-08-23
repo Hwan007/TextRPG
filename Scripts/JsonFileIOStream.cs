@@ -123,13 +123,61 @@ internal partial class TextRPG
                         exp = value.GetValue<int>();
                         break;
                     case "Inven":
-                        var tempValue1 = value["mItems"]!.AsArray();
-                        mItems = tempValue1.Deserialize<LinkedList<Item>>()!;
+                        var tempArray = value["mItems"]!.AsArray();
+                        foreach (var temp in tempArray)
+                        {
+                            var jsonNodeData = temp!["Data"];
+                            ItemData data = new ItemData();
+                            var tempData = data;
+                            foreach (var (dataName, dataValue) in jsonNodeData!.AsObject())
+                            {
+                                switch (dataName)
+                                {
+                                    case "type":
+                                        tempData.type = (EquipType)dataValue!.GetValue<int>();
+                                        break;
+                                    case "ItemName":
+                                        tempData.ItemName = dataValue!.GetValue<string>();
+                                        break;
+                                    case "Description":
+                                        tempData.Description = dataValue!.GetValue<string>();
+                                        break;
+                                    case "IsEquip":
+                                        tempData.IsEquip = dataValue!.GetValue<bool>();
+                                        break;
+                                    case "Point":
+                                        tempData.Point = dataValue!.GetValue<float>();
+                                        break;
+                                    case "Price":
+                                        tempData.Price = dataValue!.GetValue<int>();
+                                        break;
+                                }
+                            }
+                            data = tempData;
+
+                            if (data.type == EquipType.Weapon)
+                            {
+                                Weapon weapon = new Weapon(data);
+                                mItems.AddLast(weapon);
+                                if (data.IsEquip)
+                                    EquipItemList.AddLast(new EquipmentSystem.EquipItemData(weapon));
+                            }
+                            else if (data.type == EquipType.Armor)
+                            {
+                                Armor armor = new Armor(data);
+                                mItems.AddLast(armor);
+                                if (data.IsEquip)
+                                    EquipItemList.AddLast(new EquipmentSystem.EquipItemData(armor));
+                            }
+                        }
+                        //mItems = tempArray.Deserialize<LinkedList<Item>>()!;
                         break;
+                        /*
                     case "Equipments":
                         var tempValue2 = value["EquipItemList"]!.AsArray();
                         EquipItemList = tempValue2.Deserialize<LinkedList<EquipmentSystem.EquipItemData>>()!;
                         break;
+                        */
                 }
             }
             InventorySystem inven = new InventorySystem(mItems);
@@ -180,6 +228,7 @@ internal partial class TextRPG
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+            /*
             writer.WriteStartObject(nameof(value.Equipments));
             writer.WriteStartArray(nameof(value.Equipments.EquipItemList));
             foreach (var node in value.Equipments.EquipItemList)
@@ -188,6 +237,7 @@ internal partial class TextRPG
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+            */
             writer.WriteEndObject();
         }
     }
