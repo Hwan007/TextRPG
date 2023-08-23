@@ -21,7 +21,7 @@ internal class Program
         JsonFileIOStream JsonIO = new JsonFileIOStream();
         JsonIO.SaveItemDataBase();
 
-        TextRPG.GamaManager game = new TextRPG.GamaManager();
+        TextRPG.GameManager game = new TextRPG.GameManager();
         game.GameStart();
     }
 }

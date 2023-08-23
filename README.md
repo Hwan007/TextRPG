@@ -75,17 +75,71 @@ Map은 방향성이 없는 2차원 그래프로 작성되어 있습니다. 장소에 대한 Enum을 선언하�
 
 GameManger에 작성된 순서와 밀접한 연관이 있습니다. 다음과 같은 순으로 작동합니다.
 
-먼저 플래이어 위치에 대하여 머리글을 SBList에 넣습니다.
 
-두번째 위치에 대하여 필요한 정보를 SBList에 넣도록 각 객체에게 요청합니다.
+```int[,] map = MapSystem.MapSetting();```
+```sLocate = new MapSystem(map, sPlayer, sStore);```
+
+우선 게임 매니저에서 Map 세팅을 합니다.
+
+
+```SetDisplayString() -> Display****()```
+
+① 플래이어 위치에 대하여 머리글을 SBList에 넣습니다.
+
+② 위치에 대하여 필요한 정보를 SBList에 넣도록 각 객체에게 요청합니다.
+
+③ 이때 각 객체에서 돌려준 선택지의 개수가 몇개인지 체크합니다.
 
 (필요한 경우에 string[]마다 앞에 번호를 넣습니다.)
 
 ([E]에 대한 코드는 수정할 필요가 있습니다. 여기서할 것이 아니라 내부에서 작성하는 것으로 충분합니다.)
 
 
+```AddEnableRouteToSBList()```
+
+④ 이동가능한 루트에 대한 정보를 SBList에 넣습니다.
+
+
+```DisplaySystem.DisplayOut()```
+
+게임 매니저에서 화면에 출력합니다.
+
+
+```ActByInput(int i) 혹은 ChageLocation(LocationType type)```
+
+⑤ 선택지에 따라서 입력을 나누어 반응을 합니다.
+
+(입력을 나누는 것은 GameManager에서 하고 있습니다.)
+
+여기서 주의해야 하는 점은 던전에서는 별도의 입력처리를 하고 있습니다.
+ 결국에는 한곳에서 입력처리를 전부 하지 못하는 상황이니 만큼 던전과 맵의 상호작용에 대한 구조가 아쉽습니다.
 
 #### StoreSystem
 
+StoreSystem.cs 파일에 있으며, 인벤토리를 가진 상인에 대한 기능을 합니다.
+
+아이템들을 한번에 인벤토리에 넣고, 플래이어가 선택한 아이템이 무엇인지 참조를 하게 해줍니다.
+
+다시 한번 dynamic이 다양한 버그들의 원인이었습니다. 딱 맞는 상황이 아니고서야 dynamic은 지양해야 된다고 생각하게 되었습니다.
 
 #### GameManager
+
+GameManager.cs 파일에 있으며, 게임에 대한 정보를 세팅하고 메인 루프를 돌리는 기능을 합니다.
+
+#### 기타
+
+Program.cs 파일에 작성된 내용에 대해 설명하겠습니다.
+
+```public static string StringWithCustomColor(string cout, int foreColor = 7, int backColor = 0)```
+을 동작하기 위한 밑작업들로
+
+```[DllImport("kernel32.dll", SetLastError = true)]```
+```public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);```
+
+등등
+
+이루어졌습니다.
+
+```StringWithCustomColor```
+
+이 함수는 콘솔에서 다양한 색을 출력하기 위한 것으로, <https://stackoverflow.com/questions/7937256/custom-text-color-in-c-sharp-console-application> 해당 링크에 대한 내용을 참고하였습니다.

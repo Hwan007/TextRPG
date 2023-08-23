@@ -2,7 +2,7 @@
 
 internal partial class TextRPG
 {
-    public class GamaManager
+    public class GameManager
     {
         private CharacterSystem? sPlayer;
         private MapSystem? sLocate;
