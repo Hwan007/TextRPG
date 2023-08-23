@@ -137,9 +137,9 @@
                 Console.WriteLine("아이템 정보가 없습니다.");
         }
 
-        public void GetGold(int earning)
+        public void GetGold(int? earning)
         {
-            Gold += earning;
+            Gold += earning??0;
         }
 
         public void GetExp(int exp)

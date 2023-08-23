@@ -37,10 +37,10 @@ internal partial class TextRPG
 
                 // 아이템 정보 세팅
                 // 1번째 아이템은 플래이어에 인벤토리에 넣고 장착시키기
-                sPlayer.GetGold(weapons[0].Gold);
-                sPlayer.GetGold(armors[0].Gold);
-                sPlayer.BuyItem(weapons[0]);
-                sPlayer.BuyItem(armors[0]);
+                sPlayer.GetGold(weapons?[0].Gold);
+                sPlayer.GetGold(armors?[0].Gold);
+                sPlayer.BuyItem(weapons![0]);
+                sPlayer.BuyItem(armors![0]);
                 sPlayer.Inven.GetItem(0)?.Value.EquipByCharacter(sPlayer);
                 sPlayer.Inven.GetItem(1)?.Value.EquipByCharacter(sPlayer);
             }
