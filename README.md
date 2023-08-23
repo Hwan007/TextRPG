@@ -1,6 +1,5 @@
 # TextRPG
 
-
 ## ±¸ÇöÇÑ ±â´É Áß ÀÏºÎ
 1. ½ÃÀÛ ½Ã¿¡ ÀÌ¸§ ÀÔ·ÂÇÏ¿© ÇÃ·¡ÀÌ¾î ÀÌ¸§ Àû¿ëµÈ´Ù.
 2. »óÅÂÃ¢¿¡ ÇÃ·¡ÀÌ¾î°¡ ÀåÂøÇÑ ¾ÆÀÌÅÛÀÇ Á¤º¸°¡ Àû¿ëµÈ´Ù.
@@ -14,7 +13,7 @@
  
 ## ±â´É(Å¬·¡½º) º° ¼³¸í
 
-### << DisplaySystem >>
+### << **DisplaySystem** >>
 
 Program.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, È­¸é¿¡ ³»º¸³¾ ¹®ÀÚ¿­À» Static º¯¼öÀÎ List<string> SBList¿¡ ³Ö°Å³ª, ¿ä¼ÒµéÀ» ²¨³» È­¸é¿¡ Ãâ·ÂÇÕ´Ï´Ù.
 
@@ -22,9 +21,9 @@ Program.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, È­¸é¿¡ ³»º¸³¾ ¹®ÀÚ¿­À» Static º¯¼öÀÎ List<string> SBLi
 
 => ÀÎÅÍÆäÀÌ½º¸¦ ÀÌ¿ëÇÏ·Á°í ÇßÀ¸³ª, °¢ Å¬·¡½ºº°·Î bool ÀÎ¼ö¸¦ ¹Þ°í ½Í°Å³ª, ¸ðµç ¹®ÀÚ¿­À» ¹Þ¾Æ ÃÖÁ¾ÀûÀ¸·Î ¼öÁ¤ÇÒ ÇÊ¿ä°¡ ÀÖ¾î ÀÌ Å¬·¡½º¸¦ ÀÛ¼ºÇÏ°Ô µÇ¾ú½À´Ï´Ù.
 
+<br>
 
-
-### << CharacterSystem >>
+### << **CharacterSystem** >>
 
 CharacterSystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÇÃ·¡ÀÌ¾î°¡ °¡Áö°í ÀÖ´Â Á¤º¸¸¦ ¶æÇÕ´Ï´Ù.
 
@@ -34,17 +33,17 @@ Json ÆÄÀÏ ÀúÀå ±â´É¿¡ °¡Àå ¸¹Àº ½Ã°£À» ÇÒ¾ÖÇÏ°ÔµÈ ÀÌÀ¯°¡ ¹Ù·Î ÀÌ Ä³¸¯ÅÍ ¾Æ·¡ ÀÎº
  ¸®½ºÆ®¸¦ °¡Áø Å¬·¡½º¸¦ °´Ã¼·Î °¡Áø Å¬·¡½º¸¦ DeserializeÇÏ·Á°í ÇÒ¶§¸¶´Ù ¿¡·¯°¡ ¹ß»ýÇÏ¿´°í, Json.Text.Json¿¡¼­´Â LinkedList³ª List³ª ¸ðµÎ Array ÇüÅÂ·Î ÀÛ¼ºÀ» ÇÏ´Â °ÍÀ» ¾Ë°í,
  º°µµÀÇ JsonConverter¸¦ ÀÛ¼ºÇÏ´Â ¼ö¹Û¿¡ ¾ø¾ú½À´Ï´Ù.
 
+ <br>
 
-
-### << DungeonSystem >>
+### << **DungeonSystem** >>
 
 DungeonSystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ´øÀü ¸Ê¿¡ ´ëÇÑ Ãâ·Â ¹× ÀÔ·Â¿¡ ´ëÇÑ ¹ÝÀÀÀ» ´ã´çÇÕ´Ï´Ù.
 
 ³»ºÎ¿¡ Stage Å¬·¡½º°¡ Ç¥ÇöµÇ¾î ÀÖÀ¸¸ç, °¢ ³­ÀÌµµ¿¡ µû¸¥ Stage °´Ã¼¸¦ »ý¼ºÇØ¼­ °ÔÀÓÀ» ÁøÇàÇÏ°í, ´øÀü¿¡ ³­ÀÌµµ¸¦ ¼±ÅÃÇÒ ¶§¸¶´Ù »õ·Î¿î °´Ã¼¸¦ »ý¼ºÇÕ´Ï´Ù.
 
+<br>
 
-
-### << EquipmentSystem >>
+### << **EquipmentSystem** >>
 
 EquipmentSystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÇÃ·¡ÀÌ¾î¿¡°Ô ÀåÂø ¾ÆÀÌÅÛ¿¡ ´ëÇÑ Á¤º¸¸¦ °¡Áö°í ÀÖ´Â ±â´ÉÀ» ´õÇÏ±â À§ÇÑ Å¬·¡½ºÀÔ´Ï´Ù.
 
@@ -52,25 +51,25 @@ EquipmentSystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÇÃ·¡ÀÌ¾î¿¡°Ô ÀåÂø ¾ÆÀÌÅÛ¿¡ ´ëÇÑ Á¤º¸¸¦ °¡Áö°í 
 
 ¡Ø dynamicÀ» »ç¿ëÇÑ °ÍÀÌ ¿Ø¸¸ÇÑ ¹ö±×ÀÇ ¿øÀÎÀÌ¾ú½À´Ï´Ù. Å¬·¡½º¸¦ ¸íÈ®È÷ ¸í½ÃÇÏ´Â °ÍÀÌ ¹«¾ùº¸´Ù Áß¿äÇÏ´Ù´Â °ÍÀ» ´À²¼½À´Ï´Ù.
 
+<br>
 
-
-### << InventorySystem >>
+### << **InventorySystem** >>
 
 InventorySystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÇÃ·¡ÀÌ¾î ¹× »óÀÎ¿¡°Ô °¡Áö°í ÀÖ´Â ¾ÆÀÌÅÛµé¿¡ ´ëÇÑ Á¤º¸¸¦ ¶æÇÕ´Ï´Ù.
 
 °¡Áö°í ÀÖ´Â ¾ÆÀÌÅÛ¿¡ ´ëÇÑ LinkedList¸¦ °¡Áö°í ÀÖÀ¸¸ç, ¾ÆÀÌÅÛ¿¡ ´ëÇÑ Á¤º¸¸¦ ¹®ÀÚ¿­·Î ¹ÝÈ¯ÇÏ°Å³ª, ÀÎµ¦½º¿¡ µû¶ó¼­ ¾ÆÀÌÅÛÀ» Ãß°¡ÇÏ°Å³ª ¹ÝÈ¯ÇÏ°Å³ª Á¦°ÅÇÕ´Ï´Ù.
 
+<br>
 
-
-### << ItemSystem >>
+### << **ItemSystem** >>
 
 Item, Weapon, Armor Å¬·¡½º¸¦ ÃÑÄªÇÕ´Ï´Ù. ItemSystem.csÀÇ ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ¾ÆÀÌÅÛ Å¸ÀÔ¿¡ ´ëÇÑ EnumÀ» Á¤ÀÇÇÏ°Ç, ¾ÆÀÌÅÛ Á¤º¸¿¡ ´ëÇÑ ±¸Á¶Ã¼°¡ Á¤ÀÇµÇ¾î ÀÖ½À´Ï´Ù.
 
 JsonÀ¸·Î ÀúÀåÇÏ´Â °Í¿¡ ¸¹Àº ¾î·Á¿òÀ» °Þ°ÔµÈ ÀÌÀ¯°¡ private·Î µÈ ÇÊµå ¸â¹ö°¡ ±âº»ÀûÀ¸·Î Æ÷ÇÔÇÏÁö ¾Ê´Â °ÍÀÌ¾ú½À´Ï´Ù. ½Ã°£ÀÌ ¾ó¸¶ ¾ø¾î pulic ¼Ó¼ºÀ¸·Î get¸¸ °¡´ÉÇÏµµ·Ï ¹Ù²Ù¾î ÇØ°áÇÏ¿´Áö¸¸, ´ÙÀ½¹ø¿¡´Â ÇÊ¿äÇÑ ³»¿ë¸¸ ÀúÀåÇÏ·Á°í ÇÕ´Ï´Ù.
 
+<br>
 
-
-### << JsonFileIOStream >>
+### << **JsonFileIOStream** >>
 
 JsonFileIOStream.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, Json ÆÄÀÏ¿¡ ´ëÇÑ ÀúÀå/ºÒ·¯¿À±â ±â´ÉÀ» ´ã´çÇÕ´Ï´Ù. ¾îµð¼­³ª Á¢±ÙÇÒ ¼ö ÀÖµµ·Ï staticÀ¸·Î ¼±¾ðµÇ¾î ÀÖ½À´Ï´Ù.
 
@@ -78,9 +77,9 @@ JsonFileIOStream.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, Json ÆÄÀÏ¿¡ ´ëÇÑ ÀúÀå/ºÒ·¯¿À±â ±â´ÉÀ» ´ã´çÇÕ´
 
 CharacterSystem¿¡ ´ëÇÑ JsonConverterÀÎ CharacterConverter Å¬·¡½º°¡ ¼±¾ðµÇ¾î ÀÖ½À´Ï´Ù. ´Ù¸¥ ÀÌÀÇ ÄÚµå¸¦ Âü°íÇÏ¸ç ÀÛ¼ºÇÏ¿´Áö¸¸, Json ÆÄÀÏÀÇ ÀÚ·á±¸Á¶°¡ TreeÀÎ Á¡°ú Dictionary·Î Ãë±Þ°¡´ÉÇÏ´Ù´Â °ÍÀ» ¹è¿ì°Ô µÇ¾ú½À´Ï´Ù.
 
+<br>
 
-
-### << MspSystem >>
+### << **MspSystem** >>
 
 MaySystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÇÃ·¡ÀÌ¾îÀÇ À§Ä¡¿¡ ´ëÇÑ Á¤º¸¿Í À§Ä¡¿¡ µû¸¥ È­¸é Ãâ·ÂÀ» ´ã´çÇÕ´Ï´Ù.
 
@@ -89,8 +88,10 @@ MapÀº ¹æÇâ¼ºÀÌ ¾ø´Â 2Â÷¿ø ±×·¡ÇÁ·Î ÀÛ¼ºµÇ¾î ÀÖ½À´Ï´Ù. Àå¼Ò¿¡ ´ëÇÑ EnumÀ» ¼±¾ðÇÏ¿
 GameManger¿¡ ÀÛ¼ºµÈ ¼ø¼­¿Í ¹ÐÁ¢ÇÑ ¿¬°üÀÌ ÀÖ½À´Ï´Ù. ´ÙÀ½°ú °°Àº ¼øÀ¸·Î ÀÛµ¿ÇÕ´Ï´Ù.
 
 
-```int[,] map = MapSystem.MapSetting();```
-```sLocate = new MapSystem(map, sPlayer, sStore);```
+```
+int[,] map = MapSystem.MapSetting();
+sLocate = new MapSystem(map, sPlayer, sStore);
+```
 
 ¿ì¼± °ÔÀÓ ¸Å´ÏÀú¿¡¼­ Map ¼¼ÆÃÀ» ÇÕ´Ï´Ù.
 
@@ -127,9 +128,9 @@ GameManger¿¡ ÀÛ¼ºµÈ ¼ø¼­¿Í ¹ÐÁ¢ÇÑ ¿¬°üÀÌ ÀÖ½À´Ï´Ù. ´ÙÀ½°ú °°Àº ¼øÀ¸·Î ÀÛµ¿ÇÕ´Ï´Ù
 ¿©±â¼­ ÁÖÀÇÇØ¾ß ÇÏ´Â Á¡Àº ´øÀü¿¡¼­´Â º°µµÀÇ ÀÔ·ÂÃ³¸®¸¦ ÇÏ°í ÀÖ½À´Ï´Ù.
  °á±¹¿¡´Â ÇÑ°÷¿¡¼­ ÀÔ·ÂÃ³¸®¸¦ ÀüºÎ ÇÏÁö ¸øÇÏ´Â »óÈ²ÀÌ´Ï ¸¸Å­ ´øÀü°ú ¸ÊÀÇ »óÈ£ÀÛ¿ë¿¡ ´ëÇÑ ±¸Á¶°¡ ¾Æ½±½À´Ï´Ù.
 
+ <br>
 
-
-### << StoreSystem >>
+### << **StoreSystem** >>
 
 StoreSystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÀÎº¥Åä¸®¸¦ °¡Áø »óÀÎ¿¡ ´ëÇÑ ±â´ÉÀ» ÇÕ´Ï´Ù.
 
@@ -137,23 +138,25 @@ StoreSystem.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, ÀÎº¥Åä¸®¸¦ °¡Áø »óÀÎ¿¡ ´ëÇÑ ±â´ÉÀ» ÇÕ´Ï´Ù.
 
 ´Ù½Ã ÇÑ¹ø dynamicÀÌ ´Ù¾çÇÑ ¹ö±×µéÀÇ ¿øÀÎÀÌ¾ú½À´Ï´Ù. µü ¸Â´Â »óÈ²ÀÌ ¾Æ´Ï°í¼­¾ß dynamicÀº Áö¾çÇØ¾ß µÈ´Ù°í »ý°¢ÇÏ°Ô µÇ¾ú½À´Ï´Ù.
 
+<br>
 
-
-### << GameManager >>
+### << **GameManager** >>
 
 GameManager.cs ÆÄÀÏ¿¡ ÀÖÀ¸¸ç, °ÔÀÓ¿¡ ´ëÇÑ Á¤º¸¸¦ ¼¼ÆÃÇÏ°í ¸ÞÀÎ ·çÇÁ¸¦ µ¹¸®´Â ±â´ÉÀ» ÇÕ´Ï´Ù.
 
+<br>
 
-
-### << ±âÅ¸ >>
+### << **±âÅ¸** >>
 
 Program.cs ÆÄÀÏ¿¡ ÀÛ¼ºµÈ ³»¿ë¿¡ ´ëÇØ ¼³¸íÇÏ°Ú½À´Ï´Ù.
 
 ```public static string StringWithCustomColor(string cout, int foreColor = 7, int backColor = 0)```
 À» µ¿ÀÛÇÏ±â À§ÇÑ ¹ØÀÛ¾÷µé·Î
 
-```[DllImport("kernel32.dll", SetLastError = true)]```
-```public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);```
+```
+[DllImport("kernel32.dll", SetLastError = true)]
+public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
+```
 
 µîµî
 
