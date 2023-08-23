@@ -148,12 +148,12 @@ GameManager.cs 파일에 있으며, 게임에 대한 정보를 세팅하고 메인 루프를 돌리는 기�
 <br>
 
 ### << **기타** >>
-
+<br>
 Program.cs 파일에 작성된 내용에 대해 설명하겠습니다.
-
+<br>
 ```public static string StringWithCustomColor(string cout, int foreColor = 7, int backColor = 0)```
-을 동작하기 위한 밑작업들로
-
+을 동작하기 위한 밑작업들로 아래와 같은 코드로 이루어졌습니다.
+<br>
 ```
 [DllImport("kernel32.dll", SetLastError = true)]
 public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
@@ -173,10 +173,6 @@ static void Main(string[] args)
     SetConsoleMode(handle, mode | 0x4);
 ```
 
-등등
-
-이루어졌습니다.
-
 ```StringWithCustomColor```
-
+<br>
 이 함수는 콘솔에서 다양한 색을 출력하기 위한 것으로, <https://stackoverflow.com/questions/7937256/custom-text-color-in-c-sharp-console-application> 해당 링크에 대한 내용을 참고하였습니다.
